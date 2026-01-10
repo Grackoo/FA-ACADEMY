@@ -1,7 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MODULES, getIcon } from '../constants';
 import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronRight, MessageCircle } from 'lucide-react';
+
+const TradingViewHeatmap: React.FC = () => {
+  const container = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (container.current) {
+      // Limpiar el contenedor antes de inyectar para evitar duplicados en re-renders
+      container.current.innerHTML = '';
+
+      // 1. Crear el div del widget
+      const widgetDiv = document.createElement("div");
+      widgetDiv.className = "tradingview-widget-container__widget";
+      widgetDiv.style.height = "100%";
+      widgetDiv.style.width = "100%";
+      container.current.appendChild(widgetDiv);
+
+      // 2. Crear el div de copyright (Requerido por TradingView para funcionar correctamente muchas veces)
+      const copyrightDiv = document.createElement("div");
+      copyrightDiv.className = "tradingview-widget-copyright";
+      copyrightDiv.innerHTML = `<a href="https://es.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Rastree todos los mercados en TradingView</span></a>`;
+      copyrightDiv.style.display = "none"; // Ocultamos el texto si prefieres limpieza, pero debe existir en el DOM
+      container.current.appendChild(copyrightDiv);
+
+      // 3. Inyectar el script
+      const script = document.createElement("script");
+      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.innerHTML = JSON.stringify({
+        "exchanges": [],
+        "dataSource": "SPX500",
+        "grouping": "sector",
+        "blockSize": "market_cap_basic",
+        "blockColor": "change",
+        "locale": "es",
+        "symbolUrl": "",
+        "colorTheme": "dark",
+        "hasTopBar": false,
+        "isDataSetEnabled": false,
+        "isZoomEnabled": true,
+        "hasSymbolTooltip": true,
+        "width": "100%",
+        "height": "100%"
+      });
+      container.current.appendChild(script);
+    }
+  }, []);
+
+  return (
+    <div className="tradingview-widget-container" ref={container} style={{ width: "100%", height: "100%" }}>
+      {/* El contenido se inyecta via useEffect */}
+    </div>
+  );
+};
 
 const InvestorQuizModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [step, setStep] = useState(1);
@@ -156,29 +210,13 @@ const Home: React.FC = () => {
                 </button>
               </div>
             </div>
-            {/* Visual Hero Image - Updated to Chart */}
-            <div className="lg:col-span-6 relative">
+            {/* Visual Hero Image - Updated to TradingView Heatmap */}
+            <div className="lg:col-span-6 relative h-[450px] lg:h-[500px]">
               <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 bg-primary-900/30 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
               <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 bg-purple-900/30 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
               
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900">
-                 <img 
-                    src="https://images.unsplash.com/photo-1611974765270-ca12586343bb?auto=format&fit=crop&q=80&w=800" 
-                    alt="Stock Market Graph Analysis" 
-                    className="w-full h-auto object-cover opacity-80 hover:opacity-100 transition-opacity"
-                 />
-                 {/* Floating UI Elements Mockup */}
-                 <div className="absolute bottom-6 left-6 bg-slate-800/90 backdrop-blur border border-slate-700 p-4 rounded-lg shadow-xl max-w-xs animate-fade-in-up">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-emerald-900/50 text-emerald-400 rounded-full">
-                            <ShieldCheck size={20} />
-                        </div>
-                        <div>
-                            <p className="text-xs text-slate-400 font-semibold">Portafolio Protegido</p>
-                            <p className="text-sm font-bold text-white">+12.4% Rendimiento Anual</p>
-                        </div>
-                    </div>
-                 </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900 w-full h-full z-10">
+                 <TradingViewHeatmap />
               </div>
             </div>
           </div>
