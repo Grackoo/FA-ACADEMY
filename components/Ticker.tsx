@@ -31,7 +31,7 @@ const Ticker: React.FC = () => {
     <div className="w-full bg-slate-900 border-b border-slate-800">
       <tv-ticker-tape
         symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,FX:EURUSD,BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,CMCMARKETS:GOLD,FX:USDMXN"
-        show-hover
+        theme="light" transparent
         color-theme="dark"
       />
     </div>
