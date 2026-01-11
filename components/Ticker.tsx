@@ -7,6 +7,7 @@ declare global {
       'tv-ticker-tape': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
         symbols?: string;
         'show-hover'?: boolean;
+        'color-theme'?: string;
       };
     }
   }
@@ -31,6 +32,7 @@ const Ticker: React.FC = () => {
       <tv-ticker-tape
         symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,FX:EURUSD,BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,CMCMARKETS:GOLD,FX:USDMXN"
         show-hover
+        color-theme="dark"
       />
     </div>
   );
