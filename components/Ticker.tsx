@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 
 // Declaration to avoid TypeScript errors with the custom element
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'tv-ticker-tape': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-        symbols?: string;
-        'show-hover'?: boolean;
-        'color-theme'?: string;
-      };
-    }
-  }
-}
+// // Declaration to avoid TypeScript errors with the custom element
+// declare global {
+//   namespace JSX {
+//     interface IntrinsicElements {
+//       'tv-ticker-tape': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+//         symbols?: string;
+//         'show-hover'?: boolean;
+//         'color-theme'?: string;
+//       };
+//     }
+//   }
+// }
 
 const Ticker: React.FC = () => {
   useEffect(() => {
@@ -29,10 +30,10 @@ const Ticker: React.FC = () => {
 
   return (
     <div className="w-full bg-slate-900 border-b border-slate-800">
+      {/* @ts-ignore */}
       <tv-ticker-tape
         symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,FX:EURUSD,BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,CMCMARKETS:GOLD,FX:USDMXN"
         theme="dark"
-
       />
     </div>
   );
