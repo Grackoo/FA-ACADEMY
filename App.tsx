@@ -4,6 +4,12 @@ import Navbar from './components/Navbar';
 import Ticker from './components/Ticker';
 import Home from './pages/Home';
 import CourseDetail from './pages/CourseDetail';
+import CoursePlayerPhase1 from './pages/CoursePlayerPhase1';
+import CoursePlayerPhase2 from './pages/CoursePlayerPhase2';
+import CoursePlayerPhase3 from './pages/CoursePlayerPhase3';
+import CoursePlayerPhase4 from './pages/CoursePlayerPhase4';
+import CoursePlayerPhase5 from './pages/CoursePlayerPhase5';
+
 import Tools from './pages/Tools';
 import Mentors from './pages/Mentors';
 import Pricing from './pages/Pricing';
@@ -45,13 +51,13 @@ const Footer: React.FC = () => (
 
 const ScrollToTop = () => {
   const { pathname, hash } = React.useMemo(() => window.location, []);
-  
+
   React.useEffect(() => {
     if (!hash) {
       window.scrollTo(0, 0);
     }
   }, [pathname, hash]);
-  
+
   return null;
 }
 
@@ -70,6 +76,11 @@ const App: React.FC = () => {
             <Route path="/mentors" element={<Mentors />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/academy/:id" element={<CourseDetail />} />
+            <Route path="/course/phase/1" element={<CoursePlayerPhase1 />} />
+            <Route path="/course/phase/2" element={<CoursePlayerPhase2 />} />
+            <Route path="/course/phase/3" element={<CoursePlayerPhase3 />} />
+            <Route path="/course/phase/4" element={<CoursePlayerPhase4 />} />
+            <Route path="/course/phase/5" element={<CoursePlayerPhase5 />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
