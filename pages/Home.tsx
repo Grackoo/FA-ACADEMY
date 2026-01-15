@@ -189,10 +189,10 @@ const Home: React.FC = () => {
                 Nuevas Vacantes Abiertas 2026
               </div>
               <h1 className="text-4xl lg:text-6xl font-display font-extrabold text-white tracking-tight leading-tight mb-6">
-                Domina tu futuro financiero, desde el primer peso hasta tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-200">primer portafolio</span>.
+                Toma el control de tu capital y diseña <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-200">tu propio futuro.</span>
               </h1>
               <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Deja de adivinar y empieza a invertir con estrategia. Una academia diseñada para llevarte de cero a experto en los mercados financieros globales.
+                No es suerte, es educación. Te guiamos desde los conceptos básicos hasta el análisis técnico avanzado para que construyas un portafolio sólido y rentable.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
