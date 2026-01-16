@@ -1,5 +1,8 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Ticker from './components/Ticker';
 import Home from './pages/Home';
@@ -63,30 +66,50 @@ const ScrollToTop = () => {
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="flex flex-col min-h-screen bg-slate-950">
-        <Ticker />
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/academy" element={<Home />} />
-            <Route path="/tools" element={<Tools />} />
-            <Route path="/mentors" element={<Mentors />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/academy/:id" element={<CourseDetail />} />
-            <Route path="/course/phase/1" element={<CoursePlayerPhase1 />} />
-            <Route path="/course/phase/2" element={<CoursePlayerPhase2 />} />
-            <Route path="/course/phase/3" element={<CoursePlayerPhase3 />} />
-            <Route path="/course/phase/4" element={<CoursePlayerPhase4 />} />
-            <Route path="/course/phase/5" element={<CoursePlayerPhase5 />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="flex flex-col min-h-screen bg-slate-950">
+          <Ticker />
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/academy" element={<Home />} />
+              <Route path="/tools" element={<Tools />} />
+              <Route path="/mentors" element={<Mentors />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/academy/:id" element={<CourseDetail />} />
+
+              {/* Public Phases */}
+              <Route path="/course/phase/1" element={<CoursePlayerPhase1 />} />
+              <Route path="/course/phase/2" element={<CoursePlayerPhase2 />} />
+
+              {/* Protected Phases */}
+              <Route path="/course/phase/3" element={
+                <ProtectedRoute>
+                  <CoursePlayerPhase3 />
+                </ProtectedRoute>
+              } />
+              <Route path="/course/phase/4" element={
+                <ProtectedRoute>
+                  <CoursePlayerPhase4 />
+                </ProtectedRoute>
+              } />
+              <Route path="/course/phase/5" element={
+                <ProtectedRoute>
+                  <CoursePlayerPhase5 />
+                </ProtectedRoute>
+              } />
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 };
 
