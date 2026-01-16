@@ -13,7 +13,7 @@ const Pricing: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          
+
           {/* Plan 1: Cimientos */}
           <div className="bg-slate-900 rounded-3xl p-8 border border-slate-800 flex flex-col relative overflow-hidden hover:border-slate-600 transition-colors">
             <div className="mb-8">
@@ -26,7 +26,7 @@ const Pricing: React.FC = () => {
                 Perfecto para conocer la plataforma y entender si el mundo de las inversiones es para ti.
               </p>
             </div>
-            
+
             <ul className="space-y-4 mb-8 flex-1">
               <li className="flex items-start gap-3">
                 <Check className="text-primary-500 shrink-0" size={20} />
@@ -74,7 +74,7 @@ const Pricing: React.FC = () => {
                 El paquete completo para dominar los mercados. Incluye todo lo necesario para gestionar un portafolio real.
               </p>
             </div>
-            
+
             <ul className="space-y-4 mb-8 flex-1">
               <li className="flex items-start gap-3">
                 <Check className="text-primary-500 shrink-0" size={20} />
@@ -88,7 +88,7 @@ const Pricing: React.FC = () => {
                 <Check className="text-primary-500 shrink-0" size={20} />
                 <span className="text-white text-sm">Plantilla Excel Profesional de Gestión</span>
               </li>
-               <li className="flex items-start gap-3">
+              <li className="flex items-start gap-3">
                 <Check className="text-primary-500 shrink-0" size={20} />
                 <span className="text-white text-sm">Acceso de Por Vida (Sin mensualidades)</span>
               </li>
@@ -98,9 +98,9 @@ const Pricing: React.FC = () => {
               </li>
             </ul>
 
-            <button className="w-full py-4 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-500 transition-colors shadow-lg shadow-primary-500/20">
+            <a href="https://mpago.li/1GFn4gU" target="_blank" rel="noopener noreferrer" className="block text-center w-full py-4 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-500 transition-colors shadow-lg shadow-primary-500/20">
               Obtener Acceso Total
-            </button>
+            </a>
             <p className="text-center text-xs text-slate-500 mt-4">Garantía de devolución de 7 días.</p>
           </div>
 
