@@ -13,10 +13,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const storedAuth = localStorage.getItem('fa_academy_auth');
-        if (storedAuth === 'true') {
-            setIsAuthenticated(true);
-        }
+        // Session persistence removed as per user request
         setIsLoading(false);
     }, []);
 
@@ -24,7 +21,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         // Credentials hardcoded as per plan
         if (username === 'admin' && pass === 'fa-academy-2026') {
             setIsAuthenticated(true);
-            localStorage.setItem('fa_academy_auth', 'true');
             return true;
         }
         return false;
@@ -32,7 +28,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const logout = () => {
         setIsAuthenticated(false);
-        localStorage.removeItem('fa_academy_auth');
     };
 
     if (isLoading) {
