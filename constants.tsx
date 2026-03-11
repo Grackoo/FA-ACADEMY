@@ -28,62 +28,62 @@ export const MODULES: Module[] = [
   {
     id: 'fase-1',
     phase: 1,
-    title: 'Fundamentos y Mentalidad',
+    title: 'Fundamentos y Mentalidad Financiera',
     level: 'Básico',
     duration: '4 Semanas',
     rating: 4.9,
-    description: 'Antes de comprar una acción, el estudiante debe entender el terreno donde está pisando.',
+    description: 'Antes de comprar una acción, debes romper las barreras psicológicas y entender el terreno donde estás pisando.',
     icon: 'Building2',
     color: 'bg-emerald-500',
     // Image related to foundations/mentalidad
     image: 'https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&q=80&w=800', 
     topics: [
       {
+        title: 'El "Por Qué" antes del "Cómo"',
+        content: 'Definición de Objetivos Financieros. No es lo mismo ahorrar por ahorrar que invertir para un retiro a los 50 años o para capitalizar un negocio como SIATEC.'
+      },
+      {
+        title: 'Deuda vs. Inversión (Deuda Mala vs. Deuda Buena)',
+        content: 'Es vital sanar tus finanzas antes de comprar tu primera acción de Meta o Novo Nordisk. Pierde el miedo a invertir manejando inteligentemente tus tarjetas de crédito.'
+      },
+      {
+        title: 'Interés Compuesto (La Magia)',
+        content: 'Visualiza el impacto real de empezar a invertir a los 26 años frente a los 40. Descubre la abismal diferencia de dinero que te motivará a comenzar hoy mismo.'
+      },
+      {
         title: 'Introducción al Sistema Financiero',
-        content: '¿Qué es la bolsa? ¿Cómo funcionan los mercados y quiénes son los participantes (bróker, bolsa, reguladores)? Entenderemos el flujo de capital y la estructura base del mercado global.'
-      },
-      {
-        title: 'Psicología del Dinero y Finanzas Personales',
-        content: 'El interés compuesto es la octava maravilla del mundo. Aprende la diferencia crítica entre ahorro vs. inversión y cómo controlar los sesgos cognitivos como el miedo y la codicia.'
-      },
-      {
-        title: 'Vehículos de Inversión',
-        content: 'Diferencias clave entre renta fija (bonos), renta variable (acciones), ETFs (Exchange Traded Funds) y fondos indexados. Cuál elegir según tu perfil de riesgo.'
-      },
-      {
-        title: 'Tu Primera Plataforma',
-        content: 'Cómo elegir un bróker regulado y seguro. Apertura de cuenta paso a paso. Tipos de órdenes esenciales: Market, Limit y Stop Loss. Entendiendo las comisiones.'
+        content: '¿Qué es la bolsa? ¿Cómo funcionan los mercados y quiénes son los participantes (bróker, bolsa, reguladores)? Entenderemos el flujo de capital.'
       }
     ]
   },
   {
     id: 'fase-2',
     phase: 2,
-    title: 'Análisis Fundamental',
-    level: 'Intermedio',
+    title: 'El Ecosistema de Inversión',
+    level: 'Básico',
     duration: '6 Semanas',
     rating: 4.8,
-    description: 'Aquí el estudiante aprende a valorar "qué" está comprando.',
+    description: 'Aquí es donde entiendes dónde estás parado. Aprende a moverte por los diferentes mercados y plataformas de forma segura.',
     icon: 'Search',
     color: 'bg-blue-500',
     // Image related to analysis/documents
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
-        title: 'Lectura de Estados Financieros',
-        content: 'Aprende a leer la salud de una empresa. Entender el Balance General (lo que tienen vs lo que deben), el Estado de Resultados (ganancias) y el Flujo de Caja (la sangre del negocio).'
+        title: 'Diferenciación de Mercados (BMV vs. BIVA vs. SIC)',
+        content: 'El Sistema Internacional de Cotizaciones (SIC). El "ajá moment": descubre cómo es posible y legal ser dueño de una fracción de Occidental Petroleum desde una app mexicana.'
       },
       {
-        title: 'Métricas de Valoración',
-        content: 'Uso de ratios clave para saber si una acción está barata o cara: P/E (Price to Earnings), ROE (Return on Equity), Deuda/Ebitda y Dividend Yield.'
+        title: 'Casas de Bolsa y Seguridad',
+        content: 'Guía rápida y confiable sobre cómo elegir una casa de bolsa regulada por la CNBV (como GBM o Kuspit), enfocándonos en la seguridad absoluta de tus fondos.'
       },
       {
-        title: 'Análisis Macroeconómico',
-        content: 'No inviertas contra la corriente. Cómo afectan las tasas de interés de la FED, la inflación (IPC) y el PIB a tus inversiones.'
+        title: 'Tipos de Activos (Más allá de las acciones)',
+        content: 'Introducción a ETFs (como VOO o IVVPESO) y las FIBRAS. Aprende por qué empezar con ETFs es mucho más seguro para un principiante que elegir acciones individuales.'
       },
       {
-        title: 'Valuación de Empresas',
-        content: 'Introducción a modelos profesionales: Flujo de caja descontado (DCF) y valoración por múltiplos comparables.'
+        title: 'Análisis Fundamental Básico',
+        content: 'Una introducción a cómo valorar la salud de una empresa leyendo sus Estados Financieros para saber qué estás comprando realmente.'
       }
     ]
   },
