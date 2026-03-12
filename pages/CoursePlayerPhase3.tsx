@@ -81,7 +81,7 @@ const courseData = [
             {
                 title: "Price Action: Estructura de Mercado (HH / LL)",
                 content: "Antes de cualquier indicador: aprende a leer la huella que dejan compradores y vendedores.",
-                details: "La Estructura de Mercado es el fundamento de todo análisis técnico. Si el mercado hace Máximos Más Altos (Higher Highs) y Mínimos Más Altos (Higher Lows), está en tendencia ALCISTA. Si hace Máximos Más Bajos (Lower Highs) y Mínimos Más Bajos (Lower Lows), está en tendencia BAJISTA. Un cambio en esta estructura (denominado 'Break of Structure' o BOS) es la primera señal real de un cambio de dirección — antes que cualquier indicador. En BIMBOA.MX durante el primer trimestre de 2024, el precio comenzó a hacer LH y LL desde los $82, señal de debilidad estructural antes del crash del -18%.",
+                details: "La Estructura de Mercado es el fundamento de todo análisis técnico. Si el mercado hace Máximos Más Altos (Higher Highs) y Mínimos Más Altos (Higher Lows), está en tendencia ALCISTA. Si hace Máximos Más Bajos (Lower Highs) y Mínimos Más Bajos (Lower Lows), está en tendencia BAJISTA. Un cambio en esta estructura (denominado 'Break of Structure' o BOS) es la primera señal real de un cambio de dirección — antes que cualquier indicador. Apple (AAPL) en el primer trimestre de 2024 hizo LH y LL desde los $200, señal de debilidad estructural antes de la corrección del -15% hasta los $165.",
                 visualType: "market_structure_hh_ll",
                 speakerNotes: "Stanley Druckenmiller dijo: 'Never fight the tape.' Si la estructura es bajista, no hay RSI en sobreventa que justifique comprar. Primero espera el BOS (cambio de estructura), luego el pullback, luego la entrada.",
                 concepts: [
@@ -94,7 +94,7 @@ const courseData = [
             {
                 title: "Volumen Real vs. Volumen de Tick: Confirmando Rupturas",
                 content: "Un precio que sube sin volumen es un globo de helio: bonito, pero vacío.",
-                details: "El Volumen es el número de acciones/contratos negociados en un periodo. Es el combustible del mercado. Una ruptura (Breakout) necesita volumen alto para ser válida. Si Meta (META) rompe una resistencia de $500 con volumen 3x mayor al promedio, es señal real. Si lo hace con 30% del volumen normal, hay altas probabilidades de que sea un 'Bull Trap' (trampa alcista): el precio rompe para arriba, atrae compradores, y luego colapsa. En BIMBOA, los días de mayor volumen correlacionan históricamente con noticias fundamentales (resultados trimestrales), lo que crea divergencia entre precio y volumen.",
+                details: "El Volumen es el número de acciones/contratos negociados en un periodo. Es el combustible del mercado. Una ruptura (Breakout) necesita volumen alto para ser válida. Si Apple (AAPL) rompe una resistencia de $185 con volumen 3x mayor al promedio de 55 millones de acciones/día, es señal real. Si lo hace con 30% del volumen normal, hay altas probabilidades de que sea un 'Bull Trap' (trampa alcista): el precio rompe para arriba, atrae compradores, y luego colapsa. En AAPL, los días de mayor volumen coinciden con presentaciones de iPhone o reportes de resultados (earnings), lo que crea picos de volumen institucional perfectamente identificables.",
                 visualType: "volume_analysis",
                 speakerNotes: "Jesse Livermore: 'El volumen es la huella de los grandes jugadores.' Si el precio sube pero el volumen baja (divergencia bajista de volumen), los institucionales están vendiendo discretamente mientras los minoristas compran.",
                 concepts: [
@@ -105,9 +105,9 @@ const courseData = [
                 ]
             },
             {
-                title: "Gestión de Riesgo Visual: Ratio Riesgo:Beneficio con BIMBOA",
+                title: "Gestión de Riesgo Visual: Ratio Riesgo:Beneficio con Apple (AAPL)",
                 content: "La entrada es solo el 20% del éxito. El 80% está en dónde pones el Stop y el Target.",
-                details: "Caso real BIMBOA (BMV). El precio cayó a $65 MXN (zona de soporte doble fondo). Antes de entrar, el trader profesional dibuja 3 líneas: (1) ENTRADA: $66.50 en cierre por encima del doble fondo. (2) STOP-LOSS: $60.00 — debajo del soporte, si lo pierde el tesis es incorrecto. (3) TAKE PROFIT: $82.00 — resistencia histórica de largo plazo. Esto da: Riesgo = $6.50 / Beneficio = $15.50 → Ratio R:B = 1:2.38. Con solo el 42% de operaciones ganadoras con este ratio, el sistema es RENTABLE. Esta es la matemática que los institucionales aplican en cada operación.",
+                details: "Caso real Apple Inc. (AAPL). El precio cayó a $165 USD (zona de soporte doble fondo tras corrección de inicio de 2024). El trader profesional dibuja 3 líneas: (1) ENTRADA: $168 en cierre por encima del doble fondo. (2) STOP-LOSS: $158 — debajo del soporte mínimo, si lo pierde el tesis es incorrecto. (3) TAKE PROFIT: $195 — resistencia histórica previa y zona de distribución. Esto da: Riesgo = $10 / Beneficio = $27 → Ratio R:B = 1:2.7. Con solo el 37% de operaciones ganadoras con este ratio, el sistema es RENTABLE a largo plazo.",
                 visualType: "risk_reward_bimbo",
                 speakerNotes: "Paul Tudor Jones: 'La clave no es acertar, sino cuánto ganas cuando aciertas vs cuánto pierdes cuando te equivocas.' Un sistema con 40% de aciertos y ratio 1:3 bate a uno con 70% de aciertos y ratio 1:1.",
                 concepts: [
@@ -120,7 +120,7 @@ const courseData = [
             {
                 title: "Uso de Temporalidades: El Marco Manda",
                 content: "Una tendencia alcista diaria puede tener una corrección bajista de 4 horas. Saber cuál frame domina evita errores costosos.",
-                details: "El análisis Multi-Timeframe (MTF) es la técnica que usan los traders institucionales. La regla: el marco mayor siempre domina al marco menor. Si en el Daily de BIMBOA hay tendencia bajista (LH/LL) pero en el de 15 minutos parece alcista, es un rebote dentro de una caída mayor — no un cambio real. La metodología clásica de Stan Weinstein usa el Weekly para definir la 'fase' (Acumulación, Ascenso, Distribución, Descenso). El Daily para la entrada. El 1H o 4H para el timing exacto y el Stop preciso.",
+                details: "El análisis Multi-Timeframe (MTF) es la técnica que usan los traders institucionales. La regla: el marco mayor siempre domina al marco menor. Si en el Daily de Apple (AAPL) hay tendencia bajista (LH/LL) pero en el de 15 minutos parece alcista, es un rebote dentro de una caída mayor — no un cambio real. La metodología clásica de Stan Weinstein usa el Weekly para definir la 'fase' (Acumulación, Ascenso, Distribución, Descenso). El Daily para la entrada. El 1H o 4H para el timing exacto y el Stop preciso.",
                 visualType: "multi_timeframe",
                 speakerNotes: "Riesgo del novato: ver solo el gráfico de 5 minutos y creer que tiene el panorama completo. Es como navegaren un barco mirando solo el suelo del barco. Necesitas ver el mapa completo antes.",
                 concepts: [
@@ -175,7 +175,7 @@ const MarketStructureHHLL = () => {
     return (
         <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
             <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Estructura de Mercado — BIMBOA.MX</h4>
+                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Estructura de Mercado — AAPL (NASDAQ)</h4>
                 <div className="flex gap-1">
                     {(['alcista','bajista'] as const).map(p=>(
                         <button key={p} onClick={()=>setPhase(p)} className={`px-3 py-1 text-xs font-bold rounded-full transition-all ${phase===p?(p==='alcista'?'bg-emerald-600 text-white':'bg-red-600 text-white'):'bg-slate-700 text-slate-400'}`}>{p==='alcista'?'📈 Alcista':'📉 Bajista'}</button>
@@ -189,7 +189,7 @@ const MarketStructureHHLL = () => {
                 {labels.map((l,i)=><text key={i} x={l.x-8} y={l.y-8} fill={l.c} fontSize="9" fontWeight="bold">{l.t}</text>)}
                 {phase==='alcista' && <text x="160" y="20" fill="#22c55e" fontSize="8">BOS →</text>}
                 {phase==='bajista' && <text x="160" y="115" fill="#ef4444" fontSize="8">BOS ↓</text>}
-                <text x="5" y="12" fill="#64748b" fontSize="7">BIMBOA Estructura {phase==='alcista'?'Alcista':'Bajista'}</text>
+                <text x="5" y="12" fill="#64748b" fontSize="7">AAPL Estructura {phase==='alcista'?'Alcista':'Bajista'}</text>
             </svg>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
                 {(phase==='alcista'
@@ -212,29 +212,29 @@ const MarketStructureHHLL = () => {
 // ── 2. VOLUMEN ANALYSIS ─────────────────────────────
 const VolumeAnalysis = () => {
     const bars = [
-        {m:'Ene',p:72,v:1.2,bull:true},{m:'Feb',p:75,v:0.9,bull:true},{m:'Mar',p:78,v:1.5,bull:true},
-        {m:'Abr',p:82,v:2.8,bull:true},{m:'May',p:85,v:1.1,bull:false},{m:'Jun',p:80,v:0.7,bull:false},
-        {m:'Jul',p:76,v:0.6,bull:false},{m:'Ago',p:68,v:3.1,bull:false},{m:'Sep',p:65,v:1.3,bull:false},
-        {m:'Oct',p:67,v:0.8,bull:true},{m:'Nov',p:71,v:1.4,bull:true},{m:'Dic',p:73,v:1.0,bull:true},
+        {m:'Ene',p:185,v:1.1,bull:false},{m:'Feb',p:182,v:0.9,bull:false},{m:'Mar',p:171,v:1.8,bull:false},
+        {m:'Abr',p:165,v:2.9,bull:false},{m:'May',p:178,v:1.3,bull:true},{m:'Jun',p:195,v:2.1,bull:true},
+        {m:'Jul',p:198,v:0.7,bull:false},{m:'Ago',p:218,v:3.2,bull:true},{m:'Sep',p:226,v:1.5,bull:true},
+        {m:'Oct',p:222,v:1.0,bull:false},{m:'Nov',p:228,v:1.6,bull:true},{m:'Dic',p:250,v:2.4,bull:true},
     ];
     const maxV=Math.max(...bars.map(b=>b.v));
     return (
         <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
             <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Volumen vs Precio — BIMBOA.MX 2024</h4>
-                <span className="text-[10px] text-amber-400 bg-amber-900/20 px-2 py-1 rounded-full font-bold">⚠️ Bull Trap → Ago</span>
+                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Volumen vs Precio — AAPL (NASDAQ) 2024</h4>
+                <span className="text-[10px] text-amber-400 bg-amber-900/20 px-2 py-1 rounded-full font-bold">⚠️ Bull Trap → Jul</span>
             </div>
             {/* Price line */}
             <svg viewBox="0 0 300 80" className="w-full h-20 bg-slate-950 rounded-t-lg border border-b-0 border-slate-800">
                 {bars.map((b,i)=>{
                     const x=i*(300/bars.length)+5;
-                    const h=80-(b.p-60)*1.2;
-                    return <rect key={i} x={x} y={h} width="18" height={80-h} fill={b.bull?'#22c55e':'#ef4444'} opacity="0.85"/>;
+                    const h=80-(b.p-160)*0.38;
+                    return <rect key={i} x={x} y={Math.max(0,h)} width="18" height={Math.max(0,80-h)} fill={b.bull?'#22c55e':'#ef4444'} opacity="0.85"/>;
                 })}
-                <text x="5" y="12" fill="#64748b" fontSize="7">Precio BIMBOA (MXN)</text>
-                {/* Bull trap marker */}
-                <line x1="116" y1="0" x2="116" y2="80" stroke="#f59e0b" strokeWidth="1" strokeDasharray="3,2"/>
-                <text x="118" y="10" fill="#f59e0b" fontSize="7">Bull Trap</text>
+                <text x="5" y="12" fill="#64748b" fontSize="7">Precio AAPL (USD)</text>
+                {/* Bull trap marker Jul */}
+                <line x1="141" y1="0" x2="141" y2="80" stroke="#f59e0b" strokeWidth="1" strokeDasharray="3,2"/>
+                <text x="143" y="10" fill="#f59e0b" fontSize="7">Bull Trap</text>
             </svg>
             {/* Volume bars */}
             <svg viewBox="0 0 300 50" className="w-full h-16 bg-slate-900 rounded-b-lg border border-t-0 border-slate-800">
@@ -253,15 +253,15 @@ const VolumeAnalysis = () => {
             <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
                 <div className="bg-emerald-900/20 border border-emerald-500/20 p-2 rounded-lg">
                     <p className="text-emerald-400 font-bold">✅ Ruptura válida</p>
-                    <p className="text-[10px] text-slate-400">Abr: precio sube + volumen 2.8x ADV</p>
+                    <p className="text-[10px] text-slate-400">Jun: precio $195 + volumen 2.1x ADV tras WWDC</p>
                 </div>
                 <div className="bg-amber-900/20 border border-amber-500/20 p-2 rounded-lg">
                     <p className="text-amber-400 font-bold">⚠️ Bull Trap</p>
-                    <p className="text-[10px] text-slate-400">May $85: rompe máximo pero volumen cae</p>
+                    <p className="text-[10px] text-slate-400">Jul $198: rompe máximo pero volumen cae</p>
                 </div>
                 <div className="bg-red-900/20 border border-red-500/20 p-2 rounded-lg">
-                    <p className="text-red-400 font-bold">🔴 Distribución</p>
-                    <p className="text-[10px] text-slate-400">Ago: pánico vendedor → 3.1x ADV</p>
+                    <p className="text-red-400 font-bold">🟢 Volumen Institucional</p>
+                    <p className="text-[10px] text-slate-400">Ago: iPhone 16 launch → 3.2x ADV alcista</p>
                 </div>
             </div>
             <div className="mt-2 bg-slate-800 p-2 rounded-lg">
@@ -273,12 +273,12 @@ const VolumeAnalysis = () => {
 
 // ── 3. RISK/REWARD BIMBO ────────────────────────────
 const RiskRewardBimbo = () => {
-    const entrada=66.5, stop=60, tp=82, riesgo=entrada-stop, beneficio=tp-entrada, ratio=(beneficio/riesgo);
+    const entrada=168, stop=158, tp=195, riesgo=entrada-stop, beneficio=tp-entrada, ratio=(beneficio/riesgo);
     const winRate=Math.round(1/(1+ratio)*100);
     return (
         <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
             <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Caso Real: BIMBOA — Riesgo:Beneficio</h4>
+                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Caso Real: Apple AAPL — Riesgo:Beneficio</h4>
                 <div className="bg-emerald-900/20 border border-emerald-500/30 px-2 py-1 rounded-full">
                     <span className="text-emerald-400 text-xs font-black">R:B = 1:{ratio.toFixed(2)}</span>
                 </div>
@@ -291,19 +291,19 @@ const RiskRewardBimbo = () => {
                 <rect x="0" y="90" width="300" height="50" fill="#ef444411"/>
                 {/* Líneas clave */}
                 <line x1="0" y1="10" x2="300" y2="10" stroke="#22c55e" strokeWidth="1.5" strokeDasharray="5,3"/>
-                <text x="5" y="8" fill="#22c55e" fontSize="8" fontWeight="bold">🎯 TAKE PROFIT: ${tp} MXN</text>
+                <text x="5" y="8" fill="#22c55e" fontSize="8" fontWeight="bold">🎯 TAKE PROFIT: ${tp} USD</text>
                 <line x1="0" y1="72" x2="300" y2="72" stroke="#3b82f6" strokeWidth="2"/>
-                <text x="5" y="70" fill="#3b82f6" fontSize="8" fontWeight="bold">📍 ENTRADA: ${entrada} MXN</text>
+                <text x="5" y="70" fill="#3b82f6" fontSize="8" fontWeight="bold">📍 ENTRADA: ${entrada} USD</text>
                 <line x1="0" y1="120" x2="300" y2="120" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5,3"/>
-                <text x="5" y="118" fill="#ef4444" fontSize="8" fontWeight="bold">🛑 STOP LOSS: ${stop} MXN</text>
+                <text x="5" y="118" fill="#ef4444" fontSize="8" fontWeight="bold">🛑 STOP LOSS: ${stop} USD</text>
                 {/* Flecha beneficio */}
                 <line x1="270" y1="72" x2="270" y2="10" stroke="#22c55e" strokeWidth="2"/>
                 <polygon points="270,5 266,14 274,14" fill="#22c55e"/>
-                <text x="200" y="45" fill="#22c55e" fontSize="8">+${beneficio.toFixed(1)} MXN</text>
+                <text x="200" y="45" fill="#22c55e" fontSize="8">+${beneficio.toFixed(1)} USD</text>
                 {/* Flecha riesgo */}
                 <line x1="270" y1="72" x2="270" y2="120" stroke="#ef4444" strokeWidth="2"/>
                 <polygon points="270,125 266,116 274,116" fill="#ef4444"/>
-                <text x="200" y="100" fill="#ef4444" fontSize="8">-${riesgo.toFixed(1)} MXN</text>
+                <text x="200" y="100" fill="#ef4444" fontSize="8">-${riesgo.toFixed(1)} USD</text>
                 {/* Candlestick simulado */}
                 <line x1="70" y1="30" x2="70" y2="130" stroke="#64748b" strokeWidth="0.5"/>
                 <rect x="65" y="60" width="10" height="25" fill="#ef4444"/>
@@ -324,8 +324,8 @@ const RiskRewardBimbo = () => {
                     {l:'Stop Loss',v:`$${stop}`,c:'text-red-400'},
                     {l:'Take Profit',v:`$${tp}`,c:'text-emerald-400'},
                     {l:'Ratio R:B',v:`1:${ratio.toFixed(2)}`,c:'text-amber-400'},
-                    {l:'Riesgo por op.',v:`$${riesgo.toFixed(1)} MXN`,c:'text-red-400'},
-                    {l:'Beneficio potencial',v:`$${beneficio.toFixed(1)} MXN`,c:'text-emerald-400'},
+                    {l:'Riesgo por op.',v:`$${riesgo.toFixed(1)} USD`,c:'text-red-400'},
+                    {l:'Beneficio potencial',v:`$${beneficio.toFixed(1)} USD`,c:'text-emerald-400'},
                     {l:'WinRate mínimo',v:`${winRate}% para positivo`,c:'text-white'},
                     {l:'Potencial retorno',v:`+${((beneficio/entrada)*100).toFixed(1)}%`,c:'text-emerald-400'},
                 ].map((s,i)=>(
@@ -350,22 +350,22 @@ const MultiTimeframe = () => {
             label:'SEMANAL (Contexto Macro)',color:'#f59e0b',
             trend:'Bajista → Fase Weinstein 4 (Declive)',
             signal:'❌ NO COMPRAR — La estructura mayor dice BAJISTA',
-            desc:'En el Weekly, BIMBOA hizo LH→LL desde Ene 2024. Esto define el sesgo macro: vendedor. Cualquier rebote en temporalidades menores es ruido.',
-            weinstein:'Stage 4: Declive — El precio está por debajo de la SMA 30 semanal. Regla Weinstein: no operar largos.',
+            desc:'En el Weekly, AAPL hizo LH→LL desde finales 2023 a inicios 2024, cayendo de $200 a $165. Esto define el sesgo macro: vendedor. Cualquier rebote en temporalidades menores es ruido.',
+            weinstein:'Stage 4: Declive — El precio AAPL está por debajo de la SMA 30 semanal. Regla Weinstein: no operar largos hasta confirmar Stage 1.',
         },
         daily: {
             label:'DIARIO (Tendencia)',color:'#3b82f6',
-            trend:'Estructura: Consolidación + señal de reversión',
-            signal:'⚠️ VIGILAR — Posible doble fondo, esperar BOS alcista',
-            desc:'En el Daily, el precio formó un doble fondo en $64-65. El RSI(14) mostró divergencia alcista. Aún no hay BOS alcista confirmado, pero hay setup en formación.',
-            weinstein:'Stage 1: Acumulación — Base formándose. Volumen decrece. Riesgo de trampa alcista si no supera $76 con volumen.',
+            trend:'Estructura: Consolidación + señal de reversión alcista',
+            signal:'⚠️ VIGILAR — Doble fondo $165 AAPL, esperar BOS alcista sobre $178',
+            desc:'En el Daily, AAPL formó un doble fondo en $165-167 (Abr 2024). El RSI(14) mostró divergencia alcista con el precio. Aún no hay BOS alcista confirmado, pero el setup está en formación.',
+            weinstein:'Stage 1: Acumulación — Base formándose en $165. Volumen decrece. Riesgo de trampa alcista si no supera $178 con volumen > 1.5x ADV.',
         },
         h4: {
             label:'4 HORAS (Timing de Entrada)',color:'#22c55e',
-            trend:'Alcista de corto plazo dentro de correctivo mayor',
-            signal:'✅ ENTRADA — Si Daily confirma BOS y Weekly no tiene momentum bajista fuerte',
-            desc:'En H4, hay estructura de mínimos crecientes desde el soporte $65. El cruce EMA 9/21 fue alcista. Este es el marco para calcular el Stop Loss preciso y la entrada escalonada.',
-            weinstein:'Timing: Entrada en H4 después de pullback a EMA 21. Stop: bajo el último HL en $62. Target: resistencia diaria $76.',
+            trend:'Alcista de corto plazo dentro de estructura de recuperación',
+            signal:'✅ ENTRADA — Daily confirmó BOS sobre $178, H4 muestra HL crecientes',
+            desc:'En H4, AAPL muestra estructura de mínimos crecientes desde el soporte $165. El cruce EMA 9/21 fue alcista. Este es el marco para calcular el Stop Loss preciso ($158) y la entrada escalonada.',
+            weinstein:'Timing AAPL: Entrada en H4 después de pullback a EMA 21 (~$168). Stop: bajo el último HL $158. Target: resistencia diaria $195 (distrib. previa).',
         }
     };
     const f=frames[activeFrame];
@@ -387,7 +387,7 @@ const MultiTimeframe = () => {
                 <svg viewBox="0 0 300 90" className="w-full h-28 bg-slate-950 rounded-lg border border-slate-800 mb-3">
                     {activeFrame==='weekly' && <>
                         <path d="M10,20 L50,15 L90,25 L130,40 L170,35 L210,55 L250,65 L290,75" fill="none" stroke="#f59e0b" strokeWidth="2"/>
-                        <text x="10" y="88" fill="#64748b" fontSize="7">Weekly BIMBOA — Estructura Bajista (LH/LL)</text>
+                        <text x="10" y="88" fill="#64748b" fontSize="7">Weekly AAPL — Estructura Bajista (LH/LL) — Caída $200→$165</text>
                         <text x="200" y="30" fill="#ef4444" fontSize="8">LH ↓</text>
                         <text x="240" y="58" fill="#ef4444" fontSize="8">LL ↓</text>
                         <line x1="0" y1="20" x2="300" y2="20" stroke="#ef444440" strokeWidth="1" strokeDasharray="3,2"/>
@@ -395,7 +395,7 @@ const MultiTimeframe = () => {
                     {activeFrame==='daily' && <>
                         <path d="M10,60 L50,40 L90,70 L130,80 L150,75 L170,72 L210,65 L260,55 L290,50" fill="none" stroke="#3b82f6" strokeWidth="2"/>
                         <line x1="130" y1="0" x2="130" y2="90" stroke="#22c55e40" strokeWidth="1" strokeDasharray="3,2"/>
-                        <text x="10" y="88" fill="#64748b" fontSize="7">Daily — Doble fondo + divergencia RSI alcista</text>
+                        <text x="10" y="88" fill="#64748b" fontSize="7">Daily AAPL — Doble fondo $165 + divergencia RSI alcista</text>
                         <circle cx="130" cy="80" r="4" fill="#22c55e"/>
                         <circle cx="155" cy="74" r="4" fill="#22c55e"/>
                         <text x="125" y="88" fill="#22c55e" fontSize="7">2F</text>
@@ -403,14 +403,14 @@ const MultiTimeframe = () => {
                     {activeFrame==='h4' && <>
                         <path d="M10,70 L40,65 L70,55 L100,60 L130,48 L160,42 L190,35 L220,30 L260,22 L290,18" fill="none" stroke="#22c55e" strokeWidth="2"/>
                         <line x1="0" y1="57" x2="300" y2="57" stroke="#3b82f630" strokeWidth="1" strokeDasharray="3,2"/>
-                        <text x="10" y="88" fill="#64748b" fontSize="7">H4 — Mínimos Crecientes (HL) → Tendencia alcista</text>
+                        <text x="10" y="88" fill="#64748b" fontSize="7">H4 AAPL — Mínimos Crecientes (HL) → Recuperación alcista</text>
                         <text x="220" y="18" fill="#22c55e" fontSize="8">BOS ↑</text>
                     </>}
-                    <text x="5" y="10" fill="#475569" fontSize="6">BIMBOA.MX / TradingView</text>
+                    <text x="5" y="10" fill="#475569" fontSize="6">AAPL / NASDAQ / TradingView</text>
                 </svg>
                 {/* TradingView link card — BMV requiere cuenta premium para embed */}
                 <a
-                    href={`https://www.tradingview.com/chart/?symbol=BMV%3ABIMBO%2FA&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}`}
+                    href={`https://www.tradingview.com/chart/?symbol=NASDAQ%3AAAPL&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block mb-3"
@@ -419,7 +419,7 @@ const MultiTimeframe = () => {
                         {/* Fake chart top bar */}
                         <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-800 bg-[#131722]">
                             <div className="w-2 h-2 rounded-full bg-emerald-400"/>
-                            <span className="text-[11px] text-slate-300 font-mono font-bold">BMV:BIMBO/A</span>
+                            <span className="text-[11px] text-slate-300 font-mono font-bold">NASDAQ:AAPL</span>
                             <span className="text-[10px] text-slate-500 ml-1">·</span>
                             <span className="text-[10px] text-slate-500">{activeFrame==='weekly'?'1W':activeFrame==='daily'?'1D':'4H'}</span>
                             <span className="ml-auto text-[10px] text-blue-400 group-hover:text-blue-300 font-bold transition-colors">
@@ -441,9 +441,9 @@ const MultiTimeframe = () => {
                                 <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
-                                <span className="text-xs font-bold text-white">Abrir gráfico BIMBO/A en TradingView</span>
+                                <span className="text-xs font-bold text-white">Abrir gráfico AAPL en TradingView</span>
                             </div>
-                            <p className="relative z-10 text-[10px] text-slate-500">La BMV requiere cuenta TradingView para el gráfico embebido</p>
+                            <p className="relative z-10 text-[10px] text-slate-500">Haz clic para ver el gráfico en vivo de Apple Inc. en TradingView</p>
                         </div>
                     </div>
                 </a>
