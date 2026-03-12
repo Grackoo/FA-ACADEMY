@@ -79,6 +79,59 @@ const courseData = [
                 ]
             },
             {
+                title: "Price Action: Estructura de Mercado (HH / LL)",
+                content: "Antes de cualquier indicador: aprende a leer la huella que dejan compradores y vendedores.",
+                details: "La Estructura de Mercado es el fundamento de todo análisis técnico. Si el mercado hace Máximos Más Altos (Higher Highs) y Mínimos Más Altos (Higher Lows), está en tendencia ALCISTA. Si hace Máximos Más Bajos (Lower Highs) y Mínimos Más Bajos (Lower Lows), está en tendencia BAJISTA. Un cambio en esta estructura (denominado 'Break of Structure' o BOS) es la primera señal real de un cambio de dirección — antes que cualquier indicador. En BIMBOA.MX durante el primer trimestre de 2024, el precio comenzó a hacer LH y LL desde los $82, señal de debilidad estructural antes del crash del -18%.",
+                visualType: "market_structure_hh_ll",
+                speakerNotes: "Stanley Druckenmiller dijo: 'Never fight the tape.' Si la estructura es bajista, no hay RSI en sobreventa que justifique comprar. Primero espera el BOS (cambio de estructura), luego el pullback, luego la entrada.",
+                concepts: [
+                    { term: "Higher High (HH)", def: "Máximo Más Alto. El precio supera el techo anterior. Señal de que los compradores siguen empujando." },
+                    { term: "Higher Low (HL)", def: "Mínimo Más Alto. El precio no cae tan bajo como antes. Señal de que los vendedores se debilitan." },
+                    { term: "Break of Structure (BOS)", def: "Ruptura de estructura: el precio rompe el último máximo (alcista) o el último mínimo (bajista). Es la primera señal real de cambio de tendencia." },
+                    { term: "Quiebre de Estructura (CHoCH)", def: "Change of Character. El primer HH que rompe en una tendencia bajista (o primer LL en alcista). Es la señal de alerta temprana." }
+                ]
+            },
+            {
+                title: "Volumen Real vs. Volumen de Tick: Confirmando Rupturas",
+                content: "Un precio que sube sin volumen es un globo de helio: bonito, pero vacío.",
+                details: "El Volumen es el número de acciones/contratos negociados en un periodo. Es el combustible del mercado. Una ruptura (Breakout) necesita volumen alto para ser válida. Si Meta (META) rompe una resistencia de $500 con volumen 3x mayor al promedio, es señal real. Si lo hace con 30% del volumen normal, hay altas probabilidades de que sea un 'Bull Trap' (trampa alcista): el precio rompe para arriba, atrae compradores, y luego colapsa. En BIMBOA, los días de mayor volumen correlacionan históricamente con noticias fundamentales (resultados trimestrales), lo que crea divergencia entre precio y volumen.",
+                visualType: "volume_analysis",
+                speakerNotes: "Jesse Livermore: 'El volumen es la huella de los grandes jugadores.' Si el precio sube pero el volumen baja (divergencia bajista de volumen), los institucionales están vendiendo discretamente mientras los minoristas compran.",
+                concepts: [
+                    { term: "Volumen Promedio (ADV)", def: "Average Daily Volume. La media de contratos negociados en una ventana de tiempo (comúnmente 20 sesiones). Es la referencia para detectar anomalías." },
+                    { term: "Bull Trap", def: "Trampa alcista. El precio supera una resistencia con poco volumen, atrae compradores, y luego regresa al rango original dejando a los compradores atrapados en pérdida." },
+                    { term: "Volumen de Tick", def: "En mercados Forex/CFDs, el volumen real no existe. Se usa el 'tick volume' (número de cambios de precio), que es un proxy imperfecto del volumen real." },
+                    { term: "Divergencia de Volumen", def: "Cuando el precio sube (o baja) pero el volumen va en dirección contraria. Es señal temprana de debilitamiento de la tendencia." }
+                ]
+            },
+            {
+                title: "Gestión de Riesgo Visual: Ratio Riesgo:Beneficio con BIMBOA",
+                content: "La entrada es solo el 20% del éxito. El 80% está en dónde pones el Stop y el Target.",
+                details: "Caso real BIMBOA (BMV). El precio cayó a $65 MXN (zona de soporte doble fondo). Antes de entrar, el trader profesional dibuja 3 líneas: (1) ENTRADA: $66.50 en cierre por encima del doble fondo. (2) STOP-LOSS: $60.00 — debajo del soporte, si lo pierde el tesis es incorrecto. (3) TAKE PROFIT: $82.00 — resistencia histórica de largo plazo. Esto da: Riesgo = $6.50 / Beneficio = $15.50 → Ratio R:B = 1:2.38. Con solo el 42% de operaciones ganadoras con este ratio, el sistema es RENTABLE. Esta es la matemática que los institucionales aplican en cada operación.",
+                visualType: "risk_reward_bimbo",
+                speakerNotes: "Paul Tudor Jones: 'La clave no es acertar, sino cuánto ganas cuando aciertas vs cuánto pierdes cuando te equivocas.' Un sistema con 40% de aciertos y ratio 1:3 bate a uno con 70% de aciertos y ratio 1:1.",
+                concepts: [
+                    { term: "Ratio R:B (Risk:Reward)", def: "Riesgo vs Beneficio esperado. Con ratio 1:2 necesitas acertar solo el 34% para ser rentable. Con 1:3, solo el 26%." },
+                    { term: "Stop Loss inteligente", def: "Debe ir detrás de un nivel técnico (soporte, resistencia, media móvil). Un stop de 'precio redondo' no tiene lógica técnica." },
+                    { term: "Take Profit escalonado", def: "Salida en 2 o 3 partes: 1/3 en primer objetivo, 1/3 en punto medio, 1/3 dejar correr. Optimiza la captura de tendencia." },
+                    { term: "Expectativa Matemática", def: "E = (P_ganar × Ganancia_media) - (P_perder × Pérdida_media). Si es positiva, el sistema es rentable a largo plazo." }
+                ]
+            },
+            {
+                title: "Uso de Temporalidades: El Marco Manda",
+                content: "Una tendencia alcista diaria puede tener una corrección bajista de 4 horas. Saber cuál frame domina evita errores costosos.",
+                details: "El análisis Multi-Timeframe (MTF) es la técnica que usan los traders institucionales. La regla: el marco mayor siempre domina al marco menor. Si en el Daily de BIMBOA hay tendencia bajista (LH/LL) pero en el de 15 minutos parece alcista, es un rebote dentro de una caída mayor — no un cambio real. La metodología clásica de Stan Weinstein usa el Weekly para definir la 'fase' (Acumulación, Ascenso, Distribución, Descenso). El Daily para la entrada. El 1H o 4H para el timing exacto y el Stop preciso.",
+                visualType: "multi_timeframe",
+                speakerNotes: "Riesgo del novato: ver solo el gráfico de 5 minutos y creer que tiene el panorama completo. Es como navegaren un barco mirando solo el suelo del barco. Necesitas ver el mapa completo antes.",
+                concepts: [
+                    { term: "Top-Down Analysis", def: "Análisis de arriba hacia abajo. Empieza en el Weekly/Monthly para el contexto macro, baja al Daily para la tendencia, entra con el H4 o H1." },
+                    { term: "Confluencia de Marcos", def: "La señal más poderosa ocurre cuando 3 temporalidades diferentes muestran la misma dirección al mismo tiempo." },
+                    { term: "Fase Weinstein (Stage 1-4)", def: "Stan Weinstein clasificó el ciclo de toda acción en 4 etapas: Acumulación (base), Avance (compra), Distribución (techo), Declive (evitar)." },
+                    { term: "Trap en Marco Menor", def: "Una señal falsa en 15min que parece breakout pero es ruido desde el Daily. Solo visible con análisis multi-marco." }
+                ]
+            },
+            {
+
                 title: "Psicología del Trading",
                 content: "Tu peor enemigo eres tú mismo.",
                 details: "El mercado está diseñado para transferir dinero del impaciente al paciente. El FOMO (miedo a perderse algo) te hará comprar caro. El miedo te hará vender barato. El 'Revenge Trading' (vengarse del mercado) te hará perder todo.",
@@ -105,7 +158,288 @@ const quizQuestions = [
 
 // --- COMPONENTES VISUALES FASE 3 (AVANZADOS) ---
 
+// ── 1. MARKET STRUCTURE HH/LL ──────────────────────
+const MarketStructureHHLL = () => {
+    const [phase, setPhase] = useState<'alcista'|'bajista'>('alcista');
+    const bullPoints = [
+        {x:20,y:110},{x:50,y:80},{x:80,y:60},{x:110,y:85},{x:140,y:45},{x:170,y:65},{x:200,y:28},{x:230,y:50}
+    ];
+    const bearPoints = [
+        {x:20,y:30},{x:50,y:55},{x:80,y:45},{x:110,y:70},{x:140,y:58},{x:170,y:85},{x:200,y:72},{x:230,y:100}
+    ];
+    const pts = phase === 'alcista' ? bullPoints : bearPoints;
+    const polyline = pts.map(p=>`${p.x},${p.y}`).join(' ');
+    const labels = phase === 'alcista'
+        ? [{x:80,y:53,t:'HH',c:'#22c55e'},{x:140,y:38,t:'HH',c:'#22c55e'},{x:200,y:21,t:'HH',c:'#22c55e'},{x:50,y:73,t:'HL',c:'#86efac'},{x:110,y:78,t:'HL',c:'#86efac'},{x:170,y:58,t:'HL',c:'#86efac'}]
+        : [{x:50,y:48,t:'LH',c:'#ef4444'},{x:110,y:63,t:'LH',c:'#ef4444'},{x:170,y:78,t:'LH',c:'#ef4444'},{x:80,y:38,t:'LL',c:'#fca5a5'},{x:140,y:51,t:'LL',c:'#fca5a5'},{x:200,y:65,t:'LL',c:'#fca5a5'}];
+    return (
+        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+            <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Estructura de Mercado — BIMBOA.MX</h4>
+                <div className="flex gap-1">
+                    {(['alcista','bajista'] as const).map(p=>(
+                        <button key={p} onClick={()=>setPhase(p)} className={`px-3 py-1 text-xs font-bold rounded-full transition-all ${phase===p?(p==='alcista'?'bg-emerald-600 text-white':'bg-red-600 text-white'):'bg-slate-700 text-slate-400'}`}>{p==='alcista'?'📈 Alcista':'📉 Bajista'}</button>
+                    ))}
+                </div>
+            </div>
+            <svg viewBox="0 0 260 130" className="w-full h-48 bg-slate-950 rounded-lg border border-slate-800">
+                {[30,60,90,120].map(y=><line key={y} x1="0" y1={y} x2="260" y2={y} stroke="#1e293b" strokeWidth="1"/>)}
+                <polyline points={polyline} fill="none" stroke={phase==='alcista'?'#22c55e':'#ef4444'} strokeWidth="2.5" strokeLinejoin="round"/>
+                {pts.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r="4" fill={phase==='alcista'?'#22c55e':'#ef4444'}/>)}
+                {labels.map((l,i)=><text key={i} x={l.x-8} y={l.y-8} fill={l.c} fontSize="9" fontWeight="bold">{l.t}</text>)}
+                {phase==='alcista' && <text x="160" y="20" fill="#22c55e" fontSize="8">BOS →</text>}
+                {phase==='bajista' && <text x="160" y="115" fill="#ef4444" fontSize="8">BOS ↓</text>}
+                <text x="5" y="12" fill="#64748b" fontSize="7">BIMBOA Estructura {phase==='alcista'?'Alcista':'Bajista'}</text>
+            </svg>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
+                {(phase==='alcista'
+                    ? [{l:'HH',d:'Máximo más alto',c:'text-emerald-400'},{l:'HL',d:'Mínimo más alto',c:'text-emerald-300'},{l:'BOS ↑',d:'Ruptura de estructura alcista',c:'text-emerald-400'},{l:'Señal',d:'Tendencia confirmada al subir',c:'text-white'}]
+                    : [{l:'LH',d:'Máximo más bajo',c:'text-red-400'},{l:'LL',d:'Mínimo más bajo',c:'text-red-300'},{l:'BOS ↓',d:'Ruptura de estructura bajista',c:'text-red-400'},{l:'Señal',d:'Salir / no comprar',c:'text-white'}]
+                ).map((item,i)=>(
+                    <div key={i} className="bg-slate-800 p-2 rounded-lg">
+                        <p className={`text-xs font-black ${item.c}`}>{item.l}</p>
+                        <p className="text-[10px] text-slate-400">{item.d}</p>
+                    </div>
+                ))}
+            </div>
+            <div className="mt-3 bg-amber-900/20 border border-amber-500/30 p-2 rounded-lg">
+                <p className="text-[10px] text-amber-200"><strong className="text-amber-400">📖 Bibliografía:</strong> Al Brooks — "Trading Price Action Trends" (2011) · Stan Weinstein — "Secrets for Profiting in Bull and Bear Markets" · Wyckoff Market Cycle Theory (1930s, vigente)</p>
+            </div>
+        </div>
+    );
+};
+
+// ── 2. VOLUMEN ANALYSIS ─────────────────────────────
+const VolumeAnalysis = () => {
+    const bars = [
+        {m:'Ene',p:72,v:1.2,bull:true},{m:'Feb',p:75,v:0.9,bull:true},{m:'Mar',p:78,v:1.5,bull:true},
+        {m:'Abr',p:82,v:2.8,bull:true},{m:'May',p:85,v:1.1,bull:false},{m:'Jun',p:80,v:0.7,bull:false},
+        {m:'Jul',p:76,v:0.6,bull:false},{m:'Ago',p:68,v:3.1,bull:false},{m:'Sep',p:65,v:1.3,bull:false},
+        {m:'Oct',p:67,v:0.8,bull:true},{m:'Nov',p:71,v:1.4,bull:true},{m:'Dic',p:73,v:1.0,bull:true},
+    ];
+    const maxV=Math.max(...bars.map(b=>b.v));
+    return (
+        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+            <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Volumen vs Precio — BIMBOA.MX 2024</h4>
+                <span className="text-[10px] text-amber-400 bg-amber-900/20 px-2 py-1 rounded-full font-bold">⚠️ Bull Trap → Ago</span>
+            </div>
+            {/* Price line */}
+            <svg viewBox="0 0 300 80" className="w-full h-20 bg-slate-950 rounded-t-lg border border-b-0 border-slate-800">
+                {bars.map((b,i)=>{
+                    const x=i*(300/bars.length)+5;
+                    const h=80-(b.p-60)*1.2;
+                    return <rect key={i} x={x} y={h} width="18" height={80-h} fill={b.bull?'#22c55e':'#ef4444'} opacity="0.85"/>;
+                })}
+                <text x="5" y="12" fill="#64748b" fontSize="7">Precio BIMBOA (MXN)</text>
+                {/* Bull trap marker */}
+                <line x1="116" y1="0" x2="116" y2="80" stroke="#f59e0b" strokeWidth="1" strokeDasharray="3,2"/>
+                <text x="118" y="10" fill="#f59e0b" fontSize="7">Bull Trap</text>
+            </svg>
+            {/* Volume bars */}
+            <svg viewBox="0 0 300 50" className="w-full h-16 bg-slate-900 rounded-b-lg border border-t-0 border-slate-800">
+                {bars.map((b,i)=>{
+                    const x=i*(300/bars.length)+5;
+                    const h=50-(b.v/maxV)*42;
+                    const isAnom=b.v>2;
+                    return <g key={i}>
+                        <rect x={x} y={h} width="18" height={50-h} fill={isAnom?'#f59e0b':b.bull?'#22c55e20':'#ef444420'} stroke={isAnom?'#f59e0b':b.bull?'#22c55e':'#ef4444'} strokeWidth="0.5"/>
+                        {isAnom && <text x={x-2} y={h-3} fill="#f59e0b" fontSize="6">📊</text>}
+                    </g>;
+                })}
+                {bars.map((b,i)=><text key={i} x={i*(300/bars.length)+6} y={49} fill="#64748b" fontSize="5">{b.m}</text>)}
+                <text x="5" y="10" fill="#64748b" fontSize="7">Volumen (relativo al ADV)</text>
+            </svg>
+            <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
+                <div className="bg-emerald-900/20 border border-emerald-500/20 p-2 rounded-lg">
+                    <p className="text-emerald-400 font-bold">✅ Ruptura válida</p>
+                    <p className="text-[10px] text-slate-400">Abr: precio sube + volumen 2.8x ADV</p>
+                </div>
+                <div className="bg-amber-900/20 border border-amber-500/20 p-2 rounded-lg">
+                    <p className="text-amber-400 font-bold">⚠️ Bull Trap</p>
+                    <p className="text-[10px] text-slate-400">May $85: rompe máximo pero volumen cae</p>
+                </div>
+                <div className="bg-red-900/20 border border-red-500/20 p-2 rounded-lg">
+                    <p className="text-red-400 font-bold">🔴 Distribución</p>
+                    <p className="text-[10px] text-slate-400">Ago: pánico vendedor → 3.1x ADV</p>
+                </div>
+            </div>
+            <div className="mt-2 bg-slate-800 p-2 rounded-lg">
+                <p className="text-[10px] text-slate-300"><strong className="text-amber-400">💡 Regla Jesse Livermore:</strong> "El volumen es la huella de los grandes jugadores." Un rally sin volumen es una invitación a una trampa. Siempre compara el volumen del día con el ADV de 20 sesiones.</p>
+            </div>
+        </div>
+    );
+};
+
+// ── 3. RISK/REWARD BIMBO ────────────────────────────
+const RiskRewardBimbo = () => {
+    const entrada=66.5, stop=60, tp=82, riesgo=entrada-stop, beneficio=tp-entrada, ratio=(beneficio/riesgo);
+    const winRate=Math.round(1/(1+ratio)*100);
+    return (
+        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+            <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Caso Real: BIMBOA — Riesgo:Beneficio</h4>
+                <div className="bg-emerald-900/20 border border-emerald-500/30 px-2 py-1 rounded-full">
+                    <span className="text-emerald-400 text-xs font-black">R:B = 1:{ratio.toFixed(2)}</span>
+                </div>
+            </div>
+            {/* Chart con zonas */}
+            <svg viewBox="0 0 300 140" className="w-full h-48 bg-slate-950 rounded-lg border border-slate-800 mb-3">
+                {/* Fondo zonas */}
+                <rect x="0" y="0" width="300" height="45" fill="#22c55e11"/>
+                <rect x="0" y="45" width="300" height="45" fill="#64748b11"/>
+                <rect x="0" y="90" width="300" height="50" fill="#ef444411"/>
+                {/* Líneas clave */}
+                <line x1="0" y1="10" x2="300" y2="10" stroke="#22c55e" strokeWidth="1.5" strokeDasharray="5,3"/>
+                <text x="5" y="8" fill="#22c55e" fontSize="8" fontWeight="bold">🎯 TAKE PROFIT: ${tp} MXN</text>
+                <line x1="0" y1="72" x2="300" y2="72" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="5" y="70" fill="#3b82f6" fontSize="8" fontWeight="bold">📍 ENTRADA: ${entrada} MXN</text>
+                <line x1="0" y1="120" x2="300" y2="120" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5,3"/>
+                <text x="5" y="118" fill="#ef4444" fontSize="8" fontWeight="bold">🛑 STOP LOSS: ${stop} MXN</text>
+                {/* Flecha beneficio */}
+                <line x1="270" y1="72" x2="270" y2="10" stroke="#22c55e" strokeWidth="2"/>
+                <polygon points="270,5 266,14 274,14" fill="#22c55e"/>
+                <text x="200" y="45" fill="#22c55e" fontSize="8">+${beneficio.toFixed(1)} MXN</text>
+                {/* Flecha riesgo */}
+                <line x1="270" y1="72" x2="270" y2="120" stroke="#ef4444" strokeWidth="2"/>
+                <polygon points="270,125 266,116 274,116" fill="#ef4444"/>
+                <text x="200" y="100" fill="#ef4444" fontSize="8">-${riesgo.toFixed(1)} MXN</text>
+                {/* Candlestick simulado */}
+                <line x1="70" y1="30" x2="70" y2="130" stroke="#64748b" strokeWidth="0.5"/>
+                <rect x="65" y="60" width="10" height="25" fill="#ef4444"/>
+                <line x1="90" y1="40" x2="90" y2="125" stroke="#64748b" strokeWidth="0.5"/>
+                <rect x="85" y="65" width="10" height="20" fill="#ef4444"/>
+                {/* Doble fondo */}
+                <circle cx="130" cy="85" r="4" fill="#22c55e"/>
+                <circle cx="160" cy="83" r="4" fill="#22c55e"/>
+                <text x="122" y="100" fill="#22c55e" fontSize="7">Doble Fondo</text>
+                {/* Entry candle */}
+                <rect x="185" y="60" width="12" height="20" fill="#22c55e"/>
+                <text x="180" y="57" fill="#22c55e" fontSize="7">Entrada</text>
+            </svg>
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {[
+                    {l:'Entrada',v:`$${entrada}`,c:'text-blue-400'},
+                    {l:'Stop Loss',v:`$${stop}`,c:'text-red-400'},
+                    {l:'Take Profit',v:`$${tp}`,c:'text-emerald-400'},
+                    {l:'Ratio R:B',v:`1:${ratio.toFixed(2)}`,c:'text-amber-400'},
+                    {l:'Riesgo por op.',v:`$${riesgo.toFixed(1)} MXN`,c:'text-red-400'},
+                    {l:'Beneficio potencial',v:`$${beneficio.toFixed(1)} MXN`,c:'text-emerald-400'},
+                    {l:'WinRate mínimo',v:`${winRate}% para positivo`,c:'text-white'},
+                    {l:'Potencial retorno',v:`+${((beneficio/entrada)*100).toFixed(1)}%`,c:'text-emerald-400'},
+                ].map((s,i)=>(
+                    <div key={i} className="bg-slate-800 p-2 rounded-lg">
+                        <p className="text-[9px] text-slate-500 uppercase">{s.l}</p>
+                        <p className={`text-sm font-bold ${s.c}`}>{s.v}</p>
+                    </div>
+                ))}
+            </div>
+            <div className="mt-3 bg-blue-900/20 border border-blue-500/30 p-2 rounded-lg">
+                <p className="text-[10px] text-blue-200"><strong className="text-blue-400">📖 Paul Tudor Jones:</strong> "The secret to being successful in trading is to have an insatiable and an undying and unquenchable thirst for information and knowledge." — Pero también: Si el riesgo:beneficio no es mínimo 1:2, la operación no se hace.</p>
+            </div>
+        </div>
+    );
+};
+
+// ── 4. MULTI-TIMEFRAME ──────────────────────────────
+const MultiTimeframe = () => {
+    const [activeFrame, setActiveFrame] = useState<'weekly'|'daily'|'h4'>('weekly');
+    const frames = {
+        weekly: {
+            label:'SEMANAL (Contexto Macro)',color:'#f59e0b',
+            trend:'Bajista → Fase Weinstein 4 (Declive)',
+            signal:'❌ NO COMPRAR — La estructura mayor dice BAJISTA',
+            desc:'En el Weekly, BIMBOA hizo LH→LL desde Ene 2024. Esto define el sesgo macro: vendedor. Cualquier rebote en temporalidades menores es ruido.',
+            weinstein:'Stage 4: Declive — El precio está por debajo de la SMA 30 semanal. Regla Weinstein: no operar largos.',
+        },
+        daily: {
+            label:'DIARIO (Tendencia)',color:'#3b82f6',
+            trend:'Estructura: Consolidación + señal de reversión',
+            signal:'⚠️ VIGILAR — Posible doble fondo, esperar BOS alcista',
+            desc:'En el Daily, el precio formó un doble fondo en $64-65. El RSI(14) mostró divergencia alcista. Aún no hay BOS alcista confirmado, pero hay setup en formación.',
+            weinstein:'Stage 1: Acumulación — Base formándose. Volumen decrece. Riesgo de trampa alcista si no supera $76 con volumen.',
+        },
+        h4: {
+            label:'4 HORAS (Timing de Entrada)',color:'#22c55e',
+            trend:'Alcista de corto plazo dentro de correctivo mayor',
+            signal:'✅ ENTRADA — Si Daily confirma BOS y Weekly no tiene momentum bajista fuerte',
+            desc:'En H4, hay estructura de mínimos crecientes desde el soporte $65. El cruce EMA 9/21 fue alcista. Este es el marco para calcular el Stop Loss preciso y la entrada escalonada.',
+            weinstein:'Timing: Entrada en H4 después de pullback a EMA 21. Stop: bajo el último HL en $62. Target: resistencia diaria $76.',
+        }
+    };
+    const f=frames[activeFrame];
+    return (
+        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 overflow-hidden">
+            <div className="flex border-b border-slate-700">
+                {Object.entries(frames).map(([k,v])=>(
+                    <button key={k} onClick={()=>setActiveFrame(k as any)}
+                        className={`flex-1 py-2.5 text-xs font-bold transition-all ${activeFrame===k?'border-b-2 text-white bg-slate-800':'text-slate-500 hover:text-slate-300'}`}
+                        style={activeFrame===k?{borderColor:v.color}:{}}>{v.label}</button>
+                ))}
+            </div>
+            <div className="p-4">
+                <div className="flex gap-2 items-center mb-3">
+                    <div className="w-3 h-3 rounded-full" style={{background:f.color}}/>
+                    <span className="text-xs font-bold text-white">{f.trend}</span>
+                </div>
+                {/* Chart representativo */}
+                <svg viewBox="0 0 300 90" className="w-full h-28 bg-slate-950 rounded-lg border border-slate-800 mb-3">
+                    {activeFrame==='weekly' && <>
+                        <path d="M10,20 L50,15 L90,25 L130,40 L170,35 L210,55 L250,65 L290,75" fill="none" stroke="#f59e0b" strokeWidth="2"/>
+                        <text x="10" y="88" fill="#64748b" fontSize="7">Weekly BIMBOA — Estructura Bajista (LH/LL)</text>
+                        <text x="200" y="30" fill="#ef4444" fontSize="8">LH ↓</text>
+                        <text x="240" y="58" fill="#ef4444" fontSize="8">LL ↓</text>
+                        <line x1="0" y1="20" x2="300" y2="20" stroke="#ef444440" strokeWidth="1" strokeDasharray="3,2"/>
+                    </>}
+                    {activeFrame==='daily' && <>
+                        <path d="M10,60 L50,40 L90,70 L130,80 L150,75 L170,72 L210,65 L260,55 L290,50" fill="none" stroke="#3b82f6" strokeWidth="2"/>
+                        <line x1="130" y1="0" x2="130" y2="90" stroke="#22c55e40" strokeWidth="1" strokeDasharray="3,2"/>
+                        <text x="10" y="88" fill="#64748b" fontSize="7">Daily — Doble fondo + divergencia RSI alcista</text>
+                        <circle cx="130" cy="80" r="4" fill="#22c55e"/>
+                        <circle cx="155" cy="74" r="4" fill="#22c55e"/>
+                        <text x="125" y="88" fill="#22c55e" fontSize="7">2F</text>
+                    </>}
+                    {activeFrame==='h4' && <>
+                        <path d="M10,70 L40,65 L70,55 L100,60 L130,48 L160,42 L190,35 L220,30 L260,22 L290,18" fill="none" stroke="#22c55e" strokeWidth="2"/>
+                        <line x1="0" y1="57" x2="300" y2="57" stroke="#3b82f630" strokeWidth="1" strokeDasharray="3,2"/>
+                        <text x="10" y="88" fill="#64748b" fontSize="7">H4 — Mínimos Crecientes (HL) → Tendencia alcista</text>
+                        <text x="220" y="18" fill="#22c55e" fontSize="8">BOS ↑</text>
+                    </>}
+                    <text x="5" y="10" fill="#475569" fontSize="6">BIMBOA.MX / TradingView</text>
+                </svg>
+                {/* TradingView embed */}
+                <div className="bg-slate-800 rounded-lg border border-slate-700 overflow-hidden mb-3">
+                    <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-700 bg-slate-900">
+                        <div className="w-2 h-2 rounded-full bg-emerald-400"/>
+                        <span className="text-[10px] text-slate-400 font-mono">TradingView — BIMBOA (BMV)</span>
+                        <a href="https://www.tradingview.com/chart/?symbol=BMV%3ABIMBOA" target="_blank" rel="noopener noreferrer"
+                            className="ml-auto text-[10px] text-blue-400 hover:text-blue-300 underline">Abrir en TradingView ↗</a>
+                    </div>
+                    <iframe
+                        src={`https://s.tradingview.com/widgetembed/?symbol=BMV%3ABIMBOA&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}&theme=dark&style=1&locale=es&toolbar_bg=%230f172a&hide_top_toolbar=1&hide_legend=0&saveimage=0&watchlist=0&width=100%25&height=260`}
+                        style={{width:'100%',height:'260px',border:'none'}}
+                        title="BIMBOA TradingView"
+                        loading="lazy"
+                    />
+                </div>
+                <div className={`p-2 rounded-lg border text-xs ${f.color==='#f59e0b'?'bg-amber-900/20 border-amber-500/30 text-amber-200':f.color==='#3b82f6'?'bg-blue-900/20 border-blue-500/30 text-blue-200':'bg-emerald-900/20 border-emerald-500/30 text-emerald-200'}`}>
+                    <p className="font-bold mb-1">{f.signal}</p>
+                    <p className="text-[10px] opacity-80">{f.desc}</p>
+                    <p className="text-[10px] opacity-70 mt-1">📖 Weinstein: <em>{f.weinstein}</em></p>
+                </div>
+            </div>
+            <div className="px-4 pb-4">
+                <div className="bg-slate-800 p-3 rounded-lg">
+                    <p className="text-[10px] text-slate-400"><strong className="text-white">📚 Bibliografía:</strong> Stan Weinstein — "Secrets for Profiting in Bull and Bear Markets" (1988) · Mark Douglas — "Trading in the Zone" (2000) · Al Brooks — "Reading Price Charts Bar by Bar" · ICT (Inner Circle Trader) — Multi-Timeframe Analysis methodology</p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const CandlestickAnatomy = () => (
+
     <div className="flex flex-col md:flex-row items-center justify-center gap-12 mt-8 animate-fade-in">
         {/* Vela Verde (Bullish) */}
         <div className="relative group">
@@ -383,6 +717,10 @@ export default function CoursePlayerPhase3() {
 
     const renderVisual = (type: string) => {
         switch (type) {
+            case 'market_structure_hh_ll': return <MarketStructureHHLL />;
+            case 'volume_analysis': return <VolumeAnalysis />;
+            case 'risk_reward_bimbo': return <RiskRewardBimbo />;
+            case 'multi_timeframe': return <MultiTimeframe />;
             case 'candlestick_anatomy': return <CandlestickAnatomy />;
             case 'support_resistance': return <SupportResistance />;
             case 'trend_structure': return <TrendStructure />;
