@@ -408,21 +408,46 @@ const MultiTimeframe = () => {
                     </>}
                     <text x="5" y="10" fill="#475569" fontSize="6">BIMBOA.MX / TradingView</text>
                 </svg>
-                {/* TradingView embed */}
-                <div className="bg-slate-800 rounded-lg border border-slate-700 overflow-hidden mb-3">
-                    <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-700 bg-slate-900">
-                        <div className="w-2 h-2 rounded-full bg-emerald-400"/>
-                        <span className="text-[10px] text-slate-400 font-mono">TradingView — BIMBO/A (BMV)</span>
-                        <a href="https://www.tradingview.com/chart/?symbol=BMV%3ABIMBO%2FA" target="_blank" rel="noopener noreferrer"
-                            className="ml-auto text-[10px] text-blue-400 hover:text-blue-300 underline">Abrir en TradingView ↗</a>
+                {/* TradingView link card — BMV requiere cuenta premium para embed */}
+                <a
+                    href={`https://www.tradingview.com/chart/?symbol=BMV%3ABIMBO%2FA&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block mb-3"
+                >
+                    <div className="bg-slate-950 rounded-xl border border-slate-700 hover:border-blue-500/60 transition-all group overflow-hidden">
+                        {/* Fake chart top bar */}
+                        <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-800 bg-[#131722]">
+                            <div className="w-2 h-2 rounded-full bg-emerald-400"/>
+                            <span className="text-[11px] text-slate-300 font-mono font-bold">BMV:BIMBO/A</span>
+                            <span className="text-[10px] text-slate-500 ml-1">·</span>
+                            <span className="text-[10px] text-slate-500">{activeFrame==='weekly'?'1W':activeFrame==='daily'?'1D':'4H'}</span>
+                            <span className="ml-auto text-[10px] text-blue-400 group-hover:text-blue-300 font-bold transition-colors">
+                                Ver gráfico en vivo ↗
+                            </span>
+                        </div>
+                        {/* Simulated chart area with CTA */}
+                        <div className="relative h-[160px] flex flex-col items-center justify-center gap-3 bg-[#131722]">
+                            {/* Background lines */}
+                            <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 300 160">
+                                {[40,80,120].map(y=><line key={y} x1="0" y1={y} x2="300" y2={y} stroke="#334155" strokeWidth="1"/>)}
+                                {[60,120,180,240].map(x=><line key={x} x1={x} y1="0" x2={x} y2="160" stroke="#334155" strokeWidth="1"/>)}
+                                {activeFrame==='weekly' && <path d="M10,140 L50,130 L90,120 L150,100 L200,110 L260,95 L290,80" fill="none" stroke="#f59e0b" strokeWidth="2"/>}
+                                {activeFrame==='daily' && <path d="M10,120 L70,90 L130,140 L160,135 L200,115 L260,100 L290,90" fill="none" stroke="#3b82f6" strokeWidth="2"/>}
+                                {activeFrame==='h4'   && <path d="M10,140 L60,125 L110,105 L160,110 L210,85 L260,60 L290,45" fill="none" stroke="#22c55e" strokeWidth="2"/>}
+                            </svg>
+                            {/* CTA */}
+                            <div className="relative z-10 flex items-center gap-2 bg-slate-800/90 border border-slate-600 group-hover:border-blue-500/80 rounded-lg px-4 py-2 transition-all backdrop-blur-sm">
+                                <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                                <span className="text-xs font-bold text-white">Abrir gráfico BIMBO/A en TradingView</span>
+                            </div>
+                            <p className="relative z-10 text-[10px] text-slate-500">La BMV requiere cuenta TradingView para el gráfico embebido</p>
+                        </div>
                     </div>
-                    <iframe
-                        src={`https://s.tradingview.com/widgetembed/?symbol=BMV%3ABIMBO%2FA&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}&theme=dark&style=1&locale=es&toolbar_bg=%230f172a&hide_top_toolbar=1&hide_legend=0&saveimage=0&watchlist=0&width=100%25&height=260`}
-                        style={{width:'100%',height:'260px',border:'none'}}
-                        title="BIMBO/A TradingView"
-                        loading="lazy"
-                    />
-                </div>
+                </a>
+
                 <div className={`p-2 rounded-lg border text-xs ${f.color==='#f59e0b'?'bg-amber-900/20 border-amber-500/30 text-amber-200':f.color==='#3b82f6'?'bg-blue-900/20 border-blue-500/30 text-blue-200':'bg-emerald-900/20 border-emerald-500/30 text-emerald-200'}`}>
                     <p className="font-bold mb-1">{f.signal}</p>
                     <p className="text-[10px] opacity-80">{f.desc}</p>
