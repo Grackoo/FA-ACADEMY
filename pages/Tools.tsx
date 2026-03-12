@@ -12,9 +12,11 @@ const DebtAmortization: React.FC = () => {
   const [monthlyPayment, setMonthlyPayment] = useState<number>(2500);
   
   const [amortizationSchedule, setAmortizationSchedule] = useState<any[]>([]);
+  const [detailSchedule, setDetailSchedule] = useState<any[]>([]);
   const [totalInterest, setTotalInterest] = useState<number>(0);
   const [monthsToPayoff, setMonthsToPayoff] = useState<number>(0);
   const [errorMSG, setErrorMSG] = useState<string>("");
+  const [showTable, setShowTable] = useState<boolean>(false);
 
   useEffect(() => {
     calculateAmortization();
@@ -27,19 +29,20 @@ const DebtAmortization: React.FC = () => {
     let totalInt = 0;
     let months = 0;
     const schedule = [];
+    const detail: any[] = [];
     
-    // Check if payment is too small to cover even the interest
     const initialInterest = balance * monthlyRate;
     if (monthlyPayment <= initialInterest && balance > 0) {
        setErrorMSG("Tu pago mensual es menor a los intereses que genera la deuda. ¡La deuda crecerá al infinito!");
        setAmortizationSchedule([]);
+       setDetailSchedule([]);
        setTotalInterest(0);
        setMonthsToPayoff(0);
        return;
     }
     setErrorMSG("");
 
-    while (balance > 0 && months < 360) { // Max 30 years limit for loop safety
+    while (balance > 0 && months < 360) {
       months++;
       const interest = balance * monthlyRate;
       let principal = monthlyPayment - interest;
@@ -50,8 +53,17 @@ const DebtAmortization: React.FC = () => {
       
       balance -= principal;
       totalInt += interest;
+
+      // Full detail row for table
+      detail.push({
+        month: months,
+        payment: principal + interest,
+        interest: interest,
+        principal: principal,
+        balance: Math.max(0, balance),
+      });
       
-      if (months % 6 === 0 || balance <= 0 || months === 1) { // sample data points to avoid huge arrays
+      if (months % 6 === 0 || balance <= 0 || months === 1) {
         schedule.push({
           month: `Mes ${months}`,
           balance: Math.max(0, balance),
@@ -60,6 +72,7 @@ const DebtAmortization: React.FC = () => {
     }
 
     setAmortizationSchedule(schedule);
+    setDetailSchedule(detail);
     setTotalInterest(totalInt);
     setMonthsToPayoff(months);
   };
@@ -135,6 +148,79 @@ const DebtAmortization: React.FC = () => {
              )}
         </div>
       </div>
+
+      {/* Amortization Detail Table */}
+      {!errorMSG && detailSchedule.length > 0 && (
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+              <Calculator size={18} className="text-red-400" />
+              Tabla de Amortización Detallada
+            </h3>
+            <button
+              onClick={() => setShowTable(!showTable)}
+              className="text-xs font-bold px-4 py-2 rounded-full bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 transition-colors"
+            >
+              {showTable ? '▲ Ocultar tabla' : '▼ Ver tabla completa'}
+            </button>
+          </div>
+
+          {showTable && (
+            <div className="overflow-x-auto rounded-xl border border-slate-700">
+              <table className="w-full text-sm min-w-[560px]">
+                <thead>
+                  <tr className="bg-slate-900 border-b border-slate-700">
+                    <th className="p-4 text-left text-slate-400 font-semibold uppercase tracking-widest text-xs">Mes</th>
+                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Cuota</th>
+                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Interés</th>
+                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Capital</th>
+                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Saldo Restante</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detailSchedule.map((row, idx) => (
+                    <tr
+                      key={idx}
+                      className={`border-b border-slate-700/50 transition-colors hover:bg-slate-700/40 ${
+                        row.balance === 0 ? 'bg-emerald-900/10' : idx % 2 === 0 ? 'bg-slate-800/20' : ''
+                      }`}
+                    >
+                      <td className="p-4 font-bold text-slate-300">{row.month}</td>
+                      <td className="p-4 text-right font-bold text-white">
+                        ${(row.payment).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
+                      <td className="p-4 text-right font-semibold text-red-400">
+                        ${row.interest.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
+                      <td className="p-4 text-right font-semibold text-emerald-400">
+                        ${row.principal.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
+                      <td className="p-4 text-right text-slate-300">
+                        ${row.balance.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="bg-slate-900 border-t-2 border-slate-600">
+                    <td className="p-4 font-bold text-slate-300 text-xs uppercase tracking-wider">Totales</td>
+                    <td className="p-4 text-right font-bold text-white">
+                      ${detailSchedule.reduce((s, r) => s + r.payment, 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </td>
+                    <td className="p-4 text-right font-bold text-red-400">
+                      ${detailSchedule.reduce((s, r) => s + r.interest, 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </td>
+                    <td className="p-4 text-right font-bold text-emerald-400">
+                      ${detailSchedule.reduce((s, r) => s + r.principal, 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </td>
+                    <td className="p-4 text-right text-emerald-400 font-bold">$0.00</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
