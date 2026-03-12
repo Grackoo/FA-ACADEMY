@@ -412,14 +412,14 @@ const MultiTimeframe = () => {
                 <div className="bg-slate-800 rounded-lg border border-slate-700 overflow-hidden mb-3">
                     <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-700 bg-slate-900">
                         <div className="w-2 h-2 rounded-full bg-emerald-400"/>
-                        <span className="text-[10px] text-slate-400 font-mono">TradingView — BIMBOA (BMV)</span>
-                        <a href="https://www.tradingview.com/chart/?symbol=BMV%3ABIMBOA" target="_blank" rel="noopener noreferrer"
+                        <span className="text-[10px] text-slate-400 font-mono">TradingView — BIMBO/A (BMV)</span>
+                        <a href="https://www.tradingview.com/chart/?symbol=BMV%3ABIMBO%2FA" target="_blank" rel="noopener noreferrer"
                             className="ml-auto text-[10px] text-blue-400 hover:text-blue-300 underline">Abrir en TradingView ↗</a>
                     </div>
                     <iframe
-                        src={`https://s.tradingview.com/widgetembed/?symbol=BMV%3ABIMBOA&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}&theme=dark&style=1&locale=es&toolbar_bg=%230f172a&hide_top_toolbar=1&hide_legend=0&saveimage=0&watchlist=0&width=100%25&height=260`}
+                        src={`https://s.tradingview.com/widgetembed/?symbol=BMV%3ABIMBO%2FA&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}&theme=dark&style=1&locale=es&toolbar_bg=%230f172a&hide_top_toolbar=1&hide_legend=0&saveimage=0&watchlist=0&width=100%25&height=260`}
                         style={{width:'100%',height:'260px',border:'none'}}
-                        title="BIMBOA TradingView"
+                        title="BIMBO/A TradingView"
                         loading="lazy"
                     />
                 </div>
