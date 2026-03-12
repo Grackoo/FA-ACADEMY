@@ -6,213 +6,237 @@ import { Calculator, Target, PiggyBank, ArrowDownToLine, Flame, TrendingUp } fro
 
 // --- Components for Tools ---
 
+const fmt = (n: number) => n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
 const DebtAmortization: React.FC = () => {
-  const [debtAmount, setDebtAmount] = useState<number>(50000);
-  const [interestRate, setInterestRate] = useState<number>(35); // Typical credit card APY
-  const [monthlyPayment, setMonthlyPayment] = useState<number>(2500);
-  
-  const [amortizationSchedule, setAmortizationSchedule] = useState<any[]>([]);
-  const [detailSchedule, setDetailSchedule] = useState<any[]>([]);
-  const [totalInterest, setTotalInterest] = useState<number>(0);
-  const [monthsToPayoff, setMonthsToPayoff] = useState<number>(0);
-  const [errorMSG, setErrorMSG] = useState<string>("");
+  const [capital, setCapital]         = useState<number>(35000);
+  const [annualRate, setAnnualRate]   = useState<number>(48);   // Annual % — Nu example: 4%/mes = 48%/año
+  const [plazo, setPlazo]             = useState<number>(12);
+  const [applyIVA, setApplyIVA]       = useState<boolean>(true);
+  const [rateMode, setRateMode]       = useState<'annual'|'monthly'>('annual');
+
+  const [result, setResult] = useState<{
+    pmt: number;
+    totalPay: number;
+    totalInterest: number;
+    totalIVA: number;
+    extraPct: number;
+    schedule: Array<{ month: number; payment: number; interest: number; iva: number; principal: number; balance: number }>;
+    chartData: Array<{ month: string; balance: number; }>;
+  } | null>(null);
+
   const [showTable, setShowTable] = useState<boolean>(false);
+  const [errorMSG, setErrorMSG]   = useState<string>('');
 
-  useEffect(() => {
-    calculateAmortization();
-    // eslint-disable-next-line
-  }, [debtAmount, interestRate, monthlyPayment]);
+  useEffect(() => { calculate(); }, [capital, annualRate, plazo, applyIVA, rateMode]);
 
-  const calculateAmortization = () => {
-    let balance = debtAmount;
-    const monthlyRate = (interestRate / 100) / 12;
+  const calculate = () => {
+    if (capital <= 0 || annualRate <= 0 || plazo <= 0) { setErrorMSG('Ingresa valores válidos mayores a cero.'); setResult(null); return; }
+
+    // Monthly base rate (before IVA)
+    const monthlyBase = rateMode === 'annual' ? (annualRate / 100) / 12 : annualRate / 100;
+    // Effective rate including IVA on interest
+    const r = applyIVA ? monthlyBase * 1.16 : monthlyBase;
+    const n = plazo;
+
+    // PMT formula: P * r * (1+r)^n / ((1+r)^n - 1)
+    const pmt = capital * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+
+    if (!isFinite(pmt) || pmt <= 0) { setErrorMSG('Los parámetros generan un préstamo inviable. Revisa la tasa o el plazo.'); setResult(null); return; }
+    setErrorMSG('');
+
+    const schedule: typeof result extends null ? never : NonNullable<typeof result>['schedule'] = [];
+    const chartData: Array<{ month: string; balance: number }> = [];
+    let balance = capital;
     let totalInt = 0;
-    let months = 0;
-    const schedule = [];
-    const detail: any[] = [];
-    
-    const initialInterest = balance * monthlyRate;
-    if (monthlyPayment <= initialInterest && balance > 0) {
-       setErrorMSG("Tu pago mensual es menor a los intereses que genera la deuda. ¡La deuda crecerá al infinito!");
-       setAmortizationSchedule([]);
-       setDetailSchedule([]);
-       setTotalInterest(0);
-       setMonthsToPayoff(0);
-       return;
-    }
-    setErrorMSG("");
+    let totalIVA = 0;
 
-    while (balance > 0 && months < 360) {
-      months++;
-      const interest = balance * monthlyRate;
-      let principal = monthlyPayment - interest;
-      
-      if (balance - principal < 0) {
-        principal = balance;
-      }
-      
-      balance -= principal;
-      totalInt += interest;
+    for (let i = 1; i <= n; i++) {
+      const interestRaw = balance * monthlyBase;
+      const iva = applyIVA ? interestRaw * 0.16 : 0;
+      const interestTotal = interestRaw + iva;
+      let principal = pmt - interestTotal;
+      if (i === n) principal = balance; // last payment clears balance
+      balance = Math.max(0, balance - principal);
+      totalInt += interestRaw;
+      totalIVA += iva;
 
-      // Full detail row for table
-      detail.push({
-        month: months,
-        payment: principal + interest,
-        interest: interest,
-        principal: principal,
-        balance: Math.max(0, balance),
-      });
-      
-      if (months % 6 === 0 || balance <= 0 || months === 1) {
-        schedule.push({
-          month: `Mes ${months}`,
-          balance: Math.max(0, balance),
-        });
-      }
+      schedule.push({ month: i, payment: pmt, interest: interestRaw, iva, principal, balance });
+      chartData.push({ month: `Mes ${i}`, balance });
     }
 
-    setAmortizationSchedule(schedule);
-    setDetailSchedule(detail);
-    setTotalInterest(totalInt);
-    setMonthsToPayoff(months);
+    const totalPay   = pmt * n;
+    const extraPct   = ((totalPay - capital) / capital) * 100;
+
+    setResult({ pmt, totalPay, totalInterest: totalInt, totalIVA, extraPct, schedule, chartData });
   };
+
+  const inputCls = "w-full p-2.5 bg-slate-900 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm";
+  const labelCls = "text-xs font-semibold text-slate-400 uppercase tracking-widest block mb-1.5";
 
   return (
     <div className="bg-slate-800 rounded-2xl shadow-lg border border-slate-700 p-8">
-      <div className="flex items-center gap-2 mb-6 text-red-400">
+      <div className="flex items-center gap-2 mb-2 text-red-400">
         <Flame size={28} />
         <h2 className="text-2xl font-bold text-white">Calculadora "Mata Deudas"</h2>
       </div>
-      <p className="text-slate-400 text-sm mb-6">Descubre cuánto dinero le regalas al banco en intereses y cuánto tiempo te tomará ser libre de esa deudada mala (Tarjetas de crédito, préstamos personales).</p>
+      <p className="text-slate-400 text-sm mb-6">Ingresa los datos de tu préstamo y descubre exactamente cuánto pagas de capital, intereses e IVA mes a mes.</p>
 
+      {/* Inputs + Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-4 space-y-4">
-          <div>
-            <label className="text-sm font-medium text-slate-300 block mb-1">Total de la Deuda ($)</label>
-            <input type="number" value={debtAmount} onChange={(e) => setDebtAmount(Number(e.target.value))} className="w-full p-2 bg-slate-900 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-red-500 outline-none" />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-slate-300 block mb-1">Tasa de Interés Anual (CAT) %</label>
-            <input type="number" value={interestRate} onChange={(e) => setInterestRate(Number(e.target.value))} className="w-full p-2 bg-slate-900 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-red-500 outline-none" />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-slate-300 block mb-1">Tu Pago Mensual ($)</label>
-            <input type="number" value={monthlyPayment} onChange={(e) => setMonthlyPayment(Number(e.target.value))} className="w-full p-2 bg-slate-900 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-red-500 outline-none" />
-          </div>
-          
-          {errorMSG && (
-              <div className="bg-red-900/40 border border-red-500 p-3 rounded-lg text-red-400 text-xs font-bold leading-relaxed">
-                  ⚠️ {errorMSG}
-              </div>
-          )}
 
-          {!errorMSG && monthsToPayoff > 0 && (
-             <div className="grid grid-cols-2 gap-2 mt-4">
-                 <div className="bg-slate-900 border border-slate-700 p-3 rounded-lg text-center">
-                    <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Tiempo</p>
-                    <p className="text-lg font-bold text-white">{Math.floor(monthsToPayoff/12)} años, {monthsToPayoff%12} m</p>
-                 </div>
-                 <div className="bg-red-900/20 border border-red-900 p-3 rounded-lg text-center">
-                    <p className="text-xs text-red-500 uppercase tracking-wider mb-1">Intereses Puros</p>
-                    <p className="text-lg font-bold text-red-400">${Math.round(totalInterest).toLocaleString()}</p>
-                 </div>
-             </div>
+        {/* --- LEFT: Inputs --- */}
+        <div className="lg:col-span-4 space-y-4">
+
+          {/* Rate mode toggle */}
+          <div className="flex gap-1 p-1 bg-slate-900 rounded-lg border border-slate-700">
+            {(['annual','monthly'] as const).map(m => (
+              <button key={m} onClick={() => setRateMode(m)}
+                className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all ${rateMode === m ? 'bg-red-600 text-white' : 'text-slate-400 hover:text-white'}`}>
+                {m === 'annual' ? 'Tasa Anual (CAT)' : 'Tasa Mensual'}
+              </button>
+            ))}
+          </div>
+
+          <div>
+            <label className={labelCls}>Capital / Monto del crédito ($)</label>
+            <input type="number" value={capital} onChange={e => setCapital(Number(e.target.value))} className={inputCls} />
+          </div>
+          <div>
+            <label className={labelCls}>{rateMode === 'annual' ? 'Tasa de Interés Anual (CAT) %' : 'Tasa de Interés Mensual %'}</label>
+            <input type="number" step="0.01" value={annualRate} onChange={e => setAnnualRate(Number(e.target.value))} className={inputCls} />
+          </div>
+          <div>
+            <label className={labelCls}>Plazo (número de meses)</label>
+            <input type="number" value={plazo} min={1} max={360} onChange={e => setPlazo(Number(e.target.value))} className={inputCls} />
+          </div>
+
+          {/* IVA Toggle */}
+          <button onClick={() => setApplyIVA(v => !v)}
+            className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all ${applyIVA ? 'bg-amber-900/20 border-amber-500/40 text-amber-300' : 'bg-slate-900 border-slate-700 text-slate-400'}`}>
+            <div className={`w-10 h-5 rounded-full relative transition-colors ${applyIVA ? 'bg-amber-500' : 'bg-slate-600'}`}>
+              <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all ${applyIVA ? 'left-5' : 'left-0.5'}`}/>
+            </div>
+            <span className="text-xs font-bold">Aplicar IVA 16% sobre intereses (México)</span>
+          </button>
+
+          {errorMSG && (
+            <div className="bg-red-900/40 border border-red-500 p-3 rounded-lg text-red-400 text-xs font-bold">⚠️ {errorMSG}</div>
           )}
         </div>
 
-        <div className="lg:col-span-8 h-64 lg:h-auto">
-             {!errorMSG && amortizationSchedule.length > 0 ? (
-                 <ResponsiveContainer width="100%" height="100%" minHeight={300}>
-                 <AreaChart data={amortizationSchedule} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                   <defs>
-                     <linearGradient id="colorDebt" x1="0" y1="0" x2="0" y2="1">
-                       <stop offset="5%" stopColor="#ef4444" stopOpacity={0.5}/>
-                       <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-                     </linearGradient>
-                   </defs>
-                   <XAxis dataKey="month" fontSize={11} stroke="#64748b" />
-                   <YAxis fontSize={11} stroke="#64748b" tickFormatter={(val) => `$${val/1000}k`} />
-                   <Tooltip 
-                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: 'white' }} 
-                      formatter={(value: number) => [`$${value.toLocaleString()}`, 'Deuda Restante']}
-                      labelStyle={{color: '#94a3b8'}}
-                   />
-                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e293b" />
-                   <Area type="monotone" dataKey="balance" stroke="#ef4444" fillOpacity={1} fill="url(#colorDebt)" />
-                 </AreaChart>
-               </ResponsiveContainer>
-             ) : (
-                 <div className="w-full h-full min-h-[300px] border-2 border-dashed border-slate-700 rounded-xl flex items-center justify-center text-slate-500">
-                     Ajusta tus números para ver la gráfica de amortización
-                 </div>
-             )}
+        {/* --- RIGHT: Summary + Chart --- */}
+        <div className="lg:col-span-8 space-y-4">
+          {result && !errorMSG && (
+            <>
+              {/* Summary cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="bg-blue-900/20 border border-blue-500/30 p-3 rounded-xl text-center">
+                  <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Pago Mensual</p>
+                  <p className="text-xl font-black text-white">${fmt(result.pmt)}</p>
+                </div>
+                <div className="bg-red-900/20 border border-red-500/30 p-3 rounded-xl text-center">
+                  <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Intereses + IVA</p>
+                  <p className="text-xl font-black text-red-400">${fmt(result.totalInterest + result.totalIVA)}</p>
+                </div>
+                <div className="bg-emerald-900/20 border border-emerald-500/30 p-3 rounded-xl text-center">
+                  <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Total a Pagar</p>
+                  <p className="text-xl font-black text-white">${fmt(result.totalPay)}</p>
+                </div>
+                <div className="bg-amber-900/20 border border-amber-500/30 p-3 rounded-xl text-center">
+                  <p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">Costo Extra</p>
+                  <p className="text-xl font-black text-amber-400">+{result.extraPct.toFixed(1)}%</p>
+                </div>
+              </div>
+
+              {/* Breakdown bar */}
+              <div className="bg-slate-900 rounded-xl p-4 border border-slate-700">
+                <div className="flex justify-between text-xs text-slate-400 mb-2">
+                  <span>Desglose del Total a Pagar</span>
+                  <span className="text-white font-bold">${fmt(result.totalPay)}</span>
+                </div>
+                <div className="flex h-5 rounded-full overflow-hidden gap-px mb-2">
+                  <div className="bg-blue-500 transition-all" style={{ width: `${(capital / result.totalPay) * 100}%` }} title="Capital" />
+                  <div className="bg-red-500 transition-all" style={{ width: `${(result.totalInterest / result.totalPay) * 100}%` }} title="Intereses" />
+                  {applyIVA && <div className="bg-amber-400 transition-all" style={{ width: `${(result.totalIVA / result.totalPay) * 100}%` }} title="IVA" />}
+                </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-blue-500 inline-block"/>Capital: <strong className="text-white">${fmt(capital)}</strong></span>
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-red-500 inline-block"/>Intereses: <strong className="text-red-400">${fmt(result.totalInterest)}</strong></span>
+                  {applyIVA && <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-amber-400 inline-block"/>IVA: <strong className="text-amber-400">${fmt(result.totalIVA)}</strong></span>}
+                </div>
+              </div>
+
+              {/* Chart */}
+              <ResponsiveContainer width="100%" height={200}>
+                <AreaChart data={result.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorDebt" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.5}/>
+                      <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="month" fontSize={10} stroke="#64748b" interval={Math.floor(plazo/8)} />
+                  <YAxis fontSize={10} stroke="#64748b" tickFormatter={v => `$${(v/1000).toFixed(0)}k`} />
+                  <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: 'white' }}
+                    formatter={(v: number) => [`$${fmt(v)}`, 'Saldo Restante']} labelStyle={{ color: '#94a3b8' }} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e293b" />
+                  <Area type="monotone" dataKey="balance" stroke="#ef4444" fillOpacity={1} fill="url(#colorDebt)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </>
+          )}
+          {!result && !errorMSG && (
+            <div className="w-full h-full min-h-[300px] border-2 border-dashed border-slate-700 rounded-xl flex items-center justify-center text-slate-500 text-sm">
+              Ingresa los datos del préstamo para ver el análisis
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Amortization Detail Table */}
-      {!errorMSG && detailSchedule.length > 0 && (
+      {/* Amortization Table */}
+      {result && !errorMSG && (
         <div className="mt-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <Calculator size={18} className="text-red-400" />
               Tabla de Amortización Detallada
             </h3>
-            <button
-              onClick={() => setShowTable(!showTable)}
-              className="text-xs font-bold px-4 py-2 rounded-full bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 transition-colors"
-            >
+            <button onClick={() => setShowTable(v => !v)}
+              className="text-xs font-bold px-4 py-2 rounded-full bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 transition-colors">
               {showTable ? '▲ Ocultar tabla' : '▼ Ver tabla completa'}
             </button>
           </div>
 
           {showTable && (
             <div className="overflow-x-auto rounded-xl border border-slate-700">
-              <table className="w-full text-sm min-w-[560px]">
+              <table className="w-full text-sm min-w-[640px]">
                 <thead>
                   <tr className="bg-slate-900 border-b border-slate-700">
-                    <th className="p-4 text-left text-slate-400 font-semibold uppercase tracking-widest text-xs">Mes</th>
-                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Cuota</th>
-                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Interés</th>
-                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Capital</th>
-                    <th className="p-4 text-right text-slate-400 font-semibold uppercase tracking-widest text-xs">Saldo Restante</th>
+                    {['Mes','Cuota','Interés','IVA (16%)','Capital','Saldo Restante'].map(h => (
+                      <th key={h} className="p-4 text-right first:text-left text-slate-400 font-semibold uppercase tracking-widest text-xs">{h}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {detailSchedule.map((row, idx) => (
-                    <tr
-                      key={idx}
-                      className={`border-b border-slate-700/50 transition-colors hover:bg-slate-700/40 ${
-                        row.balance === 0 ? 'bg-emerald-900/10' : idx % 2 === 0 ? 'bg-slate-800/20' : ''
-                      }`}
-                    >
+                  {result.schedule.map((row, idx) => (
+                    <tr key={idx} className={`border-b border-slate-700/50 transition-colors hover:bg-slate-700/40 ${row.balance === 0 ? 'bg-emerald-900/10' : idx % 2 === 0 ? 'bg-slate-800/20' : ''}`}>
                       <td className="p-4 font-bold text-slate-300">{row.month}</td>
-                      <td className="p-4 text-right font-bold text-white">
-                        ${(row.payment).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </td>
-                      <td className="p-4 text-right font-semibold text-red-400">
-                        ${row.interest.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </td>
-                      <td className="p-4 text-right font-semibold text-emerald-400">
-                        ${row.principal.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </td>
-                      <td className="p-4 text-right text-slate-300">
-                        ${row.balance.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </td>
+                      <td className="p-4 text-right font-bold text-white">${fmt(row.payment)}</td>
+                      <td className="p-4 text-right font-semibold text-red-400">${fmt(row.interest)}</td>
+                      <td className="p-4 text-right font-semibold text-amber-400">{applyIVA ? `$${fmt(row.iva)}` : '—'}</td>
+                      <td className="p-4 text-right font-semibold text-emerald-400">${fmt(row.principal)}</td>
+                      <td className="p-4 text-right text-slate-300">${fmt(row.balance)}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
                   <tr className="bg-slate-900 border-t-2 border-slate-600">
-                    <td className="p-4 font-bold text-slate-300 text-xs uppercase tracking-wider">Totales</td>
-                    <td className="p-4 text-right font-bold text-white">
-                      ${detailSchedule.reduce((s, r) => s + r.payment, 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </td>
-                    <td className="p-4 text-right font-bold text-red-400">
-                      ${detailSchedule.reduce((s, r) => s + r.interest, 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </td>
-                    <td className="p-4 text-right font-bold text-emerald-400">
-                      ${detailSchedule.reduce((s, r) => s + r.principal, 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </td>
+                    <td className="p-4 font-bold text-slate-300 text-xs uppercase">Totales</td>
+                    <td className="p-4 text-right font-bold text-white">${fmt(result.totalPay)}</td>
+                    <td className="p-4 text-right font-bold text-red-400">${fmt(result.totalInterest)}</td>
+                    <td className="p-4 text-right font-bold text-amber-400">{applyIVA ? `$${fmt(result.totalIVA)}` : '—'}</td>
+                    <td className="p-4 text-right font-bold text-emerald-400">${fmt(capital)}</td>
                     <td className="p-4 text-right text-emerald-400 font-bold">$0.00</td>
                   </tr>
                 </tfoot>
@@ -224,6 +248,9 @@ const DebtAmortization: React.FC = () => {
     </div>
   );
 };
+
+
+
 
 const CompoundInterestCalculator: React.FC = () => {
   const [principal, setPrincipal] = useState(10000);
