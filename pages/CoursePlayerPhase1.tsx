@@ -17,46 +17,46 @@ const courseData = [
     lessons: [
       {
         title: "El Perfil del Inversionista 2026",
-        content: "Tu perfil no es est├ítico; es la intersecci├│n entre tu cartera y tu mente.",
-        details: "Seg├║n la AMIB, el mayor error del inversionista retail en M├®xico es saltarse este paso por 'FOMO' (miedo a quedarse fuera). Tu perfil evoluciona con la edad y tus objetivos. Para metas a corto plazo (ej. pago de impuestos SIATEC), usa deuda gubernamental. Para el retiro, la renta variable es vital. En 2025-2026, el IPC demostr├│ que un perfil 'Agresivo' debe soportar ca├¡das del 20% sin vender.",
+        content: "Tu perfil no es estático; es la intersección entre tu cartera y tu mente.",
+        details: "Según la AMIB, el mayor error del inversionista retail en México es saltarse este paso por 'FOMO' (miedo a quedarse fuera). Tu perfil evoluciona con la edad y tus objetivos. Para metas a corto plazo (ej. pago de impuestos SIATEC), usa deuda gubernamental. Para el retiro, la renta variable es vital. En 2025-2026, el IPC demostró que un perfil 'Agresivo' debe soportar caídas del 20% sin vender.",
         visualType: "investor_profile",
         quote: { 
-            text: "Antes de invertir, debes realizar un diagn├│stico de tu salud financiera. No puedes invertir dinero que vas a necesitar para pagar la renta el pr├│ximo mes. El perfil se define por la intersecci├│n entre tu capacidad financiera y tu estabilidad psicol├│gica.", 
-            author: "Gu├¡a de Educaci├│n Financiera, CONDUSEF" 
+            text: "Antes de invertir, debes realizar un diagnóstico de tu salud financiera. No puedes invertir dinero que vas a necesitar para pagar la renta el próximo mes. El perfil se define por la intersección entre tu capacidad financiera y tu estabilidad psicológica.", 
+            author: "Guía de Educación Financiera, CONDUSEF" 
         },
-        speakerNotes: "El FOMO te hace comprar cuando todo est├í caro. Conocer tu perfil te da la disciplina para apagar el celular cuando el mercado entra en p├ínico.",
+        speakerNotes: "El FOMO te hace comprar cuando todo está caro. Conocer tu perfil te da la disciplina para apagar el celular cuando el mercado entra en pánico.",
         concepts: [
-          { term: "AMIB", def: "Asociaci├│n Mexicana de Instituciones Burs├ítiles. Representa y certifica a los profesionales del mercado de valores." },
-          { term: "FOMO", def: "Fear Of Missing Out. Comprar impulsivamente por miedo a perderte una ganancia que otros est├ín teniendo." },
-          { term: "Horizonte de Inversi├│n", def: "El tiempo exacto en el que necesitar├ís usar el dinero invertido. Define qu├® tanto riesgo puedes tomar." }
+          { term: "AMIB", def: "Asociación Mexicana de Instituciones Bursátiles. Representa y certifica a los profesionales del mercado de valores." },
+          { term: "FOMO", def: "Fear Of Missing Out. Comprar impulsivamente por miedo a perderte una ganancia que otros están teniendo." },
+          { term: "Horizonte de Inversión", def: "El tiempo exacto en el que necesitarás usar el dinero invertido. Define qué tanto riesgo puedes tomar." }
         ]
       },
       {
-        title: "Matem├íticas: El Poder del Inter├®s Compuesto",
+        title: "Matemáticas: El Poder del Interés Compuesto",
         content: "El lenguaje del dinero. Protege tu capital del enemigo silencioso.",
-        details: "En 2026, Banxico mantiene la inflaci├│n cerca del 3%. Si tu inversi├│n nominal da 9%, y la inflaci├│n es 4.5%, tu riqueza real crece mucho menos. Pero aqu├¡ entra la Octava Maravilla: el Inter├®s Compuesto. No solo ganas sobre tu capital, sino que ganas intereses sobre los intereses ya ganados. Es el motor de la riqueza generacional.",
+        details: "En 2026, Banxico mantiene la inflación cerca del 3%. Si tu inversión nominal da 9%, y la inflación es 4.5%, tu riqueza real crece mucho menos. Pero aquí entra la Octava Maravilla: el Interés Compuesto. No solo ganas sobre tu capital, sino que ganas intereses sobre los intereses ya ganados. Es el motor de la riqueza generacional.",
         visualType: "financial_math",
-        speakerNotes: "Entender la 'Tasa Real' te salvar├í de inversiones enga├▒osas. Un pagar├® bancario del 5% cuando la inflaci├│n es del 6%, te est├í haciendo perder dinero silenciosamente.",
+        speakerNotes: "Entender la 'Tasa Real' te salvará de inversiones engañosas. Un pagaré bancario del 5% cuando la inflación es del 6%, te está haciendo perder dinero silenciosamente.",
         concepts: [
-          { term: "Inflaci├│n (Banxico)", def: "El aumento de precios. Banxico tiene el mandato de mantenerla en un objetivo del 3% (+/- 1%)." },
-          { term: "Tasa Nominal", def: "El porcentaje de ganancia que te promete el banco o la plataforma, sin descontar inflaci├│n ni impuestos." },
-          { term: "Tasa Real", def: "Tu ganancia VERDADERA. Se calcula restando la inflaci├│n a tu tasa nominal." }
+          { term: "Inflación (Banxico)", def: "El aumento de precios. Banxico tiene el mandato de mantenerla en un objetivo del 3% (+/- 1%)." },
+          { term: "Tasa Nominal", def: "El porcentaje de ganancia que te promete el banco o la plataforma, sin descontar inflación ni impuestos." },
+          { term: "Tasa Real", def: "Tu ganancia VERDADERA. Se calcula restando la inflación a tu tasa nominal." }
         ]
       },
       {
         title: "El Ecosistema: Sistema Financiero Mexicano",
-        content: "Conoce a los ├írbitros que protegen tu capital.",
-        details: "El sistema est├í dise├▒ado para proteger al ahorrador, pero solo si usas instituciones autorizadas. Si una plataforma no est├í regulada por la CNBV o no aparece en el SIPRES, huye. Adem├ís, M├®xico cuenta con dos bolsas (BMV y BIVA), compitiendo para traer mejores opciones, incluyendo a las PYMES.",
+        content: "Conoce a los árbitros que protegen tu capital.",
+        details: "El sistema está diseñado para proteger al ahorrador, pero solo si usas instituciones autorizadas. Si una plataforma no está regulada por la CNBV o no aparece en el SIPRES, huye. Además, México cuenta con dos bolsas (BMV y BIVA), compitiendo para traer mejores opciones, incluyendo a las PYMES.",
         visualType: "mexican_system_table",
         newsSnippet: {
             title: "Boom de Inversionistas Retail",
-            text: "La CNBV reporta un incremento del 15% en cuentas de inversi├│n minoristas en el primer trimestre de 2026, impulsado por plataformas tecnol├│gicas que facilitan el acceso a la Bolsa Mexicana de Valores desde montos m├¡nimos de $100 pesos.",
-            source: "El Economista (Secci├│n Mercados, 2026)"
+            text: "La CNBV reporta un incremento del 15% en cuentas de inversión minoristas en el primer trimestre de 2026, impulsado por plataformas tecnológicas que facilitan el acceso a la Bolsa Mexicana de Valores desde montos mínimos de $100 pesos.",
+            source: "El Economista (Sección Mercados, 2026)"
         },
-        speakerNotes: "Nunca entregues tu dinero a plataformas extranjeras de dudosa procedencia o a 'gur├║s' en redes sociales. Usa el SIPRES, es tu escudo anti-estafas.",
+        speakerNotes: "Nunca entregues tu dinero a plataformas extranjeras de dudosa procedencia o a 'gurús' en redes sociales. Usa el SIPRES, es tu escudo anti-estafas.",
         concepts: [
           { term: "SIPRES", def: "Sistema de Registro de Prestadores de Servicios Financieros (CONDUSEF). El buscador oficial para saber si una empresa es legal." },
-          { term: "BIVA", def: "Bolsa Institucional de Valores. La segunda bolsa del pa├¡s, impuls├│ la modernizaci├│n y entrada de nuevas empresas al mercado." }
+          { term: "BIVA", def: "Bolsa Institucional de Valores. La segunda bolsa del país, impulsó la modernización y entrada de nuevas empresas al mercado." }
         ]
       },
       {
@@ -125,11 +125,11 @@ const courseData = [
 ];
 
 const quizQuestions = [
-  { id: 1, question: "Seg├║n CONDUSEF, ┬┐qu├® define tu perfil de inversi├│n?", options: ["Tu edad y tu signo zodiacal.", "La intersecci├│n entre tu capacidad financiera y tu estabilidad psicol├│gica.", "Cu├ínto dinero quieres ganar en un mes.", "Tu nivel de estudios."], correct: 1 },
-  { id: 2, question: "Si inviertes a una tasa del 9% y la inflaci├│n es del 4.5%, ┬┐qu├® est├ís calculando si ajustas esa diferencia?", options: ["La Tasa Nominal.", "La Tasa Real.", "El Inter├®s Compuesto.", "El CAT."], correct: 1 },
-  { id: 3, question: "┬┐Qu├® hace la 'Octava Maravilla' (El Inter├®s Compuesto)?", options: ["Te cobra impuestos mensuales.", "Genera intereses solo sobre tu capital inicial.", "Genera intereses sobre los intereses ya ganados, creando una curva exponencial.", "Evita que la bolsa caiga."], correct: 2 },
-  { id: 4, question: "┬┐Qu├® instituci├│n garantiza tus ahorros bancarios hasta por ~3.2 millones de pesos en M├®xico?", options: ["BANXICO", "CNBV", "IPAB", "BMV"], correct: 2 },
-  { id: 5, question: "┬┐Qu├® debes hacer si una plataforma de inversi├│n NO aparece en el SIPRES?", options: ["Invertir poco a poco.", "Evitarla completamente, es una estafa potencial.", "Pedirles su RFC.", "Confiar si tienen muchos seguidores en Instagram."], correct: 1 },
+  { id: 1, question: "Según CONDUSEF, ¿qué define tu perfil de inversión?", options: ["Tu edad y tu signo zodiacal.", "La intersección entre tu capacidad financiera y tu estabilidad psicológica.", "Cuánto dinero quieres ganar en un mes.", "Tu nivel de estudios."], correct: 1 },
+  { id: 2, question: "Si inviertes a una tasa del 9% y la inflación es del 4.5%, ¿qué estás calculando si ajustas esa diferencia?", options: ["La Tasa Nominal.", "La Tasa Real.", "El Interés Compuesto.", "El CAT."], correct: 1 },
+  { id: 3, question: "¿Qué hace la 'Octava Maravilla' (El Interés Compuesto)?", options: ["Te cobra impuestos mensuales.", "Genera intereses solo sobre tu capital inicial.", "Genera intereses sobre los intereses ya ganados, creando una curva exponencial.", "Evita que la bolsa caiga."], correct: 2 },
+  { id: 4, question: "¿Qué institución garantiza tus ahorros bancarios hasta por ~3.2 millones de pesos en México?", options: ["BANXICO", "CNBV", "IPAB", "BMV"], correct: 2 },
+  { id: 5, question: "¿Qué debes hacer si una plataforma de inversión NO aparece en el SIPRES?", options: ["Invertir poco a poco.", "Evitarla completamente, es una estafa potencial.", "Pedirles su RFC.", "Confiar si tienen muchos seguidores en Instagram."], correct: 1 },
   { id: 6, question: "Si quieres usar tus inversiones para capitalizar un negocio en 2 años, ¿deberías invertir todo en acciones de alto riesgo?", options: ["Sí, porque puedes duplicar el dinero rápido.", "No. Ese dinero tiene un 'por qué' de corto plazo y el riesgo debe ser bajo.", "Solo si el negocio es de tecnología.", "Depende de tu signo zodiacal."], correct: 1 },
     { id: 7, question: "Tienes una deuda de tarjeta de crédito con un CAT del 60% y mil pesos libres. ¿Qué haces?", options: ["Inviertes los mil pesos en S&P 500 para ganar un 10%.", "Sanas tu deuda pagando a la tarjeta, garantizando un 'rendimiento' del 60%.", "Compras acciones de Novo Nordisk.", "Los ahorras en el banco."], correct: 1 },
     { id: 8, question: "La maravilla del Interés Compuesto se basa principalmente en:", options: ["Ganar siempre el 20% anual.", "Generar intereses sobre los intereses previamente ganados a lo largo del tiempo.", "Invertir grandes sumas de dinero a los 50 años.", "Que el gobierno te da subsidios."], correct: 1 },
@@ -140,7 +140,7 @@ const quizQuestions = [
 // --- COMPONENTES VISUALES MÓDULO 1 ---
 const InvestorProfile = () => (
     <div className="flex flex-col items-center mt-6 bg-slate-900 p-6 rounded-xl border border-teal-500/20 shadow-lg">
-        <h4 className="text-teal-400 font-bold mb-6 text-sm tracking-widest uppercase">La Intersecci├│n del Perfil</h4>
+        <h4 className="text-teal-400 font-bold mb-6 text-sm tracking-widest uppercase">La Intersección del Perfil</h4>
         
         <div className="relative w-full max-w-sm h-48 flex items-center justify-center">
             {/* Circle 1: Financial Capacity */}
@@ -153,7 +153,7 @@ const InvestorProfile = () => (
             {/* Circle 2: Psychological Stability */}
             <div className="absolute right-8 w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-amber-500/80 bg-amber-500/10 flex items-center justify-end pr-4 md:pr-8">
                 <div className="text-center">
-                    <span className="block text-amber-400 font-bold text-xs md:text-sm">Estabilidad<br/>Psicol├│gica</span>
+                    <span className="block text-amber-400 font-bold text-xs md:text-sm">Estabilidad<br/>Psicológica</span>
                 </div>
             </div>
 
@@ -171,7 +171,7 @@ const InvestorProfile = () => (
             </div>
             <div className="bg-slate-800/80 p-4 rounded-lg border-l-2 border-red-500">
                 <p className="text-red-400 font-bold text-xs mb-1">Horizonte Largo (Retiro)</p>
-                <p className="text-slate-300 text-[10px]">Renta Variable (IPC). Soportar ca├¡das del -20% sin p├ínico.</p>
+                <p className="text-slate-300 text-[10px]">Renta Variable (IPC). Soportar caídas del -20% sin pánico.</p>
             </div>
         </div>
     </div>
@@ -182,25 +182,25 @@ const FinancialMath = () => (
         {/* Formulas Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-slate-800 p-4 rounded-xl border border-slate-600 flex flex-col items-center justify-center group hover:border-amber-500 transition-colors">
-                <h5 className="text-slate-400 text-xs font-bold uppercase mb-3">Tasa Real (Inflaci├│n)</h5>
+                <h5 className="text-slate-400 text-xs font-bold uppercase mb-3">Tasa Real (Inflación)</h5>
                 <div className="bg-slate-900 p-3 rounded-lg text-amber-400 font-mono text-sm md:text-base tracking-widest border border-slate-700 shadow-inner">
-                    r = [(1 + i) / (1 + ¤Ç)] - 1
+                    r = [(1 + i) / (1 + π)] - 1
                 </div>
                 <div className="flex gap-4 mt-3 text-[9px] text-slate-500">
                     <span><strong className="text-white">r:</strong> Tasa Real</span>
                     <span><strong className="text-white">i:</strong> Nominal</span>
-                    <span><strong className="text-white">¤Ç:</strong> Inflaci├│n</span>
+                    <span><strong className="text-white">π:</strong> Inflación</span>
                 </div>
             </div>
 
             <div className="bg-slate-800 p-4 rounded-xl border border-slate-600 flex flex-col items-center justify-center group hover:border-teal-500 transition-colors">
                 <h5 className="text-slate-400 text-xs font-bold uppercase mb-3">Valor Futuro (Compuesto)</h5>
                 <div className="bg-slate-900 p-3 rounded-lg text-teal-400 font-mono text-sm md:text-base tracking-widest border border-slate-700 shadow-inner">
-                    VF = VP ├ù (1 + i)Ôü┐
+                    VF = VP × (1 + i)ⁿ
                 </div>
                 <div className="flex gap-4 mt-3 text-[9px] text-slate-500">
                     <span><strong className="text-white">VP:</strong> Capital</span>
-                    <span><strong className="text-white">n:</strong> A├▒os</span>
+                    <span><strong className="text-white">n:</strong> Años</span>
                 </div>
             </div>
         </div>
@@ -209,7 +209,7 @@ const FinancialMath = () => (
         <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-xl border border-teal-500/30 relative overflow-hidden">
             <div className="absolute right-0 top-0 opacity-10"><TrendingUp size={150} /></div>
             <h4 className="text-white font-bold text-sm mb-4 flex items-center gap-2">
-                <Calculator size={18} className="text-teal-500"/> Ejemplo FA Academy (20 A├▒os al 10%)
+                <Calculator size={18} className="text-teal-500"/> Ejemplo FA Academy (20 Años al 10%)
             </h4>
             
             <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
@@ -241,15 +241,15 @@ const MexicanSystemTable = () => (
         <thead>
             <tr className="bg-slate-900/80">
             <th className="p-4 text-slate-400 text-xs uppercase tracking-wider w-1/4">Entidad</th>
-            <th className="p-4 text-slate-400 text-xs uppercase tracking-wider w-1/3">Funci├│n Principal</th>
-            <th className="p-4 text-teal-400 text-xs uppercase tracking-wider">Por qu├® le importa al alumno</th>
+            <th className="p-4 text-slate-400 text-xs uppercase tracking-wider w-1/3">Función Principal</th>
+            <th className="p-4 text-teal-400 text-xs uppercase tracking-wider">Por qué le importa al alumno</th>
             </tr>
         </thead>
         <tbody className="text-slate-200 text-sm">
             <tr className="border-t border-slate-800 hover:bg-slate-800/50 transition-colors">
                 <td className="p-4 font-bold flex items-center gap-2"><Landmark className="text-amber-500" size={16}/> BANXICO</td>
-                <td className="p-4 text-slate-300 text-xs">Controlar la inflaci├│n y pol├¡tica monetaria.</td>
-                <td className="p-4 text-xs">Determina cu├ínto rinden tus Cetes y el costo de los cr├®ditos.</td>
+                <td className="p-4 text-slate-300 text-xs">Controlar la inflación y política monetaria.</td>
+                <td className="p-4 text-xs">Determina cuánto rinden tus Cetes y el costo de los créditos.</td>
             </tr>
             <tr className="border-t border-slate-800 hover:bg-slate-800/50 transition-colors">
                 <td className="p-4 font-bold flex items-center gap-2"><Scale className="text-blue-500" size={16}/> CNBV</td>
@@ -258,7 +258,7 @@ const MexicanSystemTable = () => (
             </tr>
             <tr className="border-t border-slate-800 hover:bg-slate-800/50 transition-colors">
                 <td className="p-4 font-bold flex items-center gap-2"><ShieldCheck className="text-green-500" size={16}/> IPAB</td>
-                <td className="p-4 text-slate-300 text-xs">Seguro de dep├│sitos bancarios.</td>
+                <td className="p-4 text-slate-300 text-xs">Seguro de depósitos bancarios.</td>
                 <td className="p-4 text-xs">Protege tus ahorros en el banco hasta ~3.2 millones de pesos (400 mil UDIs).</td>
             </tr>
             <tr className="border-t border-slate-800 hover:bg-slate-800/50 transition-colors bg-slate-800/20">
