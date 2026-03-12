@@ -17,6 +17,75 @@ const courseData = [
     description: "Conoce el tablero de juego. Aprende a moverte por diferentes activos y mercados con seguridad.",
     lessons: [
       {
+        title: "La Anatom├¡a de una Acci├│n",
+        content: "No compras un 'ticker' en una pantalla; adquieres una parte del capital social.",
+        details: "En M├®xico, es vital entender las 'Series' accionarias. La Serie A suele ser para mexicanos con pleno derecho a voto. La Serie B o L tiene voto limitado pero a veces derechos preferentes. Los CPOs (Certificados de Participaci├│n Ordinaria) agrupan varias acciones para hacerlas m├ís f├íciles de comprar y vender, como el famoso caso de CEMEXCPO.",
+        visualType: "action_anatomy",
+        quote: { 
+            text: "El inversionista debe distinguir entre la ganancia de capital (subida de precio) y el dividendo (reparto de utilidades). No todas las empresas pagan dividendos; muchas reinvierten para crecer, lo cual no es necesariamente malo.", 
+            author: "Nota Formativa, CNBV" 
+        },
+        speakerNotes: "Ser due├▒o implica derechos y riesgos. Si la empresa quiebra, los accionistas son los ├║ltimos en cobrar. Por eso la rentabilidad potencial es ilimitada.",
+        concepts: [
+          { term: "CPO", def: "Certificado de Participaci├│n Ordinaria. Un paquete que contiene varias acciones de distintas series (ej. 2 Serie A y 1 Serie B)." },
+          { term: "Ganancia de Capital", def: "El beneficio que obtienes cuando vendes la acci├│n m├ís cara de lo que la compraste." },
+          { term: "Dividendo", def: "La parte de las ganancias (utilidades) que la empresa decide repartir en efectivo a sus accionistas." }
+        ]
+      },
+      {
+        title: "An├ílisis Fundamental: Evaluando el Negocio",
+        content: "Buscando el Valor Intr├¡nseco oculto bajo el precio.",
+        details: "El An├ílisis Fundamental se enfoca en los estados financieros para saber si el negocio es sano. Si el Valor Intr├¡nseco (lo que realmente vale) es mayor al Precio de Mercado, la acci├│n est├í 'barata'. Usamos m├®tricas clave como el EBITDA (el coraz├│n operativo), ROE (eficiencia del capital) y Free Cash Flow (efectivo real disponible).",
+        visualType: "fundamental_metrics",
+        speakerNotes: "El precio es lo que pagas, el valor es lo que obtienes. Un P/E bajo no siempre significa que est├® barata; a veces es una 'trampa de valor' porque el negocio se est├í hundiendo.",
+        concepts: [
+          { term: "EBITDA", def: "Ganancias antes de intereses, impuestos, depreciaciones y amortizaciones. Muestra cu├ínto efectivo genera la operaci├│n pura." },
+          { term: "ROE", def: "Return on Equity. Mide qu├® tanta ganancia genera la empresa utilizando el dinero que pusieron los accionistas." },
+          { term: "Free Cash Flow", def: "Flujo de Caja Libre. El dinero que sobra despu├®s de pagar operaciones y mantener las f├íbricas. Si es negativo constantemente, cuidado." }
+        ]
+      },
+      {
+        title: "Caso Pr├íctico 2026: CEMEX ($CEMEXCPO)",
+        content: "Una gigante c├¡clica en el boom de la infraestructura.",
+        details: "Cemex es una empresa 'c├¡clica', depende de la econom├¡a global y la construcci├│n. En An├ílisis Fundamental, usamos el m├║ltiplo EV/EBITDA; adem├ís, su agresivo 'desapalancamiento' le ha devuelto el 'Grado de Inversi├│n'. En An├ílisis T├®cnico, los analistas vigilan soportes hist├│ricos y confirmaciones con alto volumen.",
+        visualType: "cemex_case",
+        newsSnippet: {
+            title: "Cemex y el Efecto Nearshoring",
+            text: "Cemex reporta un incremento del 8% en su flujo operativo gracias a la demanda de infraestructura derivada del Nearshoring en el norte de M├®xico. Analistas institucionales ajustan precio objetivo a niveles no vistos en la d├®cada.",
+            source: "Secci├│n de Mercados, El Economista (Simulaci├│n 2026)"
+        },
+        speakerNotes: "No inviertas en lo que no entiendes. Si vas a comprar Cemex, ve a la calle y mira si se est├ín construyendo puentes, f├íbricas o casas. La calle te da se├▒ales antes que las noticias.",
+        concepts: [
+          { term: "Empresa C├¡clica", def: "Negocios que ganan mucho cuando la econom├¡a va bien (construcci├│n, autos) y sufren mucho en recesiones." },
+          { term: "EV/EBITDA", def: "Enterprise Value / EBITDA. M├║ltiplo que permite comparar empresas con distintos niveles de deuda. Muy usado en la industria industrial." },
+          { term: "Investment Grade", def: "Grado de inversi├│n. Calificaci├│n crediticia alta que permite a la empresa pedir pr├®stamos con tasas de inter├®s muy bajas." }
+        ]
+      },
+      {
+        title: "An├ílisis T├®cnico: La Psicolog├¡a de Masas",
+        content: "El Fundamental te dice QU├ë comprar. El T├®cnico te dice CU├üNDO.",
+        details: "Los gr├íficos no adivinan el futuro, pero muestran el rastro del dinero institucional. Las Velas Japonesas muestran la batalla diaria. Las Medias M├│viles (ej. MA 200) revelan la tendencia macro. Y el RSI (├ìndice de Fuerza Relativa) nos dice si el mercado est├í sobrecomprado (>70) o sobrevendido (<30).",
+        visualType: "technical_psychology",
+        speakerNotes: "El peor error es comprar una buena empresa en un p├®simo momento t├®cnico. Si el RSI est├í en 85 y el precio sube vertical, el riesgo de correcci├│n es alt├¡simo.",
+        concepts: [
+          { term: "Vela Japonesa", def: "Gr├ífico que muestra Apertura, Cierre, M├íximo y M├¡nimo. Una vela verde grande significa control total de los compradores." },
+          { term: "Media M├│vil 200 (MA200)", def: "El promedio de los ├║ltimos 200 d├¡as. Act├║a como la 'l├¡nea en la arena'; si el precio est├í arriba, hay tendencia alcista." },
+          { term: "RSI", def: "Indicador que mide la velocidad de los movimientos de precio. Ayuda a identificar puntos de agotamiento." }
+        ]
+      },
+      {
+        title: "El Ecosistema de Diversificaci├│n",
+        content: "Expande tu horizonte: Inmuebles, ETFs globales y Activos Digitales.",
+        details: "No todo es comprar acciones sueltas. Las FIBRAS (Bienes Ra├¡ces) en 2026 capturan el valor de las bodegas industriales (Nearshoring) pagando rentas. Los ETFs (ej. IVV) te permiten ser due├▒o del S&P 500 desde M├®xico (con un ISR preferencial del 10%). Y los Criptoactivos ('Digital Gold') ofrecen crecimiento asim├®trico extremo para el 1-5% de tu cartera.",
+        visualType: "diversification_eco",
+        speakerNotes: "Combina estos activos estrat├®gicamente. Las FIBRAS te dan flujo de caja (rentas), los ETFs te dan estabilidad global, y las Cripto te dan un 'boleto de loter├¡a' sin arriesgar tu futuro.",
+        concepts: [
+          { term: "FIBRAS", def: "Fideicomisos de Infraestructura y Bienes Ra├¡ces. Por ley deben repartir al menos el 95% de su resultado fiscal a los inversionistas." },
+          { term: "SIC", def: "Sistema Internacional de Cotizaciones. Plataforma en M├®xico que permite comprar acciones y ETFs de otros pa├¡ses en pesos mexicanos." },
+          { term: "Asimetr├¡a Positiva", def: "Inversiones donde lo m├íximo que puedes perder es 1x, pero puedes ganar 10x o 100x (t├¡pico en Startups y Criptoactivos s├│lidos)." }
+        ]
+      },
+      {
         title: "Diferenciación de Mercados (BMV vs. SIC)",
         content: "El Sistema Internacional de Cotizaciones (SIC) democratizó la bolsa en México.",
         details: "Antes, un mexicano solo podía comprar acciones de empresas locales como Cemex o Bimbo, porque las acciones de EE. UU. (como Apple o Tesla) cotizaban en Nueva York y necesitabas una cuenta en el extranjero. Hoy, el SIC trae casi todo Wall Street a México. Esto es un 'Aha! moment': puedes ser dueño de Nvidia o Pfizer pagando en pesos mexicanos, desde una app, de forma 100% legal y con una gran ventaja fiscal al momento de vender.",
@@ -78,14 +147,175 @@ const courseData = [
 ];
 
 const quizQuestions = [
-  { id: 1, question: "¿Qué permitió el Sistema Internacional de Cotizaciones (SIC) a los inversionistas mexicanos?", options: ["Poder abrir cuentas físicas en un banco de Nueva York.", "Comprar títulos de empresas extranjeras como Apple o Nvidia y ETFs globales operando desde México y en pesos.", "Pagar menos comisiones a Banxico.", "Solo comprar acciones mexicanas como Bimbo."], correct: 1 },
-  { id: 2, question: "El paso más crítico al elegir una Casa de Bolsa como GBM o Bursanet es asegurar que:", options: ["Tengan la aplicación más bonita.", "Sus gráficos se vean geniales.", "Estén supervisadas y reguladas estrictamente por la CNBV.", "Ofrezcan invertir desde 50 pesos."], correct: 2 },
-  { id: 3, question: "¿Por qué un ETF como 'VOO' o 'IVVPESO' es mucho más seguro para un principiante que comprar acciones de una sola empresa?", options: ["Porque no pagan comisiones nunca.", "Porque invierten por ley solo en Cetes.", "Porque con una sola compra diversificas tu dinero en las 500 empresas más grandes de EE.UU., diluyendo el riesgo.", "Porque garantizan un retorno del 50% anual."], correct: 2 },
-  { id: 4, question: "Las FIBRAS en México son excelentes herramientas en un portafolio porque:", options: ["Suben de precio como el Oro.", "Te eximen de pagar ISR por tu sueldo.", "Pagan 'rentas' periódicamente a los tenedores, derivadas del flujo de bienes raíces comerciales e industriales.", "Se usan para pagar servicios online."], correct: 2 },
-  { id: 5, question: "¿Cuál es el objetivo principal del Análisis Fundamental al revisar el Balance General?", options: ["Adivinar si el gráfico de la acción subirá mañana.", "Entender si el negocio es realmente sano, si tiene ganancias y que sus deudas no asfixien a la empresa.", "Hacer trading veloz en minutos.", "Poder evadir impuestos."], correct: 1 }
+  { id: 1, question: "┬┐Qu├® diferencia a una Acci├│n Serie A de una Serie B o L en M├®xico?", options: ["El color del certificado.", "La Serie A tiene plenos derechos de voto, mientras que la B/L suele tener voto limitado.", "La Serie A es solo para bancos.", "No hay ninguna diferencia."], correct: 1 },
+  { id: 2, question: "┬┐Qu├® mide exactamente el Flujo de Caja Libre (Free Cash Flow)?", options: ["El total de ventas del a├▒o.", "El dinero en la caja registradora de las tiendas.", "El efectivo real que sobra despu├®s de mantener las operaciones y las f├íbricas.", "La deuda total."], correct: 2 },
+  { id: 3, question: "En el An├ílisis T├®cnico, ┬┐qu├® nos indica un RSI por encima de 70?", options: ["Que la empresa va a quebrar.", "Que la acci├│n est├í sobrecomprada y podr├¡a haber una correcci├│n pronto.", "Que es el momento perfecto para comprar m├ís.", "Que la acci├│n no tiene liquidez."], correct: 1 },
+  { id: 4, question: "En el contexto de 2025-2026, ┬┐por qu├® han brillado las FIBRAS Industriales?", options: ["Porque ya no se construyen casas.", "Por el impulso de las f├íbricas que se mudan a M├®xico para exportar a EE. UU. (Nearshoring).", "Porque pagan en d├│lares.", "Por la ca├¡da del Bitcoin."], correct: 1 },
+  { id: 5, question: "┬┐Cu├íl es la ventaja fiscal de comprar ETFs internacionales a trav├®s del SIC en M├®xico?", options: ["No pagas ning├║n impuesto.", "La tasa de ISR sobre la ganancia de capital (venta de acciones) es del 10% definitivo.", "Te devuelven el IVA.", "El gobierno te regala acciones."], correct: 1 },
+  { id: 6, question: "¿Qué permitió el Sistema Internacional de Cotizaciones (SIC) a los inversionistas mexicanos?", options: ["Poder abrir cuentas físicas en un banco de Nueva York.", "Comprar títulos de empresas extranjeras como Apple o Nvidia y ETFs globales operando desde México y en pesos.", "Pagar menos comisiones a Banxico.", "Solo comprar acciones mexicanas como Bimbo."], correct: 1 },
+    { id: 7, question: "El paso más crítico al elegir una Casa de Bolsa como GBM o Bursanet es asegurar que:", options: ["Tengan la aplicación más bonita.", "Sus gráficos se vean geniales.", "Estén supervisadas y reguladas estrictamente por la CNBV.", "Ofrezcan invertir desde 50 pesos."], correct: 2 },
+    { id: 8, question: "¿Por qué un ETF como 'VOO' o 'IVVPESO' es mucho más seguro para un principiante que comprar acciones de una sola empresa?", options: ["Porque no pagan comisiones nunca.", "Porque invierten por ley solo en Cetes.", "Porque con una sola compra diversificas tu dinero en las 500 empresas más grandes de EE.UU., diluyendo el riesgo.", "Porque garantizan un retorno del 50% anual."], correct: 2 },
+    { id: 9, question: "Las FIBRAS en México son excelentes herramientas en un portafolio porque:", options: ["Suben de precio como el Oro.", "Te eximen de pagar ISR por tu sueldo.", "Pagan 'rentas' periódicamente a los tenedores, derivadas del flujo de bienes raíces comerciales e industriales.", "Se usan para pagar servicios online."], correct: 2 },
+    { id: 10, question: "¿Cuál es el objetivo principal del Análisis Fundamental al revisar el Balance General?", options: ["Adivinar si el gráfico de la acción subirá mañana.", "Entender si el negocio es realmente sano, si tiene ganancias y que sus deudas no asfixien a la empresa.", "Hacer trading veloz en minutos.", "Poder evadir impuestos."], correct: 1 }
 ];
 
-// --- COMPONENTES VISUALES FA ACADEMY (FASE 2 COLORES: AZUL Y PÚRPURA) ---
+const ActionAnatomy = () => (
+    <div className="flex flex-col md:flex-row gap-4 mt-6">
+        <div className="bg-slate-800 p-5 rounded-xl border border-purple-500/30 flex-1 relative overflow-hidden group hover:border-purple-400 transition-colors">
+            <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:scale-110 transition-transform"><UserCheck size={48} className="text-purple-400"/></div>
+            <h4 className="text-purple-400 font-bold text-lg mb-2">Serie A</h4>
+            <p className="text-xs text-slate-300 font-bold uppercase tracking-wider mb-2">Capital Ordinario</p>
+            <ul className="text-[10px] text-slate-400 space-y-2">
+                <li className="flex gap-2"><CheckCircle size={12} className="text-purple-500 shrink-0"/> Plenos derechos de voto en asambleas.</li>
+                <li className="flex gap-2"><CheckCircle size={12} className="text-purple-500 shrink-0"/> Generalmente reservadas para mexicanos.</li>
+            </ul>
+        </div>
+        <div className="bg-slate-800 p-5 rounded-xl border border-indigo-500/30 flex-1 relative overflow-hidden group hover:border-indigo-400 transition-colors">
+            <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:scale-110 transition-transform"><Scale size={48} className="text-indigo-400"/></div>
+            <h4 className="text-indigo-400 font-bold text-lg mb-2">Serie B o L</h4>
+            <p className="text-xs text-slate-300 font-bold uppercase tracking-wider mb-2">Voto Limitado</p>
+            <ul className="text-[10px] text-slate-400 space-y-2">
+                <li className="flex gap-2"><CheckCircle size={12} className="text-indigo-500 shrink-0"/> Restringen el control corporativo.</li>
+                <li className="flex gap-2"><CheckCircle size={12} className="text-indigo-500 shrink-0"/> Suelen tener prioridad en pago de dividendos.</li>
+            </ul>
+        </div>
+        <div className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 p-5 rounded-xl border border-violet-500/50 flex-1 shadow-[0_0_20px_rgba(139,92,246,0.15)] group hover:shadow-[0_0_25px_rgba(139,92,246,0.3)] transition-all">
+            <div className="flex items-center gap-2 mb-2">
+                <Layers className="text-violet-400" size={24}/>
+                <h4 className="text-violet-300 font-bold text-lg">CPO</h4>
+            </div>
+            <p className="text-xs text-violet-200 font-bold uppercase tracking-wider mb-2">El Combo Burs├ítil</p>
+            <p className="text-[10px] text-slate-300 leading-relaxed">
+                Certificado de Participaci├│n Ordinaria. Agrupa varias series (ej. 2 Serie A + 1 Serie B) en un solo t├¡tulo. <br/><br/>
+                <strong className="text-violet-400">Objetivo:</strong> Facilitar la liquidez y venta a inversionistas extranjeros sin perder el control de la empresa.
+            </p>
+        </div>
+    </div>
+);
+
+const FundamentalMetrics = () => (
+    <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col items-center text-center relative">
+            <div className="absolute -top-4 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Operaci├│n Pura</div>
+            <Activity size={32} className="text-purple-400 mb-3 mt-2" />
+            <h4 className="text-white font-bold text-xl mb-1">EBITDA</h4>
+            <p className="text-[10px] text-slate-400 mt-2 border-t border-slate-700 pt-2">
+                Elimina trucos contables e impuestos para mostrar el efectivo crudo que genera el negocio.
+            </p>
+        </div>
+        
+        <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col items-center text-center relative">
+            <div className="absolute -top-4 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Eficiencia</div>
+            <Target size={32} className="text-indigo-400 mb-3 mt-2" />
+            <h4 className="text-white font-bold text-xl mb-1">ROE</h4>
+            <p className="text-[10px] text-slate-400 mt-2 border-t border-slate-700 pt-2">
+                ┬┐Qu├® porcentaje de ganancia logran los directivos por cada peso invertido por los accionistas?
+            </p>
+        </div>
+
+        <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col items-center text-center relative shadow-[0_0_20px_rgba(139,92,246,0.1)]">
+            <div className="absolute -top-4 bg-violet-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">El Rey</div>
+            <Landmark size={32} className="text-violet-400 mb-3 mt-2" />
+            <h4 className="text-white font-bold text-xl mb-1">Free Cash Flow</h4>
+            <p className="text-[10px] text-slate-400 mt-2 border-t border-slate-700 pt-2">
+                El dinero en efectivo que realmente sobra para pagar deudas, hacer recompras o pagar dividendos.
+            </p>
+        </div>
+    </div>
+);
+
+const CemexCase = () => (
+    <div className="mt-6 flex flex-col md:flex-row gap-6">
+        <div className="flex-1 bg-slate-900 rounded-xl border border-slate-700 overflow-hidden">
+            <div className="bg-slate-800 p-3 border-b border-slate-700 flex justify-between items-center">
+                <span className="text-white font-bold tracking-widest">CEMEXCPO.MX</span>
+                <span className="bg-green-500/20 text-green-400 text-[10px] px-2 py-1 rounded font-bold">Grado de Inversi├│n</span>
+            </div>
+            <div className="p-5 space-y-4">
+                <div className="flex items-start gap-3">
+                    <BarChart3 className="text-purple-400 shrink-0" size={20}/>
+                    <div>
+                        <h5 className="text-sm font-bold text-purple-300">Valoraci├│n (EV/EBITDA)</h5>
+                        <p className="text-xs text-slate-400">Si Cemex cotiza a un m├║ltiplo 6x y sus competidores (Holcim) a 8x, existe un posible "descuento" de valor.</p>
+                    </div>
+                </div>
+                <div className="flex items-start gap-3">
+                    <TrendingUp className="text-indigo-400 shrink-0" size={20}/>
+                    <div>
+                        <h5 className="text-sm font-bold text-indigo-300">An├ílisis T├®cnico</h5>
+                        <p className="text-xs text-slate-400">Ruptura de resistencias hist├│ricas apoyada por volumen institucional agresivo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div className="flex-1 bg-gradient-to-br from-slate-800 to-indigo-900/30 p-6 rounded-xl border border-indigo-500/30 flex flex-col justify-center">
+            <div className="flex items-center gap-3 mb-4">
+                <Factory className="text-indigo-400" size={28}/>
+                <h4 className="text-white font-bold text-lg leading-tight">El Motor Macroecon├│mico</h4>
+            </div>
+            <p className="text-sm text-slate-300 mb-4">
+                El modelo de negocio es pesado en capital. El catalizador real de 2026 es la construcci├│n de naves industriales impulsada por el <strong className="text-purple-400">Nearshoring</strong>.
+            </p>
+            <div className="bg-slate-900/80 p-3 rounded text-[10px] text-indigo-300 border-l-2 border-indigo-500">
+                <span className="font-bold">Estrategia FA Academy:</span> Identifica los ciclos macro. La empresa cementera brilla cuando las tasas bajan y el gasto p├║blico en infraestructura sube.
+            </div>
+        </div>
+    </div>
+);
+
+const TechnicalPsychology = () => (
+    <div className="mt-6 bg-slate-900 p-5 rounded-xl border border-slate-700 relative overflow-hidden">
+        <h4 className="text-center text-white font-bold text-sm mb-4 tracking-widest uppercase">Tablero T├®cnico</h4>
+        
+        {/* Gr├ífico Simulado */}
+        <div className="relative w-full h-40 border border-slate-700 rounded bg-slate-800/50 mb-4">
+            {/* Grid */}
+            <div className="absolute inset-0 grid grid-cols-5 grid-rows-3 opacity-10 pointer-events-none">
+                {[...Array(15)].map((_, i) => <div key={i} className="border border-slate-500"></div>)}
+            </div>
+            {/* MA Line */}
+            <svg className="w-full h-full absolute" preserveAspectRatio="none" viewBox="0 0 100 100">
+                <path d="M 0 80 Q 30 75 50 60 T 100 20" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeDasharray="4,2"/>
+                {/* Price Line to simulate candlesticks */}
+                <path d="M 0 85 L 20 65 L 35 70 L 60 40 L 80 50 L 100 10" fill="none" stroke="#cbd5e1" strokeWidth="1.5"/>
+            </svg>
+            <div className="absolute bottom-2 left-2 text-[9px] text-purple-400 font-bold bg-slate-900/80 px-2 py-0.5 rounded">Media M├│vil 200 (Tendencia Macro)</div>
+            <div className="absolute top-2 right-2 text-[9px] text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded border border-slate-600">Golden Cross &uarr;</div>
+        </div>
+
+        {/* RSI */}
+        <div className="flex items-center gap-4">
+            <span className="text-xs font-bold text-slate-400 w-12">RSI</span>
+            <div className="flex-1 h-4 bg-slate-800 rounded-full relative overflow-hidden border border-slate-600">
+                <div className="absolute left-[30%] w-[40%] h-full bg-slate-700 border-x border-slate-500"></div>
+                <div className="absolute left-[85%] top-1/2 -translate-y-1/2 w-3 h-3 bg-red-500 rounded-full shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse"></div>
+            </div>
+            <span className="text-xs font-bold text-red-400 w-20 text-right">85 (Sobrecompra)</span>
+        </div>
+    </div>
+);
+
+const DiversificationEco = () => (
+    <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-slate-800 p-5 rounded-xl border border-slate-700 hover:border-purple-500 transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+            <div className="bg-purple-900/30 p-3 rounded-full mb-3"><Building2 className="text-purple-400" size={28}/></div>
+            <h4 className="text-white font-bold text-sm mb-1">FIBRAS (REITs)</h4>
+            <p className="text-[10px] text-slate-400">Captura la plusval├¡a de naves industriales y cobra rentas peri├│dicas por ley. Mitiga la inflaci├│n.</p>
+        </div>
+        <div className="bg-slate-800 p-5 rounded-xl border border-slate-700 hover:border-indigo-500 transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+            <div className="bg-indigo-900/30 p-3 rounded-full mb-3"><Globe className="text-indigo-400" size={28}/></div>
+            <h4 className="text-white font-bold text-sm mb-1">ETFs Internacionales</h4>
+            <p className="text-[10px] text-slate-400">Ej. IVV (S&P 500). Comprados v├¡a el SIC en M├®xico con un beneficio fiscal del 10% de ISR sobre ganancia.</p>
+        </div>
+        <div className="bg-slate-800 p-5 rounded-xl border border-slate-700 hover:border-violet-500 transition-all hover:-translate-y-1 flex flex-col items-center text-center relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 opacity-5"><Coins size={80} className="text-violet-400"/></div>
+            <div className="bg-violet-900/30 p-3 rounded-full mb-3 relative z-10"><Coins className="text-violet-400" size={28}/></div>
+            <h4 className="text-white font-bold text-sm mb-1 relative z-10">Criptoactivos</h4>
+            <p className="text-[10px] text-slate-400 relative z-10">Asimetr├¡a Extrema. ├Ütil solo para el 1-5% del portafolio. Alta volatilidad sin flujos de caja intr├¡nsecos.</p>
+        </div>
+    </div>
+);
 
 const MarketDiffTab = () => (
     <div className="flex flex-col md:flex-row gap-4 mt-6">
@@ -340,6 +570,11 @@ export default function AppFAAcademyModulo2() {
 
   const renderVisual = (type) => {
     switch(type) {
+      case 'action_anatomy': return <ActionAnatomy />;
+      case 'fundamental_metrics': return <FundamentalMetrics />;
+      case 'cemex_case': return <CemexCase />;
+      case 'technical_psychology': return <TechnicalPsychology />;
+      case 'diversification_eco': return <DiversificationEco />;
       case 'market_diff_tab': return <MarketDiffTab />;
       case 'broker_security': return <BrokerSecurity />;
       case 'asset_types': return <AssetTypes />;
