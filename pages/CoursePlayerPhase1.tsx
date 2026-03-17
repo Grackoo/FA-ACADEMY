@@ -20,6 +20,7 @@ const courseData = [
         content: "Tu perfil no es estático; es la intersección entre tu cartera y tu mente.",
         details: "Según la AMIB, el mayor error del inversionista retail en México es saltarse este paso por 'FOMO' (miedo a quedarse fuera). Tu perfil evoluciona con la edad y tus objetivos. Para metas a corto plazo (ej. pago de impuestos SIATEC), usa deuda gubernamental. Para el retiro, la renta variable es vital. En 2025-2026, el IPC demostró que un perfil 'Agresivo' debe soportar caídas del 20% sin vender.",
         visualType: "investor_profile",
+        videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo1-1.mp4",
         quote: { 
             text: "Antes de invertir, debes realizar un diagnóstico de tu salud financiera. No puedes invertir dinero que vas a necesitar para pagar la renta el próximo mes. El perfil se define por la intersección entre tu capacidad financiera y tu estabilidad psicológica.", 
             author: "Guía de Educación Financiera, CONDUSEF" 
@@ -36,6 +37,7 @@ const courseData = [
         content: "El lenguaje del dinero. Protege tu capital del enemigo silencioso.",
         details: "En 2026, Banxico mantiene la inflación cerca del 3%. Si tu inversión nominal da 9%, y la inflación es 4.5%, tu riqueza real crece mucho menos. Pero aquí entra la Octava Maravilla: el Interés Compuesto. No solo ganas sobre tu capital, sino que ganas intereses sobre los intereses ya ganados. Es el motor de la riqueza generacional.",
         visualType: "financial_math",
+        videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo1-2.mp4",
         speakerNotes: "Entender la 'Tasa Real' te salvará de inversiones engañosas. Un pagaré bancario del 5% cuando la inflación es del 6%, te está haciendo perder dinero silenciosamente.",
         concepts: [
           { term: "Inflación (Banxico)", def: "El aumento de precios. Banxico tiene el mandato de mantenerla en un objetivo del 3% (+/- 1%)." },
@@ -590,6 +592,19 @@ export default function AppFAAcademy() {
           <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
         </div>
         
+        {lessonData.videoUrl && (
+          <div className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
+            <video 
+              src={`/@fs/${lessonData.videoUrl}`} 
+              controls 
+              className="w-full h-auto max-h-[60vh] object-contain"
+              controlsList="nodownload"
+            >
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+        )}
+
         <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Layers size={120} className="text-slate-500" /></div>
           {renderVisual(lessonData.visualType)}

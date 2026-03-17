@@ -10,6 +10,12 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
+      fs: {
+        allow: [
+          '..',
+          'C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados'
+        ]
+      }
     },
     plugins: [react(), tailwindcss()],
     define: {
