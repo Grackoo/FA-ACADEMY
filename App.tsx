@@ -16,6 +16,7 @@ import CoursePlayerPhase5 from './pages/CoursePlayerPhase5';
 import Tools from './pages/Tools';
 import Mentors from './pages/Mentors';
 import Pricing from './pages/Pricing';
+import ParticleBackground from './components/ParticleBackground';
 
 const Footer: React.FC = () => (
   <footer className="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
@@ -69,7 +70,8 @@ const App: React.FC = () => {
     <AuthProvider>
       <Router>
         <ScrollToTop />
-        <div className="flex flex-col min-h-screen bg-slate-950">
+        <ParticleBackground />
+        <div className="flex flex-col min-h-screen">
           <Ticker />
           <Navbar />
           <main className="flex-grow">
