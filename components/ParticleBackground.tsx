@@ -154,8 +154,8 @@ const ParticleBackground: React.FC = () => {
     return (
         <div 
             ref={mountRef} 
-            className="fixed inset-0 w-full h-full -z-10 pointer-events-none"
-            style={{ backgroundColor: '#050505' }}
+            className="fixed inset-0 w-full h-full z-0"
+            style={{ backgroundColor: 'var(--bg-dark, #050505)' }}
         />
     );
 };
