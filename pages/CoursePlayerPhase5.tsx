@@ -20,6 +20,7 @@ const courseData = [
                 content: "No intentes ganar al mercado, intenta ser más inteligente que él.",
                 details: "David Swensen, gestor del fondo de la Universidad de Yale, demostró que la diversificación real no es tener 20 acciones, sino tener activos que no se muevan igual. El 'Modelo Yale' introduce activos alternativos (Bienes Raíces, Materias Primas) para reducir la volatilidad sin sacrificar retornos.",
                 visualType: "yale_model",
+                videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo5-1.mp4",
                 source: "Libro: 'Unconventional Success' - David Swensen",
                 quote: { text: "La diversificación es la única comida gratis en las finanzas.", author: "Harry Markowitz (Premio Nobel)" },
                 speakerNotes: "El objetivo no es tener el rendimiento más alto un año, sino evitar la ruina todos los años. La consistencia crea el interés compuesto.",
@@ -34,6 +35,7 @@ const courseData = [
                 content: "La economía funciona como una máquina simple, pero muchos no la entienden.",
                 details: "Ray Dalio explica que la economía se mueve por ciclos de deuda. Hay un 'Ciclo de Corto Plazo' (5-8 años) y un 'Ciclo de Largo Plazo' (50-75 años). Entender en qué parte del ciclo estamos te dice si debes tener más riesgo (Acciones) o más seguridad (Oro/Cash).",
                 visualType: "dalio_cycles",
+                videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo5-2.mp4",
                 source: "Libro: 'Principles for Navigating Big Debt Crises' - Ray Dalio",
                 quote: { text: "El dolor más la reflexión es igual al progreso.", author: "Ray Dalio" },
                 speakerNotes: "No luches contra la Fed (Banco Central). Si están imprimiendo dinero, los activos suben. Si lo están retirando, los activos bajan.",
@@ -435,6 +437,20 @@ export default function CoursePlayerPhase5() {
                     <div className="flex items-center gap-2 mb-2"><span className="bg-amber-500/10 text-amber-400 font-bold text-[10px] md:text-xs px-2 py-0.5 rounded uppercase tracking-wider border border-amber-500/20">{moduleData.title}</span></div>
                     <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
                 </div>
+
+                {lessonData.videoUrl && (
+                  <div className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
+                    <video 
+                      src={`/@fs/${lessonData.videoUrl}`} 
+                      controls 
+                      className="w-full h-auto max-h-[60vh] object-contain"
+                      controlsList="nodownload"
+                    >
+                      Tu navegador no soporta la reproducción de video.
+                    </video>
+                  </div>
+                )}
+
                 <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Activity size={120} className="text-slate-500" /></div>
                     {renderVisual(lessonData.visualType)}

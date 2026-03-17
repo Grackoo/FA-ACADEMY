@@ -20,6 +20,7 @@ const courseData = [
                 content: "Cada vela cuenta una batalla entre compradores (Toros) y vendedores (Osos).",
                 details: "Olvídate de los gráficos de línea simples. Las Velas Japonesas nos dan 4 datos clave en un solo vistazo: Precio de Apertura, Cierre, Máximo y Mínimo. El 'Cuerpo' nos dice quién ganó la sesión; la 'Mecha' (sombra) nos dice hasta dónde intentaron llegar pero fracasaron.",
                 visualType: "candlestick_anatomy",
+                videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo3-1.mp4",
                 speakerNotes: "Si la vela es verde y grande, los compradores tienen el control total. Si tiene una mecha superior muy larga, significa rechazo: intentaron subir y los golpearon hacia abajo.",
                 concepts: [
                     { term: "OHLC", def: "Open, High, Low, Close. Los 4 precios que forman una vela." },
@@ -792,6 +793,20 @@ export default function CoursePlayerPhase3() {
                     <div className="flex items-center gap-2 mb-2"><span className="bg-violet-500/10 text-violet-400 font-bold text-[10px] md:text-xs px-2 py-0.5 rounded uppercase tracking-wider border border-violet-500/20">{moduleData.title}</span></div>
                     <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
                 </div>
+
+                {lessonData.videoUrl && (
+                  <div className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
+                    <video 
+                      src={`/@fs/${lessonData.videoUrl}`} 
+                      controls 
+                      className="w-full h-auto max-h-[60vh] object-contain"
+                      controlsList="nodownload"
+                    >
+                      Tu navegador no soporta la reproducción de video.
+                    </video>
+                  </div>
+                )}
+
                 <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Crosshair size={120} className="text-slate-500" /></div>
                     {renderVisual(lessonData.visualType)}

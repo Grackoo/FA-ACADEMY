@@ -21,6 +21,7 @@ const courseData = [
         content: "No compras un 'ticker' en una pantalla; adquieres una parte del capital social.",
         details: "En México, es vital entender las 'Series' accionarias. La Serie A suele ser para mexicanos con pleno derecho a voto. La Serie B o L tiene voto limitado pero a veces derechos preferentes. Los CPOs (Certificados de Participación Ordinaria) agrupan varias acciones para hacerlas más fáciles de comprar y vender, como el famoso caso de CEMEXCPO.",
         visualType: "action_anatomy",
+        videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo2-1.mp4",
         quote: { 
             text: "El inversionista debe distinguir entre la ganancia de capital (subida de precio) y el dividendo (reparto de utilidades). No todas las empresas pagan dividendos; muchas reinvierten para crecer, lo cual no es necesariamente malo.", 
             author: "Nota Formativa, CNBV" 
@@ -37,6 +38,7 @@ const courseData = [
         content: "Buscando el Valor Intrínseco oculto bajo el precio.",
         details: "El Análisis Fundamental se enfoca en los estados financieros para saber si el negocio es sano. Si el Valor Intrínseco (lo que realmente vale) es mayor al Precio de Mercado, la acción está 'barata'. Usamos métricas clave como el EBITDA (el corazón operativo), ROE (eficiencia del capital) y Free Cash Flow (efectivo real disponible).",
         visualType: "fundamental_metrics",
+        videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo2-2.mp4",
         speakerNotes: "El precio es lo que pagas, el valor es lo que obtienes. Un P/E bajo no siempre significa que esté barata; a veces es una 'trampa de valor' porque el negocio se está hundiendo.",
         concepts: [
           { term: "EBITDA", def: "Ganancias antes de intereses, impuestos, depreciaciones y amortizaciones. Muestra cuánto efectivo genera la operación pura." },
@@ -49,6 +51,7 @@ const courseData = [
         content: "Una gigante cíclica en el boom de la infraestructura.",
         details: "Cemex es una empresa 'cíclica', depende de la economía global y la construcción. En Análisis Fundamental, usamos el múltiplo EV/EBITDA; además, su agresivo 'desapalancamiento' le ha devuelto el 'Grado de Inversión'. En Análisis Técnico, los analistas vigilan soportes históricos y confirmaciones con alto volumen.",
         visualType: "cemex_case",
+        videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo2-3.mp4",
         newsSnippet: {
             title: "Cemex y el Efecto Nearshoring",
             text: "Cemex reporta un incremento del 8% en su flujo operativo gracias a la demanda de infraestructura derivada del Nearshoring en el norte de México. Analistas institucionales ajustan precio objetivo a niveles no vistos en la década.",
@@ -655,6 +658,19 @@ export default function AppFAAcademyModulo2() {
           <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
         </div>
         
+        {lessonData.videoUrl && (
+          <div className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
+            <video 
+              src={`/@fs/${lessonData.videoUrl}`} 
+              controls 
+              className="w-full h-auto max-h-[60vh] object-contain"
+              controlsList="nodownload"
+            >
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+        )}
+
         <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><LineChart size={120} className="text-slate-500" /></div>
           {renderVisual(lessonData.visualType)}
