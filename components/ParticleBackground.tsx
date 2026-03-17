@@ -8,7 +8,7 @@ const ParticleBackground: React.FC = () => {
         if (!mountRef.current) return;
 
         // Configuration
-        const particleCount = 450;
+        const particleCount = 600;
         const maxDistance = 2.0;    
         const fieldSize = 14;      
 
