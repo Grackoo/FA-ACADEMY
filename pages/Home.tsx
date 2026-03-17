@@ -175,12 +175,12 @@ const Home: React.FC = () => {
   const [showQuiz, setShowQuiz] = useState(false);
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-950">
+    <div className="flex flex-col min-h-screen bg-transparent">
 
       {showQuiz && <InvestorQuizModal onClose={() => setShowQuiz(false)} />}
 
       {/* 1. Hero Section */}
-      <section className="relative bg-slate-950 pt-20 pb-32 overflow-hidden">
+      <section className="relative bg-transparent pt-20 pb-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
             <div className="lg:col-span-6 text-center lg:text-left mb-12 lg:mb-0">
@@ -224,7 +224,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* 2. Roadmap Section */}
-      <section className="py-20 bg-slate-900">
+      <section className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-display font-bold text-white mb-4">Tu Roadmap de Aprendizaje</h2>
@@ -252,7 +252,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* 3. Featured Courses Cards */}
-      <section id="catalog" className="py-20 bg-slate-950">
+      <section id="catalog" className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
             <div>
@@ -298,7 +298,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* 4. Social Proof */}
-      <section className="py-16 bg-slate-900 text-white border-t border-slate-800">
+      <section className="py-16 bg-slate-900/40 text-white border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-display font-semibold mb-12 opacity-90">Datos y análisis respaldados por líderes de la industria</h2>
 
@@ -343,7 +343,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* 5. Dashboard Preview (The Product) */}
-      <section className="py-24 bg-slate-950 overflow-hidden">
+      <section className="py-24 bg-transparent overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:flex items-center gap-16">
             <div className="lg:w-1/2 mb-12 lg:mb-0">
@@ -408,7 +408,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* 6. Lead Magnet / Newsletter */}
-      <section className="bg-slate-900 py-16 border-t border-slate-800">
+      <section className="bg-transparent py-16 border-t border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-primary-900/50 rounded-3xl p-8 md:p-12 shadow-2xl border border-primary-800 relative overflow-hidden">
             {/* Decorative circles */}
