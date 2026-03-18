@@ -23,7 +23,7 @@ const courseData = [
         content: "Aprende a leer el lenguaje secreto de los estados financieros: Cómo una caída del -18% en BIMBOA fue una oportunidad de compra histórica.",
         details: "El 12 de febrero de 2024, Grupo Bimbo (BIMBOA.MX) publicó sus resultados trimestrales y el precio cayó del $82.50 al $67.80 MXN en 48 horas. Para el inversor que no sabe leer los estados financieros, fue pánico puro. Para el que SI sabe, fue una oportunidad de compra. En este caso estudiaremos BIMBOA (BMV) y su competidora directa en EE.UU., Flowers Foods (FLO:NYSE), para aprender las dos formas de leer un negocio panadero globalmente.",
         visualType: "bimbo_flowers_case",
-        videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo4-1.mp4",
+        videoUrls: ["Coloca_Aqui_El_ID_Del_Video_Modulo4_1"],
         speakerNotes: "La clave está en hacer las preguntas correctas: ¿La caída fue por el negocio o por el mercado? ¿El EBITDA subió o bajó? ¿La deuda aumentó o bajó? Si el negocio sigue sano y solo el precio cayó, es una oferta.",
         concepts: [
           { term: "EBITDA Margen", def: "Porcentaje de las ventas que se convierte en flujo operativo. Para empresas de consumo masivo como Bimbo, un margen >10% es saludable." },
@@ -872,18 +872,19 @@ export default function AppFAAcademyEstrategia() {
           <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
         </div>
         
-        {lessonData.videoUrl && (
-          <div className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
-            <video 
-              src={`/@fs/${lessonData.videoUrl}`} 
-              controls 
-              className="w-full h-auto max-h-[60vh] object-contain"
-              controlsList="nodownload"
-            >
-              Tu navegador no soporta la reproducción de video.
-            </video>
+        {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
+          <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
-        )}
+        ))}
 
         <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Layers size={120} className="text-slate-500" /></div>

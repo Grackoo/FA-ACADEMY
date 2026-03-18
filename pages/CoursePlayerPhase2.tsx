@@ -22,8 +22,8 @@ const courseData = [
         details: "En México, es vital entender las 'Series' accionarias. La Serie A suele ser para mexicanos con pleno derecho a voto. La Serie B o L tiene voto limitado pero a veces derechos preferentes. Los CPOs (Certificados de Participación Ordinaria) agrupan varias acciones para hacerlas más fáciles de comprar y vender, como el famoso caso de CEMEXCPO.",
         visualType: "action_anatomy",
         videoUrls: [
-          "/videos/modulo2-1.mp4",
-          "/videos/modulo2-2.mp4",
+          "Coloca_Aqui_El_ID_Del_Video_1", // Ejemplo: si el link es youtube.com/watch?v=dQw4w9WgXcQ, pon "dQw4w9WgXcQ"
+          "Coloca_Aqui_El_ID_Del_Video_2",
         ],
         quote: { 
             text: "El inversionista debe distinguir entre la ganancia de capital (subida de precio) y el dividendo (reparto de utilidades). No todas las empresas pagan dividendos; muchas reinvierten para crecer, lo cual no es necesariamente malo.", 
@@ -96,7 +96,7 @@ const courseData = [
         content: "El Sistema Internacional de Cotizaciones (SIC) democratizó la bolsa en México.",
         details: "Antes, un mexicano solo podía comprar acciones de empresas locales como Cemex o Bimbo, porque las acciones de EE. UU. (como Apple o Tesla) cotizaban en Nueva York y necesitabas una cuenta en el extranjero. Hoy, el SIC trae casi todo Wall Street a México. Esto es un 'Aha! moment': puedes ser dueño de Nvidia o Pfizer pagando en pesos mexicanos, desde una app, de forma 100% legal y con una gran ventaja fiscal al momento de vender.",
         visualType: "market_diff_tab",
-        videoUrls: ["/videos/modulo2-3.mp4"],
+        videoUrls: ["Coloca_Aqui_El_ID_Del_Video_3"],
         quote: { 
             text: "El SIC no es una bolsa distinta, es la plataforma dentro de la Bolsa Mexicana de Valores que te permite acceder a empresas globales sin abrir cuentas extranjeras ni mandar dólares por transferencia.", 
             author: "Guía FA Academy" 
@@ -662,16 +662,17 @@ export default function AppFAAcademyModulo2() {
           <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
         </div>
         
-        {lessonData.videoUrls && lessonData.videoUrls.map((url: string, i: number) => (
-          <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
-            <video
-              src={url}
-              controls
-              className="w-full h-auto max-h-[60vh] object-contain"
-              controlsList="nodownload"
-            >
-              Tu navegador no soporta la reproducción de video.
-            </video>
+        {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
+          <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
         ))}
 
