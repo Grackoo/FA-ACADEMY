@@ -23,7 +23,7 @@ const courseData = [
         content: "Aprende a leer el lenguaje secreto de los estados financieros: Cómo una caída del -18% en BIMBOA fue una oportunidad de compra histórica.",
         details: "El 12 de febrero de 2024, Grupo Bimbo (BIMBOA.MX) publicó sus resultados trimestrales y el precio cayó del $82.50 al $67.80 MXN en 48 horas. Para el inversor que no sabe leer los estados financieros, fue pánico puro. Para el que SI sabe, fue una oportunidad de compra. En este caso estudiaremos BIMBOA (BMV) y su competidora directa en EE.UU., Flowers Foods (FLO:NYSE), para aprender las dos formas de leer un negocio panadero globalmente.",
         visualType: "bimbo_flowers_case",
-        videoUrls: ["Coloca_Aqui_El_ID_Del_Video_Modulo4_1"],
+        videoUrls: ["e5YgKlsio_w"],
         speakerNotes: "La clave está en hacer las preguntas correctas: ¿La caída fue por el negocio o por el mercado? ¿El EBITDA subió o bajó? ¿La deuda aumentó o bajó? Si el negocio sigue sano y solo el precio cayó, es una oferta.",
         concepts: [
           { term: "EBITDA Margen", def: "Porcentaje de las ventas que se convierte en flujo operativo. Para empresas de consumo masivo como Bimbo, un margen >10% es saludable." },

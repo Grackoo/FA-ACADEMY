@@ -20,7 +20,7 @@ const courseData = [
                 content: "Cada vela cuenta una batalla entre compradores (Toros) y vendedores (Osos).",
                 details: "Olvídate de los gráficos de línea simples. Las Velas Japonesas nos dan 4 datos clave en un solo vistazo: Precio de Apertura, Cierre, Máximo y Mínimo. El 'Cuerpo' nos dice quién ganó la sesión; la 'Mecha' (sombra) nos dice hasta dónde intentaron llegar pero fracasaron.",
                 visualType: "candlestick_anatomy",
-                videoUrls: ["Coloca_Aqui_El_ID_Del_Video_Modulo3_1"],
+                videoUrls: ["590LgksX6dI"],
                 speakerNotes: "Si la vela es verde y grande, los compradores tienen el control total. Si tiene una mecha superior muy larga, significa rechazo: intentaron subir y los golpearon hacia abajo.",
                 concepts: [
                     { term: "OHLC", def: "Open, High, Low, Close. Los 4 precios que forman una vela." },

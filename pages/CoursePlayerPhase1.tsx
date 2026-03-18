@@ -37,7 +37,7 @@ const courseData = [
         content: "El lenguaje del dinero. Protege tu capital del enemigo silencioso.",
         details: "En 2026, Banxico mantiene la inflación cerca del 3%. Si tu inversión nominal da 9%, y la inflación es 4.5%, tu riqueza real crece mucho menos. Pero aquí entra la Octava Maravilla: el Interés Compuesto. No solo ganas sobre tu capital, sino que ganas intereses sobre los intereses ya ganados. Es el motor de la riqueza generacional.",
         visualType: "financial_math",
-        videoUrls: ["kwVUlQIKJVs"],
+        videoUrls: ["9QI0Q-eibUE"],
         speakerNotes: "Entender la 'Tasa Real' te salvará de inversiones engañosas. Un pagaré bancario del 5% cuando la inflación es del 6%, te está haciendo perder dinero silenciosamente.",
         concepts: [
           { term: "Inflación (Banxico)", def: "El aumento de precios. Banxico tiene el mandato de mantenerla en un objetivo del 3% (+/- 1%)." },
