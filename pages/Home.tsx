@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MODULES, getIcon } from '../constants';
-import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronRight, MessageCircle } from 'lucide-react';
+import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronRight, MessageCircle, Search, TrendingDown, Sprout, Rocket, CheckCircle2, AlertCircle, AlertTriangle } from 'lucide-react';
 
 const TradingViewHeatmap: React.FC = () => {
   const container = useRef<HTMLDivElement>(null);
@@ -170,9 +170,130 @@ const InvestorQuizModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   );
 };
 
+const StepCard = ({ step, index, total }: { step: any, index: number, total: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const icons = [
+    <Search className="w-8 h-8" />,
+    <TrendingDown className="w-8 h-8" />,
+    <ShieldCheck className="w-8 h-8" />,
+    <Sprout className="w-8 h-8" />,
+    <Rocket className="w-8 h-8" />
+  ];
+
+  return (
+    <div 
+      className={`relative flex flex-col items-center group transition-all duration-500 ease-in-out ${
+        index % 2 === 0 ? 'md:translate-y-8' : 'md:-translate-y-8'
+      }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {index !== total - 1 && (
+        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-gradient-to-r from-amber-400 to-transparent -translate-y-1/2 z-0" />
+      )}
+
+      <div className={`relative z-10 flex items-center justify-center w-20 h-20 rounded-full border-2 transition-all duration-300 ${
+        isHovered 
+        ? 'bg-amber-400 border-white text-slate-900 scale-110 shadow-[0_0_20px_rgba(251,191,36,0.6)]' 
+        : 'bg-slate-900 border-amber-400 text-amber-400'
+      }`}>
+        {icons[index]}
+        <div className="absolute -top-2 -right-2 bg-white text-slate-900 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border border-slate-900">
+          {index + 1}
+        </div>
+      </div>
+
+      <div className={`mt-6 text-center max-w-xs transition-all duration-300 ${isHovered ? 'opacity-100 transform translate-y-0' : 'opacity-90'}`}>
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">
+          {step.title}
+        </h3>
+        <p className="text-slate-300 text-sm leading-relaxed">
+          {step.description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [showQuiz, setShowQuiz] = useState(false);
+
+  // --- Financial Health Test State ---
+  const [showFinancialTest, setShowFinancialTest] = useState(false);
+  const [currentTestStep, setCurrentTestStep] = useState(0);
+  const [testAnswers, setTestAnswers] = useState<Record<string, { value: string; score: number }>>({});
+  const [isTestFinished, setIsTestFinished] = useState(false);
+
+  const testQuestions = [
+    {
+      id: 'deuda',
+      question: '¿Cuál es tu situación actual con las deudas?',
+      options: [
+        { label: 'Tengo deudas de tarjetas/préstamos que me agobian', value: 'Critica', score: 1 },
+        { label: 'Tengo deudas controladas pero me quitan liquidez', value: 'Moderada', score: 2 },
+        { label: 'No tengo deudas o son mínimas', value: 'Saludable', score: 3 }
+      ]
+    },
+    {
+      id: 'ahorro',
+      question: '¿Tienes un fondo de emergencia (colchón de paz)?',
+      options: [
+        { label: 'No tengo nada ahorrado', value: 'Sin Ahorro', score: 1 },
+        { label: 'Tengo ahorrado menos de un mes de gastos', value: 'Ahorro Mínimo', score: 2 },
+        { label: 'Tengo 3 meses o más de gastos cubiertos', value: 'Ahorro Sólido', score: 3 }
+      ]
+    },
+    {
+      id: 'inversion',
+      question: '¿Cuánto podrías destinar al mes para invertir/pagar deuda?',
+      options: [
+        { label: 'Menos de $1,000 MXN', value: 'Bajo', score: 1 },
+        { label: 'Entre $1,000 y $5,000 MXN', value: 'Medio', score: 2 },
+        { label: 'Más de $5,000 MXN', value: 'Alto', score: 3 }
+      ]
+    }
+  ];
+
+  const handleTestAnswer = (questionId: string, value: string, score: number) => {
+    const newAnswers = { ...testAnswers, [questionId]: { value, score } };
+    setTestAnswers(newAnswers);
+    if (currentTestStep < testQuestions.length - 1) {
+      setCurrentTestStep(currentTestStep + 1);
+    } else {
+      setIsTestFinished(true);
+    }
+  };
+
+  const getHealthStatus = () => {
+    const totalScore = Object.values(testAnswers).reduce((acc, curr) => acc + curr.score, 0);
+    if (totalScore <= 4) return { color: 'bg-red-500', label: 'Estado Crítico', icon: <AlertCircle className="w-12 h-12 text-red-500" />, text: 'Es urgente detener el sangrado financiero. Prioriza liquidar deudas antes de cualquier otra cosa.' };
+    if (totalScore <= 7) return { color: 'bg-yellow-500', label: 'Estado de Alerta', icon: <AlertTriangle className="w-12 h-12 text-yellow-500" />, text: 'Vas por buen camino pero tus deudas frenan tu crecimiento. Necesitas una estrategia de optimización.' };
+    return { color: 'bg-green-500', label: 'Estado Saludable', icon: <CheckCircle2 className="w-12 h-12 text-green-500" />, text: '¡Excelente! Estás listo para potenciar tus inversiones y hacer crecer tu patrimonio de forma agresiva.' };
+  };
+
+  const sendToWhatsApp = () => {
+    const status = getHealthStatus();
+    const message = encodeURIComponent(
+      `¡Hola! 👋\n\nAcabo de realizar mi Test de Salud Financiera en FA Academy.\n\n` +
+      `*Mis Resultados:*\n` +
+      `- Situación de deuda: ${testAnswers.deuda?.value || ''}\n` +
+      `- Fondo de ahorro: ${testAnswers.ahorro?.value || ''}\n` +
+      `- Capacidad mensual: ${testAnswers.inversion?.value || ''}\n` +
+      `- Mi diagnóstico: ${status.label}\n\n` +
+      `*Quiero una asesoría* para trazar mi plan perfecto. ¿Podemos hablar?`
+    );
+    window.open(`https://wa.me/527711960057?text=${message}`, '_blank');
+  };
+
+  const methodSteps = [
+    { title: 'Diagnóstico de "Sangrado" Financiero', description: 'Analizamos tus tasas de interés actuales para saber cuáles deudas te están quitando más dinero.' },
+    { title: 'Estrategia de Salida Personalizada', description: 'Creamos un plan de pagos (Bola de Nieve vs. Avalancha) adaptado a tu capacidad real.' },
+    { title: 'Construcción del "Colchón de Paz"', description: 'Establecemos un fondo de emergencia para que nunca más vuelvas a depender de las tarjetas.' },
+    { title: 'Tu Primera Inversión', description: '¡Aquí empieza la magia! Aprendes a poner a trabajar tus primeros $100 pesos en instrumentos seguros.' },
+    { title: 'Expansión y Portafolio Pro', description: 'Diversificamos en SOFIPOs, ETFs y acciones para que tu patrimonio sea imparable.' }
+  ];
 
   return (
     <div className="flex flex-col min-h-screen bg-transparent">
@@ -222,6 +343,110 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* 1.5 Sección El Camino / Metodología FA Academy */}
+      <section className="relative py-24 px-6 max-w-7xl mx-auto bg-transparent">
+        <div className="text-center mb-20">
+          <span className="inline-block px-4 py-1 rounded-full bg-amber-400/10 text-amber-400 text-sm font-semibold tracking-wider uppercase mb-4 border border-amber-400/20">
+            Metodología FA Academy
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-amber-200 to-white">
+            Tu Ruta hacia la Libertad Financiera
+          </h2>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+            No importa dónde estés hoy, lo que importa es el primer paso. Así es como transformaremos tus finanzas paso a paso.
+          </p>
+        </div>
+
+        <div className="relative">
+          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-400/50 via-amber-400/10 to-transparent md:hidden transform -translate-x-1/2" />
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-4 items-start relative">
+            {methodSteps.map((step, index) => (
+              <StepCard key={index} step={step} index={index} total={methodSteps.length} />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-32 text-center">
+          <div className="inline-block p-[2px] rounded-full bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-600 hover:scale-105 transition-transform duration-300">
+            <button 
+              onClick={() => setShowFinancialTest(true)}
+              className="px-10 py-4 bg-slate-950 rounded-full font-bold text-lg flex items-center gap-3 group text-white hover:bg-slate-900 transition-colors"
+            >
+              Quiero trazar mi camino hoy mismo
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform text-white" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* MODAL DEL TEST DE SALUD FINANCIERA */}
+      {showFinancialTest && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" onClick={() => { setShowFinancialTest(false); setTestAnswers({}); setCurrentTestStep(0); setIsTestFinished(false); }}></div>
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-3xl p-8 relative z-10 shadow-2xl overflow-hidden animate-fade-in-up">
+            <button 
+              onClick={() => { setShowFinancialTest(false); setTestAnswers({}); setCurrentTestStep(0); setIsTestFinished(false); }}
+              className="absolute top-6 right-6 text-slate-400 hover:text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {!isTestFinished ? (
+              <div className="space-y-8">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-amber-400 text-sm font-bold tracking-widest uppercase">Paso {currentTestStep + 1} de {testQuestions.length}</span>
+                  <div className="flex gap-2">
+                    {testQuestions.map((_, idx) => (
+                      <div key={idx} className={`h-1.5 w-8 rounded-full transition-all ${idx <= currentTestStep ? 'bg-amber-400' : 'bg-slate-700'}`} />
+                    ))}
+                  </div>
+                </div>
+                
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-8">
+                  {testQuestions[currentTestStep].question}
+                </h3>
+
+                <div className="grid gap-4">
+                  {testQuestions[currentTestStep].options.map((option, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleTestAnswer(testQuestions[currentTestStep].id, option.label, option.score)}
+                      className="text-left p-5 rounded-2xl border border-slate-700 bg-slate-800/50 hover:border-amber-400 hover:bg-slate-800 transition-all group"
+                    >
+                      <span className="text-lg text-slate-200 group-hover:text-white">{option.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-6 animate-fade-in-up">
+                <div className="flex justify-center mb-6">
+                  {getHealthStatus().icon}
+                </div>
+                <h3 className="text-3xl font-bold text-white mb-2">Tu Resultado</h3>
+                <div className={`inline-block px-4 py-1 rounded-full ${getHealthStatus().color} text-slate-900 font-bold mb-6`}>
+                  {getHealthStatus().label}
+                </div>
+                <p className="text-slate-300 text-lg mb-10 max-w-md mx-auto leading-relaxed">
+                  {getHealthStatus().text}
+                </p>
+                
+                <button 
+                  onClick={sendToWhatsApp}
+                  className="w-full py-4 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-xl rounded-2xl shadow-lg shadow-amber-400/20 transition-all flex items-center justify-center gap-3"
+                >
+                  Tengo el plan perfecto para ti
+                  <ArrowRight className="w-6 h-6 border-slate-900 text-slate-900" />
+                </button>
+                <p className="mt-4 text-slate-500 text-sm italic">
+                  Al dar clic, se enviará tu diagnóstico para agendar tu asesoría.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* 2. Roadmap Section */}
       <section className="py-20 bg-transparent">
