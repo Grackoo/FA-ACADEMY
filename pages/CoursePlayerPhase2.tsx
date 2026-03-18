@@ -22,8 +22,8 @@ const courseData = [
         details: "En México, es vital entender las 'Series' accionarias. La Serie A suele ser para mexicanos con pleno derecho a voto. La Serie B o L tiene voto limitado pero a veces derechos preferentes. Los CPOs (Certificados de Participación Ordinaria) agrupan varias acciones para hacerlas más fáciles de comprar y vender, como el famoso caso de CEMEXCPO.",
         visualType: "action_anatomy",
         videoUrls: [
-          "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo2-1.mp4",
-          "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo2-2.mp4",
+          "/videos/modulo2-1.mp4",
+          "/videos/modulo2-2.mp4",
         ],
         quote: { 
             text: "El inversionista debe distinguir entre la ganancia de capital (subida de precio) y el dividendo (reparto de utilidades). No todas las empresas pagan dividendos; muchas reinvierten para crecer, lo cual no es necesariamente malo.", 
@@ -96,7 +96,7 @@ const courseData = [
         content: "El Sistema Internacional de Cotizaciones (SIC) democratizó la bolsa en México.",
         details: "Antes, un mexicano solo podía comprar acciones de empresas locales como Cemex o Bimbo, porque las acciones de EE. UU. (como Apple o Tesla) cotizaban en Nueva York y necesitabas una cuenta en el extranjero. Hoy, el SIC trae casi todo Wall Street a México. Esto es un 'Aha! moment': puedes ser dueño de Nvidia o Pfizer pagando en pesos mexicanos, desde una app, de forma 100% legal y con una gran ventaja fiscal al momento de vender.",
         visualType: "market_diff_tab",
-        videoUrl: "C:/Users/GRACKO/OneDrive/PROYECTOS/FONDO ACTIVO/FA ACADEMY/videos Fa editados/modulo2-3.mp4",
+        videoUrls: ["/videos/modulo2-3.mp4"],
         quote: { 
             text: "El SIC no es una bolsa distinta, es la plataforma dentro de la Bolsa Mexicana de Valores que te permite acceder a empresas globales sin abrir cuentas extranjeras ni mandar dólares por transferencia.", 
             author: "Guía FA Academy" 
@@ -665,7 +665,7 @@ export default function AppFAAcademyModulo2() {
         {lessonData.videoUrls && lessonData.videoUrls.map((url: string, i: number) => (
           <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
             <video
-              src={`/@fs/${url}`}
+              src={url}
               controls
               className="w-full h-auto max-h-[60vh] object-contain"
               controlsList="nodownload"
