@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import { Calculator, Target, PiggyBank, ArrowDownToLine, Flame, TrendingUp } from 'lucide-react';
+import { Calculator, Target, PiggyBank, ArrowDownToLine, Flame, TrendingUp, Coins, Info, ArrowRight, AlertCircle, TrendingDown } from 'lucide-react';
 
 // --- Components for Tools ---
 
@@ -422,13 +422,217 @@ const FinancialFreedomSimulator: React.FC = () => {
     )
 }
 
+const DebtVsInvestmentTool = () => {
+  const [debtAmount, setDebtAmount] = useState(25000);
+  const [cardRate, setCardRate] = useState(60);
+  const [monthlyPayment, setMonthlyPayment] = useState(1500);
+  const [investRate, setInvestRate] = useState(11);
+  const [timeHorizon, setTimeHorizon] = useState(24);
+
+  const [results, setResults] = useState({
+    totalDebtInterest: 0,
+    totalInvested: 0,
+    gap: 0,
+    monthsToPay: 0
+  });
+
+  useEffect(() => {
+    calculateResults();
+  }, [debtAmount, cardRate, monthlyPayment, investRate, timeHorizon]);
+
+  const calculateResults = () => {
+    let currentDebt = debtAmount;
+    let totalInterestPaid = 0;
+    let months = 0;
+    const monthlyRate = (cardRate / 100) / 12;
+
+    while (currentDebt > 0 && months < 360) {
+      const interestThisMonth = currentDebt * monthlyRate;
+      totalInterestPaid += interestThisMonth;
+      currentDebt = currentDebt + interestThisMonth - monthlyPayment;
+      months++;
+      if (interestThisMonth >= monthlyPayment) {
+        months = 999;
+        break;
+      }
+    }
+
+    const r = (investRate / 100) / 12;
+    const n = timeHorizon;
+    const p = monthlyPayment;
+    const finalInvestment = p * ((Math.pow(1 + r, n) - 1) / r);
+
+    setResults({
+      totalDebtInterest: totalInterestPaid,
+      totalInvested: finalInvestment,
+      gap: finalInvestment + totalInterestPaid,
+      monthsToPay: months
+    });
+  };
+
+  const formatCurrency = (val: number) => 
+    new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(val);
+
+  return (
+    <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl shadow-xl border border-amber-500/30 p-8 relative overflow-hidden mt-12 mb-12">
+      {/* Fondo decorativo exclusivo para esta sección */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+
+        {/* Cabecera */}
+        <div className="text-center mb-12 relative z-10">
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-200">
+            La Trampa del Mínimo vs. El Poder de Invertir
+          </h2>
+          <p className="text-slate-400 text-lg">
+            Descubre cuánto te cuesta realmente "pagar poquito" cada mes.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+          
+          {/* Panel de Entradas */}
+          <div className="lg:col-span-1 bg-slate-900/50 border border-slate-700 p-6 rounded-3xl shadow-xl">
+            <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-white">
+              <Coins className="text-amber-400 w-5 h-5" /> 
+              Tus Datos Actuales
+            </h3>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm text-slate-400 mb-2">Deuda en la Tarjeta (MXN)</label>
+                <input 
+                  type="number" 
+                  value={debtAmount}
+                  onChange={(e) => setDebtAmount(Number(e.target.value))}
+                  className="w-full bg-slate-800 text-white border border-slate-600 rounded-xl px-4 py-3 focus:border-amber-400 outline-none transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-slate-400 mb-2 flex justify-between">
+                  Tasa de Interés Anual (CAT) <span>{cardRate}%</span>
+                </label>
+                <input 
+                  type="range" min="10" max="120" step="5"
+                  value={cardRate}
+                  onChange={(e) => setCardRate(Number(e.target.value))}
+                  className="w-full accent-amber-400 cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-slate-400 mb-2">Pago Mensual (MXN)</label>
+                <input 
+                  type="number" 
+                  value={monthlyPayment}
+                  onChange={(e) => setMonthlyPayment(Number(e.target.value))}
+                  className="w-full bg-slate-800 text-white border border-slate-600 rounded-xl px-4 py-3 focus:border-amber-400 outline-none transition-all"
+                />
+                { (debtAmount * (cardRate/100/12)) >= monthlyPayment && (
+                  <p className="text-red-400 text-xs mt-2 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" /> Tu deuda crecerá cada mes (pago insuficiente).
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm text-slate-400 mb-2 flex justify-between">
+                  Horizonte de Tiempo <span>{timeHorizon} meses</span>
+                </label>
+                <input 
+                  type="range" min="6" max="60" step="6"
+                  value={timeHorizon}
+                  onChange={(e) => setTimeHorizon(Number(e.target.value))}
+                  className="w-full accent-blue-500 cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Panel de Comparación */}
+          <div className="lg:col-span-2 space-y-6">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Card Deuda */}
+              <div className="bg-red-500/5 border border-red-500/20 p-6 rounded-3xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+                  <TrendingDown className="w-16 h-16 text-red-500" />
+                </div>
+                <h4 className="text-red-400 font-bold mb-1 uppercase tracking-wider text-xs">Escenario A: Seguir debiendo</h4>
+                <p className="text-3xl font-black text-white mb-2">
+                  {results.monthsToPay === 999 ? "Deuda Eterna" : formatCurrency(results.totalDebtInterest)}
+                </p>
+                <p className="text-slate-400 text-sm">
+                  {results.monthsToPay === 999 
+                    ? "Tus intereses superan tu pago. Nunca terminarás." 
+                    : `Solo de puros intereses en ${timeHorizon} meses.`}
+                </p>
+              </div>
+
+              {/* Card Inversión */}
+              <div className="bg-green-500/5 border border-green-500/20 p-6 rounded-3xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+                  <TrendingUp className="w-16 h-16 text-green-500" />
+                </div>
+                <h4 className="text-green-400 font-bold mb-1 uppercase tracking-wider text-xs">Escenario B: Invertir ese pago</h4>
+                <p className="text-3xl font-black text-white mb-2">
+                  {formatCurrency(results.totalInvested)}
+                </p>
+                <p className="text-slate-400 text-sm">
+                  Lo que tendrías en tu cuenta si invirtieras esos mismos {formatCurrency(monthlyPayment)} al {investRate}%.
+                </p>
+              </div>
+            </div>
+
+            {/* Resultado de Impacto (El Shock) */}
+            <div className="bg-slate-900 border border-amber-400/30 p-8 rounded-3xl shadow-2xl relative">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <h4 className="text-amber-400 font-bold flex items-center gap-2">
+                    <Info className="w-4 h-4" /> El Costo de Oportunidad
+                  </h4>
+                  <p className="text-4xl md:text-5xl font-black text-white">
+                    {formatCurrency(results.gap)}
+                  </p>
+                  <p className="text-slate-400 max-w-md">
+                    Este es el dinero que estás "tirando a la basura" al no cambiar tu estrategia hoy. La diferencia entre perder intereses y ganarlos es masiva.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Tip Educativo */}
+            <div className="bg-blue-500/5 border border-blue-500/10 p-4 rounded-2xl flex items-start gap-4">
+              <AlertCircle className="text-blue-400 w-6 h-6 mt-1 flex-shrink-0" />
+              <p className="text-sm text-slate-400 leading-relaxed">
+                <strong className="text-blue-300">Dato FA Academy:</strong> El CAT promedio de las tarjetas en México supera el 60%. Esto significa que por cada peso que debes, terminas pagando casi el doble en muy poco tiempo si solo das el mínimo.
+              </p>
+            </div>
+
+          </div>
+        </div>
+    </div>
+  );
+};
+
 const Tools: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-950 pb-20 pt-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col min-h-screen bg-transparent relative overflow-hidden pb-20 pt-10">
+      {/* Background Effects matching Home */}
+      <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-400 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-display font-bold text-white mb-4">Laboratorio Financiero</h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <span className="inline-block px-4 py-1 rounded-full bg-amber-400/10 text-amber-400 text-sm font-semibold tracking-wider uppercase mb-4 border border-amber-400/20">
+            Simuladores FA Academy
+          </span>
+          <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-6 tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-amber-200 to-white">
+            Laboratorio Financiero
+          </h1>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Herramientas precisas para diagnosticar deudas, proyectar interés compuesto y calcular tu verdadero retiro (Libertad Financiera).
           </p>
         </div>
@@ -436,6 +640,9 @@ const Tools: React.FC = () => {
         <div className="space-y-12">
           {/* Orden Lógico de Educación Financiera: 1. Pagar Deuda, 2. Ahorrar/Invertir, 3. Libertad */}
           <DebtAmortization />
+          
+          <DebtVsInvestmentTool />
+
           <CompoundInterestCalculator />
           <FinancialFreedomSimulator />
         </div>
