@@ -27,11 +27,22 @@ const Mentors: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent relative overflow-hidden py-20">
+      {/* Background Effects matching Home */}
+      <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-400 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-display font-bold text-white mb-4">Conoce a tus Mentores</h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <span className="inline-block px-4 py-1 rounded-full bg-amber-400/10 text-amber-400 text-sm font-semibold tracking-wider uppercase mb-4 border border-amber-400/20">
+            Expertos en Mercados
+          </span>
+          <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-6 tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-amber-200 to-white">
+            Conoce a tus Mentores
+          </h1>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Un equipo multidisciplinario que combina teoría académica con experiencia real en los mercados.
           </p>
         </div>
