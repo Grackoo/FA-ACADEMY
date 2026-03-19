@@ -438,16 +438,17 @@ export default function CoursePlayerPhase5() {
                     <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
                 </div>
 
-                {lessonData.videoUrl && (
+                {lessonData.videoUrls && lessonData.videoUrls.length > 0 && (
                   <div className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
-                    <video 
-                      src={`/@fs/${lessonData.videoUrl}`} 
-                      controls 
-                      className="w-full h-auto max-h-[60vh] object-contain"
-                      controlsList="nodownload"
-                    >
-                      Tu navegador no soporta la reproducción de video.
-                    </video>
+                    <div className="relative w-full aspect-video">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${lessonData.videoUrls[0]}?rel=0&modestbranding=1`}
+                        title={lessonData.title}
+                        className="absolute top-0 left-0 w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   </div>
                 )}
 
