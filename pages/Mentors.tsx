@@ -29,7 +29,7 @@ const Mentors: React.FC = () => {
   return (
     <div className="min-h-screen bg-transparent relative overflow-hidden py-20">
       {/* Background Effects matching Home */}
-      <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
+      <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-20">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-400 rounded-full blur-[120px]" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px]" />
       </div>
