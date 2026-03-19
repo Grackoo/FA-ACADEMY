@@ -35,7 +35,7 @@ const courseData = [
                 content: "La economía funciona como una máquina simple, pero muchos no la entienden.",
                 details: "Ray Dalio explica que la economía se mueve por ciclos de deuda. Hay un 'Ciclo de Corto Plazo' (5-8 años) y un 'Ciclo de Largo Plazo' (50-75 años). Entender en qué parte del ciclo estamos te dice si debes tener más riesgo (Acciones) o más seguridad (Oro/Cash).",
                 visualType: "dalio_cycles",
-                videoUrl: "OwMH1mmKVy0",
+                videoUrls: ["OwMH1mmKVy0"],
                 source: "Libro: 'Principles for Navigating Big Debt Crises' - Ray Dalio",
                 quote: { text: "El dolor más la reflexión es igual al progreso.", author: "Ray Dalio" },
                 speakerNotes: "No luches contra la Fed (Banco Central). Si están imprimiendo dinero, los activos suben. Si lo están retirando, los activos bajan.",
