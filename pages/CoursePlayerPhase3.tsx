@@ -830,7 +830,7 @@ const TradingViewStation = () => {
                     type="number" 
                     value={calc.capital}
                     onChange={(e) => setCalc({...calc, capital: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-300 font-mono focus:border-violet-500 outline-none"
+                    className="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono font-bold focus:border-violet-500 outline-none shadow-inner"
                   />
                 </div>
                 <div>
@@ -839,7 +839,7 @@ const TradingViewStation = () => {
                     type="number" 
                     value={calc.risk}
                     onChange={(e) => setCalc({...calc, risk: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-300 font-mono focus:border-violet-500 outline-none"
+                    className="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono font-bold focus:border-violet-500 outline-none shadow-inner"
                   />
                 </div>
               </div>
@@ -851,7 +851,7 @@ const TradingViewStation = () => {
                     type="number" 
                     value={calc.entry}
                     onChange={(e) => setCalc({...calc, entry: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-emerald-900/10 border border-emerald-900/30 rounded-lg p-2 text-emerald-400 font-mono focus:border-emerald-500 outline-none"
+                    className="w-full bg-white border border-emerald-400 rounded-lg p-2 text-emerald-700 font-mono font-bold focus:border-emerald-500 outline-none shadow-inner"
                   />
                 </div>
                 <div>
@@ -860,7 +860,7 @@ const TradingViewStation = () => {
                     type="number" 
                     value={calc.sl}
                     onChange={(e) => setCalc({...calc, sl: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-red-900/10 border border-red-900/30 rounded-lg p-2 text-red-400 font-mono focus:border-red-500 outline-none"
+                    className="w-full bg-white border border-red-400 rounded-lg p-2 text-red-700 font-mono font-bold focus:border-red-500 outline-none shadow-inner"
                   />
                 </div>
               </div>
@@ -871,7 +871,7 @@ const TradingViewStation = () => {
                   type="number" 
                   value={calc.tp}
                   onChange={(e) => setCalc({...calc, tp: parseFloat(e.target.value) || 0})}
-                  className="w-full bg-violet-900/10 border border-violet-900/30 rounded-lg p-2 text-violet-400 font-mono focus:border-violet-500 outline-none"
+                  className="w-full bg-white border border-violet-400 rounded-lg p-2 text-violet-700 font-mono font-bold focus:border-violet-500 outline-none shadow-inner"
                 />
               </div>
 
@@ -968,7 +968,6 @@ export default function CoursePlayerPhase3() {
             case 'volume_analysis': return <VolumeAnalysis />;
             case 'risk_reward_bimbo': return <RiskRewardBimbo />;
             case 'multi_timeframe': return <MultiTimeframe />;
-            case 'tradingview_station': return <TradingViewStation />;
             case 'candlestick_anatomy': return <CandlestickAnatomy />;
             case 'support_resistance': return <SupportResistance />;
             case 'trend_structure': return <TrendStructure />;
@@ -1048,10 +1047,16 @@ export default function CoursePlayerPhase3() {
                   </div>
                 ))}
 
-                <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Crosshair size={120} className="text-slate-500" /></div>
-                    {renderVisual(lessonData.visualType)}
-                </div>
+                {lessonData.visualType === 'tradingview_station' ? (
+                  <div className="mb-6 w-full relative z-10 animate-fade-in">
+                      <TradingViewStation />
+                  </div>
+                ) : (
+                  <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Crosshair size={120} className="text-slate-500" /></div>
+                      {renderVisual(lessonData.visualType)}
+                  </div>
+                )}
                 <div className="space-y-6 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
                     <div className="bg-gradient-to-r from-slate-800 to-slate-800/50 p-6 rounded-xl border-l-4 border-violet-500 shadow-lg"><p className="text-lg md:text-xl text-violet-100 font-medium leading-relaxed">{lessonData.content}</p></div>
                     <div className="flex gap-4 items-start"><div className="bg-slate-700 rounded-full p-2 mt-1 shrink-0"><Brain size={20} className="text-slate-300" /></div><div><p className="text-slate-300 leading-relaxed text-sm md:text-base">{lessonData.details}</p><p className="mt-4 text-slate-400 text-sm italic bg-slate-900/30 p-3 rounded-lg border border-slate-700/50 flex gap-2"><span className="text-violet-500 font-bold not-italic">💡 Tip:</span>{lessonData.speakerNotes}</p></div></div>
