@@ -823,41 +823,120 @@ const TradingViewStation = () => {
         {/* Columna Derecha: Herramientas Técnicas */}
         <div className="lg:col-span-4 space-y-6">
           
-          {/* Calculadora Express */}
-          <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-xl border-t-4 border-sky-500">
-            <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-white">
-              <svg className="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-              Gestión de Riesgo
+          {/* Calculadora Profesional de Gestión de Riesgo */}
+          <div className="bg-gradient-to-b from-slate-900 to-[#0A0E17] rounded-2xl p-6 border border-slate-800 shadow-2xl relative overflow-hidden group">
+            {/* Destello de fondo decorativo */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl -z-10 group-hover:bg-sky-500/10 transition-colors duration-500"></div>
+
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-3 text-white">
+              <div className="p-2 bg-sky-500/10 rounded-lg border border-sky-500/20 shadow-[0_0_15px_rgba(14,165,233,0.15)]">
+                <svg className="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+              </div>
+              <span className="tracking-wide">Terminal de Riesgo</span>
             </h2>
             
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-5">
+              {/* Sección 1: Setup de Cuenta */}
+              <div className="grid grid-cols-2 gap-4 p-4 bg-[#111827]/80 rounded-xl border border-slate-800/80 shadow-inner">
                 <div>
-                  <label className="text-[10px] text-slate-500 uppercase font-bold">Entrada ($)</label>
+                  <label className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1.5 flex justify-between">
+                    Capital Base
+                    <span className="text-sky-400/80">$</span>
+                  </label>
                   <input 
                     type="number" 
-                    value={calc.entry}
-                    onChange={(e) => setCalc({...calc, entry: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sky-400 font-mono focus:border-sky-500 outline-none"
+                    value={calc.capital}
+                    onChange={(e) => setCalc({...calc, capital: parseFloat(e.target.value) || 0})}
+                    className="w-full bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono text-sm focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 outline-none transition-all placeholder-slate-700"
+                    placeholder="10000"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] text-slate-500 uppercase font-bold text-red-400">Stop Loss ($)</label>
+                  <label className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1.5 flex justify-between">
+                    Riesgo Máx.
+                    <span className="text-sky-400/80">%</span>
+                  </label>
                   <input 
                     type="number" 
-                    value={calc.sl}
-                    onChange={(e) => setCalc({...calc, sl: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-red-400 font-mono focus:border-red-500 outline-none"
+                    value={calc.risk}
+                    onChange={(e) => setCalc({...calc, risk: parseFloat(e.target.value) || 0})}
+                    className="w-full bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono text-sm focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 outline-none transition-all placeholder-slate-700"
+                    placeholder="1.0"
                   />
                 </div>
               </div>
 
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
-                <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Acciones a Comprar</p>
-                <p className="text-4xl font-black text-white">{result.shares}</p>
-                <p className="text-[10px] text-sky-500 mt-2 font-bold uppercase tracking-widest">
-                  Ratio R:R 1:{result.rr}
-                </p>
+              {/* Sección 2: Parámetros del Trade */}
+              <div className="space-y-4 p-5 bg-[#111827]/80 rounded-xl border border-slate-800/80 relative shadow-inner">
+                {/* Linéas conectoras visuales */}
+                <div className="absolute left-[1.65rem] top-10 bottom-10 w-px bg-slate-800 z-0"></div>
+
+                <div className="grid grid-cols-12 gap-3 items-center relative z-10">
+                  <div className="col-span-2 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)] border-2 border-slate-900"></div></div>
+                  <div className="col-span-10">
+                    <label className="text-[10px] text-emerald-400 uppercase font-bold tracking-wider mb-1 block">Entrada ($)</label>
+                    <input 
+                      type="number" 
+                      value={calc.entry}
+                      onChange={(e) => setCalc({...calc, entry: parseFloat(e.target.value) || 0})}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-emerald-400 font-mono font-bold focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 outline-none transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-3 items-center relative z-10">
+                  <div className="col-span-2 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.8)] border-2 border-slate-900"></div></div>
+                  <div className="col-span-10">
+                    <label className="text-[10px] text-red-500 uppercase font-bold tracking-wider mb-1 flex justify-between">
+                      Stop Loss ($)
+                    </label>
+                    <input 
+                      type="number" 
+                      value={calc.sl}
+                      onChange={(e) => setCalc({...calc, sl: parseFloat(e.target.value) || 0})}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-red-500 font-mono font-bold focus:border-red-500 focus:ring-1 focus:ring-red-500/50 outline-none transition-all"
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-12 gap-3 items-center relative z-10">
+                  <div className="col-span-2 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.8)] border-2 border-slate-900"></div></div>
+                  <div className="col-span-10">
+                    <label className="text-[10px] text-sky-400 uppercase font-bold tracking-wider mb-1 flex justify-between">
+                      Take Profit ($)
+                    </label>
+                    <input 
+                      type="number" 
+                      value={calc.tp}
+                      onChange={(e) => setCalc({...calc, tp: parseFloat(e.target.value) || 0})}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sky-400 font-mono font-bold focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 outline-none transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Sección 3: Resultados */}
+              <div className="bg-[#0B1120] p-5 rounded-xl border border-sky-500/30 text-center relative overflow-hidden group/result mt-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-sky-400 to-blue-600 left-0"></div>
+                <div className="absolute inset-0 bg-sky-500/5 opacity-0 group-hover/result:opacity-100 transition-opacity"></div>
+                
+                <p className="text-[11px] text-slate-400 uppercase font-bold tracking-widest mb-1 mt-1">Acciones a Comprar</p>
+                <div className="text-5xl font-black text-white my-2 tracking-tighter drop-shadow-2xl flex items-baseline justify-center gap-1.5">
+                  {result.shares} <span className="text-lg text-slate-500 font-medium tracking-normal">unds</span>
+                </div>
+                
+                <div className="flex justify-between items-center mt-5 border-t border-slate-800/80 pt-4 px-2">
+                  <div className="text-left">
+                    <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wider mb-0.5">Riesgo Monetario</p>
+                    <p className="text-base font-mono text-red-400 font-medium">${parseFloat(result.riskCash.toString()).toLocaleString()}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wider mb-0.5">Ratio Recompensa</p>
+                    <div className={`px-2 py-0.5 rounded text-xs font-mono font-bold inline-block ${parseFloat(result.rr as string) >= 2 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : parseFloat(result.rr as string) > 1 ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
+                      1 : {result.rr}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
