@@ -725,7 +725,7 @@ const TechnicalGauge = ({ symbol = "NASDAQ:META" }) => {
       "interval": "1D",
       "width": "100%",
       "isTransparent": false,
-      "height": "400",
+      "height": "450",
       "symbol": symbol,
       "showIntervalTabs": true,
       "displayMode": "single",
@@ -742,7 +742,7 @@ const TechnicalGauge = ({ symbol = "NASDAQ:META" }) => {
   }, [symbol]);
 
   return (
-    <div className="w-full h-[400px] rounded-xl overflow-hidden border border-slate-700 relative z-10" ref={container}>
+    <div className="w-full h-[450px] rounded-xl border border-slate-700 relative z-10 bg-white" ref={container}>
       <div className="tradingview-widget-container__widget"></div>
     </div>
   );
@@ -942,7 +942,7 @@ const TradingViewStation = () => {
           </div>
 
           {/* Medidor de Sentimiento */}
-          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
+          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl overflow-visible">
             <div className="mb-4 px-2">
               <h2 className="text-sm font-bold uppercase tracking-widest text-sky-400">Análisis Algorítmico</h2>
             </div>
