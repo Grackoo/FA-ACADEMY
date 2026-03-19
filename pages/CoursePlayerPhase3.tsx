@@ -724,13 +724,13 @@ const TechnicalGauge = ({ symbol = "NASDAQ:META" }) => {
     script.innerHTML = JSON.stringify({
       "interval": "1D",
       "width": "100%",
-      "isTransparent": true,
+      "isTransparent": false,
       "height": "400",
       "symbol": symbol,
       "showIntervalTabs": true,
       "displayMode": "single",
       "locale": "es",
-      "theme": "dark"
+      "theme": "light"
     });
     const currentContainer = container.current;
     if (currentContainer) {
@@ -742,7 +742,7 @@ const TechnicalGauge = ({ symbol = "NASDAQ:META" }) => {
   }, [symbol]);
 
   return (
-    <div className="w-full h-[400px] rounded-xl overflow-hidden relative z-10" ref={container}>
+    <div className="w-full h-[400px] rounded-xl overflow-hidden border border-slate-700 relative z-10" ref={container}>
       <div className="tradingview-widget-container__widget"></div>
     </div>
   );
@@ -778,20 +778,21 @@ const TradingViewStation = () => {
   ];
 
   return (
-    <div className="space-y-8 w-full z-10 relative pt-4 pb-4">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/80 p-6 rounded-2xl border border-violet-500/20 shadow-lg">
+    <div className="space-y-8 w-full z-10 relative mt-4">
+      {/* Header del Módulo */}
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
         <div>
-          <h3 className="text-xl md:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-indigo-500">
-            Estación de Trabajo
-          </h3>
-          <p className="text-slate-400 mt-1 text-sm md:text-base">Laboratorio de Trading Activo</p>
+          <h1 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500">
+            MÓDULO 3: ANÁLISIS TÉCNICO
+          </h1>
+          <p className="text-slate-400 mt-1">Estación de Trabajo FA Academy - Trading en Vivo</p>
         </div>
         <div className="flex gap-2 flex-wrap">
           {favorites.map(f => (
             <button 
               key={f.ticker}
               onClick={() => setActiveSymbol(f.ticker)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeSymbol === f.ticker ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/20 ring-2 ring-violet-400/50' : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'}`}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeSymbol === f.ticker ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
             >
               {f.name}
             </button>
@@ -800,58 +801,44 @@ const TradingViewStation = () => {
       </header>
 
       <div className="grid lg:grid-cols-12 gap-6 w-full">
-        {/* Columna Izquierda: Gráfica */}
-        <div className="lg:col-span-8 w-full space-y-6">
-          <div className="bg-[#131722] rounded-2xl p-4 md:p-6 border border-slate-700 shadow-2xl">
+        {/* Columna Izquierda: Gráfica Principal */}
+        <div className="lg:col-span-8 space-y-6">
+          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
             <div className="flex justify-between items-center mb-4 px-2">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-violet-400 flex items-center gap-2">
-                <BarChart2 className="w-4 h-4" /> Gráfica Avanzada
-              </h2>
-              <span className="text-xs text-slate-500 font-mono bg-slate-800 px-2 py-1 rounded">{activeSymbol}</span>
+              <h2 className="text-sm font-bold uppercase tracking-widest text-sky-400">Gráfica Avanzada</h2>
+              <span className="text-xs text-slate-500 font-mono">{activeSymbol}</span>
             </div>
             <TradingViewChart symbol={activeSymbol} />
+          </div>
+
+          <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800/50">
+            <h3 className="text-lg font-bold mb-4 text-white">Notas de la Lección</h3>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              Utiliza las herramientas de dibujo del lado izquierdo de la gráfica para trazar tus líneas de tendencia. 
+              Recuerda: El precio tiene memoria. Los soportes del pasado suelen ser las resistencias del futuro. Observa cómo empresas como <strong className="text-white">{favorites.find(f => f.ticker === activeSymbol)?.name}</strong> respetan estos niveles técnicos.
+            </p>
           </div>
         </div>
 
         {/* Columna Derecha: Herramientas Técnicas */}
-        <div className="lg:col-span-4 w-full space-y-6">
+        <div className="lg:col-span-4 space-y-6">
+          
           {/* Calculadora Express */}
-          <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-xl border-t-4 border-t-violet-500">
+          <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-xl border-t-4 border-sky-500">
             <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-white">
-              <Zap className="w-5 h-5 text-violet-400" />
-              Calculadora de Riesgo
+              <svg className="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+              Gestión de Riesgo
             </h2>
             
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] text-slate-500 uppercase font-bold">Capital ($)</label>
-                  <input 
-                    type="number" 
-                    value={calc.capital}
-                    onChange={(e) => setCalc({...calc, capital: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono font-bold focus:border-violet-500 outline-none shadow-inner"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] text-slate-500 uppercase font-bold">Riesgo (%)</label>
-                  <input 
-                    type="number" 
-                    value={calc.risk}
-                    onChange={(e) => setCalc({...calc, risk: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono font-bold focus:border-violet-500 outline-none shadow-inner"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[10px] text-slate-500 uppercase font-bold text-emerald-400">Entrada ($)</label>
+                  <label className="text-[10px] text-slate-500 uppercase font-bold">Entrada ($)</label>
                   <input 
                     type="number" 
                     value={calc.entry}
                     onChange={(e) => setCalc({...calc, entry: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-white border border-emerald-400 rounded-lg p-2 text-emerald-700 font-mono font-bold focus:border-emerald-500 outline-none shadow-inner"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sky-400 font-mono focus:border-sky-500 outline-none"
                   />
                 </div>
                 <div>
@@ -860,26 +847,15 @@ const TradingViewStation = () => {
                     type="number" 
                     value={calc.sl}
                     onChange={(e) => setCalc({...calc, sl: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-white border border-red-400 rounded-lg p-2 text-red-700 font-mono font-bold focus:border-red-500 outline-none shadow-inner"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-red-400 font-mono focus:border-red-500 outline-none"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="text-[10px] text-slate-500 uppercase font-bold text-violet-400">Take Profit ($)</label>
-                <input 
-                  type="number" 
-                  value={calc.tp}
-                  onChange={(e) => setCalc({...calc, tp: parseFloat(e.target.value) || 0})}
-                  className="w-full bg-white border border-violet-400 rounded-lg p-2 text-violet-700 font-mono font-bold focus:border-violet-500 outline-none shadow-inner"
-                />
-              </div>
-
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center relative overflow-hidden">
-                <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-violet-500 to-indigo-500 left-0"></div>
-                <p className="text-[10px] text-slate-500 uppercase font-bold mb-1 mt-2">Acciones a Comprar</p>
-                <p className="text-4xl md:text-5xl font-black text-white">{result.shares}</p>
-                <p className="text-[10px] text-violet-400 mt-2 font-bold uppercase tracking-widest bg-violet-900/20 inline-block px-3 py-1 rounded">
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Acciones a Comprar</p>
+                <p className="text-4xl font-black text-white">{result.shares}</p>
+                <p className="text-[10px] text-sky-500 mt-2 font-bold uppercase tracking-widest">
                   Ratio R:R 1:{result.rr}
                 </p>
               </div>
@@ -887,11 +863,9 @@ const TradingViewStation = () => {
           </div>
 
           {/* Medidor de Sentimiento */}
-          <div className="bg-[#131722] rounded-2xl p-4 md:p-6 border border-slate-700 shadow-xl">
+          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
             <div className="mb-4 px-2">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-violet-400 flex items-center gap-2">
-                <Activity className="w-4 h-4" /> Algoritmo Técnico
-              </h2>
+              <h2 className="text-sm font-bold uppercase tracking-widest text-sky-400">Análisis Algorítmico</h2>
             </div>
             <TechnicalGauge symbol={activeSymbol} />
           </div>
@@ -1028,10 +1002,12 @@ export default function CoursePlayerPhase3() {
             </header>
 
             <main className="flex-1 max-w-4xl mx-auto w-full p-4 md:p-8 flex flex-col justify-start">
-                <div className="mb-4 animate-fade-in">
-                    <div className="flex items-center gap-2 mb-2"><span className="bg-violet-500/10 text-violet-400 font-bold text-[10px] md:text-xs px-2 py-0.5 rounded uppercase tracking-wider border border-violet-500/20">{moduleData.title}</span></div>
-                    <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
-                </div>
+                {lessonData.visualType !== 'tradingview_station' && (
+                  <div className="mb-4 animate-fade-in">
+                      <div className="flex items-center gap-2 mb-2"><span className="bg-violet-500/10 text-violet-400 font-bold text-[10px] md:text-xs px-2 py-0.5 rounded uppercase tracking-wider border border-violet-500/20">{moduleData.title}</span></div>
+                      <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
+                  </div>
+                )}
 
                 {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
                   <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
@@ -1052,16 +1028,18 @@ export default function CoursePlayerPhase3() {
                       <TradingViewStation />
                   </div>
                 ) : (
-                  <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
-                      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Crosshair size={120} className="text-slate-500" /></div>
-                      {renderVisual(lessonData.visualType)}
-                  </div>
+                  <>
+                    <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Crosshair size={120} className="text-slate-500" /></div>
+                        {renderVisual(lessonData.visualType)}
+                    </div>
+                    <div className="space-y-6 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                        <div className="bg-gradient-to-r from-slate-800 to-slate-800/50 p-6 rounded-xl border-l-4 border-violet-500 shadow-lg"><p className="text-lg md:text-xl text-violet-100 font-medium leading-relaxed">{lessonData.content}</p></div>
+                        <div className="flex gap-4 items-start"><div className="bg-slate-700 rounded-full p-2 mt-1 shrink-0"><Brain size={20} className="text-slate-300" /></div><div><p className="text-slate-300 leading-relaxed text-sm md:text-base">{lessonData.details}</p><p className="mt-4 text-slate-400 text-sm italic bg-slate-900/30 p-3 rounded-lg border border-slate-700/50 flex gap-2"><span className="text-violet-500 font-bold not-italic">💡 Tip:</span>{lessonData.speakerNotes}</p></div></div>
+                        <ConceptsBar concepts={lessonData.concepts} />
+                    </div>
+                  </>
                 )}
-                <div className="space-y-6 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                    <div className="bg-gradient-to-r from-slate-800 to-slate-800/50 p-6 rounded-xl border-l-4 border-violet-500 shadow-lg"><p className="text-lg md:text-xl text-violet-100 font-medium leading-relaxed">{lessonData.content}</p></div>
-                    <div className="flex gap-4 items-start"><div className="bg-slate-700 rounded-full p-2 mt-1 shrink-0"><Brain size={20} className="text-slate-300" /></div><div><p className="text-slate-300 leading-relaxed text-sm md:text-base">{lessonData.details}</p><p className="mt-4 text-slate-400 text-sm italic bg-slate-900/30 p-3 rounded-lg border border-slate-700/50 flex gap-2"><span className="text-violet-500 font-bold not-italic">💡 Tip:</span>{lessonData.speakerNotes}</p></div></div>
-                    <ConceptsBar concepts={lessonData.concepts} />
-                </div>
             </main>
 
             <footer className="bg-[#0f172a] border-t border-slate-800 p-4 pb-8 md:pb-4">
