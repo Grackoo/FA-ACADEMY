@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     ArrowRight, ArrowLeft, TrendingUp, TrendingDown, Activity,
     Target, Send, Info, BookOpen, BarChart2,
@@ -129,6 +129,17 @@ const courseData = [
                     { term: "Confluencia de Marcos", def: "La señal más poderosa ocurre cuando 3 temporalidades diferentes muestran la misma dirección al mismo tiempo." },
                     { term: "Fase Weinstein (Stage 1-4)", def: "Stan Weinstein clasificó el ciclo de toda acción en 4 etapas: Acumulación (base), Avance (compra), Distribución (techo), Declive (evitar)." },
                     { term: "Trap en Marco Menor", def: "Una señal falsa en 15min que parece breakout pero es ruido desde el Daily. Solo visible con análisis multi-marco." }
+                ]
+            },
+            {
+                title: "Estación de Trabajo: Práctica en Tiempo Real",
+                content: "Usa este laboratorio para analizar el mercado aplicando todo lo que has aprendido.",
+                details: "Selecciona diferentes activos desde el panel superior para ver sus gráficas avanzadas proporcionadas por TradingView. Usa la Calculadora de Gestión de Riesgo antes de ejecutar cualquier operación en tu broker para asegurar que tu Stop Loss y la cantidad de acciones a comprar sean matemáticamente precisos.",
+                visualType: "tradingview_station",
+                speakerNotes: "Practica trazar tus soportes, resistencias y medir el riesgo en el panel de TradingView integrado en esta estación. No operes con dinero real hasta no dominar una estrategia de gestión estricta.",
+                concepts: [
+                    { term: "Technical Gauge", def: "El medidor algorítmico usa más de 20 indicadores técnicos (RSI, MACD, Medias Móviles) para mostrar una aguja de Compra/Venta. No es infalible, pero ahorra tiempo de cálculo." },
+                    { term: "Position Sizing", def: "Calcular la cantidad exacta de acciones a comprar para que si se ejecuta tu Stop Loss, solo pierdas tu máximo riesgo permitido (ej. 1% de tu capital)." }
                 ]
             },
             {
@@ -663,6 +674,234 @@ const TradingPsychology = () => (
     </div>
 );
 
+// --- COMPONENTES TRADINGVIEW STATION ---
+
+const TradingViewChart = ({ symbol = "NASDAQ:META" }) => {
+  const container = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      "autosize": true,
+      "symbol": symbol,
+      "interval": "D",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "es",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "calendar": false,
+      "support_host": "https://www.tradingview.com"
+    });
+    const currentContainer = container.current;
+    if (currentContainer) {
+        currentContainer.appendChild(script);
+    }
+    return () => {
+      if (currentContainer) currentContainer.innerHTML = '';
+    };
+  }, [symbol]);
+
+  return (
+    <div className="w-full h-[500px] rounded-xl overflow-hidden border border-slate-700 shadow-2xl relative z-10" ref={container}>
+      <div className="tradingview-widget-container__widget"></div>
+    </div>
+  );
+};
+
+const TechnicalGauge = ({ symbol = "NASDAQ:META" }) => {
+  const container = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      "interval": "1D",
+      "width": "100%",
+      "isTransparent": true,
+      "height": "400",
+      "symbol": symbol,
+      "showIntervalTabs": true,
+      "displayMode": "single",
+      "locale": "es",
+      "theme": "dark"
+    });
+    const currentContainer = container.current;
+    if (currentContainer) {
+        currentContainer.appendChild(script);
+    }
+    return () => {
+      if (currentContainer) currentContainer.innerHTML = '';
+    };
+  }, [symbol]);
+
+  return (
+    <div className="w-full h-[400px] rounded-xl overflow-hidden relative z-10" ref={container}>
+      <div className="tradingview-widget-container__widget"></div>
+    </div>
+  );
+};
+
+const TradingViewStation = () => {
+  const [activeSymbol, setActiveSymbol] = useState("NASDAQ:META");
+  const [calc, setCalc] = useState({
+    capital: 10000,
+    risk: 1,
+    entry: 150,
+    sl: 145,
+    tp: 165
+  });
+
+  const [result, setResult] = useState({ shares: 0, riskCash: 0, rr: "0" });
+
+  useEffect(() => {
+    const riskAmount = calc.capital * (calc.risk / 100);
+    const riskPerShare = Math.abs(calc.entry - calc.sl);
+    const rewardPerShare = Math.abs(calc.tp - calc.entry);
+    const shares = riskPerShare > 0 ? Math.floor(riskAmount / riskPerShare) : 0;
+    const rr = riskPerShare > 0 ? (rewardPerShare / riskPerShare).toFixed(2) : "0";
+    
+    setResult({ shares, riskCash: riskAmount, rr });
+  }, [calc]);
+
+  const favorites = [
+    { name: "Meta", ticker: "NASDAQ:META" },
+    { name: "Occidental", ticker: "NYSE:OXY" },
+    { name: "Amazon", ticker: "NASDAQ:AMZN" },
+    { name: "Coca-Cola", ticker: "NYSE:KO" }
+  ];
+
+  return (
+    <div className="space-y-8 w-full z-10 relative pt-4 pb-4">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/80 p-6 rounded-2xl border border-violet-500/20 shadow-lg">
+        <div>
+          <h3 className="text-xl md:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-indigo-500">
+            Estación de Trabajo
+          </h3>
+          <p className="text-slate-400 mt-1 text-sm md:text-base">Laboratorio de Trading Activo</p>
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          {favorites.map(f => (
+            <button 
+              key={f.ticker}
+              onClick={() => setActiveSymbol(f.ticker)}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeSymbol === f.ticker ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/20 ring-2 ring-violet-400/50' : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'}`}
+            >
+              {f.name}
+            </button>
+          ))}
+        </div>
+      </header>
+
+      <div className="grid lg:grid-cols-12 gap-6 w-full">
+        {/* Columna Izquierda: Gráfica */}
+        <div className="lg:col-span-8 w-full space-y-6">
+          <div className="bg-[#131722] rounded-2xl p-4 md:p-6 border border-slate-700 shadow-2xl">
+            <div className="flex justify-between items-center mb-4 px-2">
+              <h2 className="text-sm font-bold uppercase tracking-widest text-violet-400 flex items-center gap-2">
+                <BarChart2 className="w-4 h-4" /> Gráfica Avanzada
+              </h2>
+              <span className="text-xs text-slate-500 font-mono bg-slate-800 px-2 py-1 rounded">{activeSymbol}</span>
+            </div>
+            <TradingViewChart symbol={activeSymbol} />
+          </div>
+        </div>
+
+        {/* Columna Derecha: Herramientas Técnicas */}
+        <div className="lg:col-span-4 w-full space-y-6">
+          {/* Calculadora Express */}
+          <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-xl border-t-4 border-t-violet-500">
+            <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-white">
+              <Zap className="w-5 h-5 text-violet-400" />
+              Calculadora de Riesgo
+            </h2>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] text-slate-500 uppercase font-bold">Capital ($)</label>
+                  <input 
+                    type="number" 
+                    value={calc.capital}
+                    onChange={(e) => setCalc({...calc, capital: parseFloat(e.target.value) || 0})}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-300 font-mono focus:border-violet-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500 uppercase font-bold">Riesgo (%)</label>
+                  <input 
+                    type="number" 
+                    value={calc.risk}
+                    onChange={(e) => setCalc({...calc, risk: parseFloat(e.target.value) || 0})}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-300 font-mono focus:border-violet-500 outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] text-slate-500 uppercase font-bold text-emerald-400">Entrada ($)</label>
+                  <input 
+                    type="number" 
+                    value={calc.entry}
+                    onChange={(e) => setCalc({...calc, entry: parseFloat(e.target.value) || 0})}
+                    className="w-full bg-emerald-900/10 border border-emerald-900/30 rounded-lg p-2 text-emerald-400 font-mono focus:border-emerald-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500 uppercase font-bold text-red-400">Stop Loss ($)</label>
+                  <input 
+                    type="number" 
+                    value={calc.sl}
+                    onChange={(e) => setCalc({...calc, sl: parseFloat(e.target.value) || 0})}
+                    className="w-full bg-red-900/10 border border-red-900/30 rounded-lg p-2 text-red-400 font-mono focus:border-red-500 outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-[10px] text-slate-500 uppercase font-bold text-violet-400">Take Profit ($)</label>
+                <input 
+                  type="number" 
+                  value={calc.tp}
+                  onChange={(e) => setCalc({...calc, tp: parseFloat(e.target.value) || 0})}
+                  className="w-full bg-violet-900/10 border border-violet-900/30 rounded-lg p-2 text-violet-400 font-mono focus:border-violet-500 outline-none"
+                />
+              </div>
+
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center relative overflow-hidden">
+                <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-violet-500 to-indigo-500 left-0"></div>
+                <p className="text-[10px] text-slate-500 uppercase font-bold mb-1 mt-2">Acciones a Comprar</p>
+                <p className="text-4xl md:text-5xl font-black text-white">{result.shares}</p>
+                <p className="text-[10px] text-violet-400 mt-2 font-bold uppercase tracking-widest bg-violet-900/20 inline-block px-3 py-1 rounded">
+                  Ratio R:R 1:{result.rr}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Medidor de Sentimiento */}
+          <div className="bg-[#131722] rounded-2xl p-4 md:p-6 border border-slate-700 shadow-xl">
+            <div className="mb-4 px-2">
+              <h2 className="text-sm font-bold uppercase tracking-widest text-violet-400 flex items-center gap-2">
+                <Activity className="w-4 h-4" /> Algoritmo Técnico
+              </h2>
+            </div>
+            <TechnicalGauge symbol={activeSymbol} />
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ConceptsBar = ({ concepts }: { concepts: any[] }) => {
     const [activeConcept, setActiveConcept] = useState<number | null>(null);
     if (!concepts || concepts.length === 0) return null;
@@ -729,6 +968,7 @@ export default function CoursePlayerPhase3() {
             case 'volume_analysis': return <VolumeAnalysis />;
             case 'risk_reward_bimbo': return <RiskRewardBimbo />;
             case 'multi_timeframe': return <MultiTimeframe />;
+            case 'tradingview_station': return <TradingViewStation />;
             case 'candlestick_anatomy': return <CandlestickAnatomy />;
             case 'support_resistance': return <SupportResistance />;
             case 'trend_structure': return <TrendStructure />;
