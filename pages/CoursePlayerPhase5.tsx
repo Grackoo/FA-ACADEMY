@@ -20,7 +20,7 @@ const courseData = [
                 content: "No intentes ganar al mercado, intenta ser más inteligente que él.",
                 details: "David Swensen, gestor del fondo de la Universidad de Yale, demostró que la diversificación real no es tener 20 acciones, sino tener activos que no se muevan igual. El 'Modelo Yale' introduce activos alternativos (Bienes Raíces, Materias Primas) para reducir la volatilidad sin sacrificar retornos.",
                 visualType: "yale_model",
-                videoUrl: "WZjkRWuka3I",
+                videoUrls: ["WZjkRWuka3I"],
                 source: "Libro: 'Unconventional Success' - David Swensen",
                 quote: { text: "La diversificación es la única comida gratis en las finanzas.", author: "Harry Markowitz (Premio Nobel)" },
                 speakerNotes: "El objetivo no es tener el rendimiento más alto un año, sino evitar la ruina todos los años. La consistencia crea el interés compuesto.",
