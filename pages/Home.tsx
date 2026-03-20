@@ -313,7 +313,7 @@ const Home: React.FC = () => {
                 Toma el control de tu capital y diseña <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-200">tu propio futuro.</span>
               </h1>
               <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                No es suerte, es educación. Te guiamos desde los conceptos básicos hasta el análisis técnico avanzado para que construyas un portafolio sólido y rentable.
+                Domina tu capital. Cursos de finanzas personales, Diagnostico de sangrado financiero y construcción de portafolios de inversion sólidos.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button

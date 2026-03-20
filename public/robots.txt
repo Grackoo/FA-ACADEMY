@@ -1,0 +1,10 @@
+# ¡Hola Googlebot! Bienvenido a FA Academy.
+User-agent: *
+Allow: /
+
+# Evitar que rastreen rutas internas ocultas si existieran
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://fa-academy.com/sitemap.xml
