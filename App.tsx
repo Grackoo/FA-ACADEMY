@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
@@ -54,7 +54,7 @@ const Footer: React.FC = () => (
 );
 
 const ScrollToTop = () => {
-  const { pathname, hash } = React.useMemo(() => window.location, []);
+  const { pathname, hash } = useLocation();
 
   React.useEffect(() => {
     if (!hash) {
