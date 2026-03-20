@@ -76,6 +76,7 @@ const courseData = [
                 content: "El seguro de auto para tu portafolio.",
                 details: "Los inversores profesionales no solo diversifican, usan derivados para protegerse. Comprar una opción 'PUT' te da el derecho de vender tus acciones a un precio fijo, incluso si el mercado colapsa. Es como pagar una prima de seguro: pierdes un poco de rendimiento, pero duermes tranquilo.",
                 visualType: "hedging_puts",
+                videoUrls: ["Hdoqm6qJzU4"],
                 source: "Libro: 'Options as a Strategic Investment' - Lawrence McMillan",
                 quote: { text: "Los amateurs se enfocan en cuánto pueden ganar. Los profesionales, en cuánto pueden perder.", author: "George Soros" },
                 speakerNotes: "No uses opciones para especular (apostar). Úsalas para proteger (hedging) capitales grandes durante tiempos de incertidumbre.",
