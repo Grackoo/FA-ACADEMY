@@ -71,7 +71,7 @@ const App: React.FC = () => {
       <Router>
         <ScrollToTop />
         <ParticleBackground />
-        <div className="relative z-10 flex flex-col min-h-screen overflow-x-hidden w-full max-w-[100vw]">
+        <div className="relative z-10 flex flex-col min-h-screen overflow-x-hidden w-full">
           <Ticker />
           <Navbar />
           <main className="flex-grow">
