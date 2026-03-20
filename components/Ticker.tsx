@@ -29,7 +29,7 @@ const Ticker: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full bg-slate-900 border-b border-slate-800">
+    <div className="w-full max-w-[100vw] overflow-hidden bg-slate-900 border-b border-slate-800 relative z-50">
       {/* @ts-ignore */}
       <tv-ticker-tape
         symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,FX:EURUSD,BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,CMCMARKETS:GOLD,FX:USDMXN"
