@@ -1,9 +1,14 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Pricing: React.FC = () => {
   return (
     <div className="min-h-screen bg-transparent relative overflow-hidden py-20">
+      <SEO 
+        title="Precios y Planes de Inversión | FA Academy"
+        description="Planes accesibles para dominar la bolsa de valores. Empieza gratis con el Plan Cimientos o escala a Inversor Pro." 
+      />
       {/* Background Effects matching Home */}
       <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-20">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-400 rounded-full blur-[120px]" />

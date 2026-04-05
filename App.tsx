@@ -1,5 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
@@ -68,7 +69,8 @@ const ScrollToTop = () => {
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
+      <HelmetProvider>
+        <Router>
         <ScrollToTop />
         <ParticleBackground />
         <div className="relative z-10 flex flex-col min-h-screen overflow-x-hidden w-full">
@@ -110,7 +112,8 @@ const App: React.FC = () => {
           </main>
           <Footer />
         </div>
-      </Router>
+        </Router>
+      </HelmetProvider>
     </AuthProvider>
   );
 };

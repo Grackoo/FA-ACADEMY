@@ -1,5 +1,6 @@
 import React from 'react';
 import { Linkedin, Twitter, Mail } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Mentors: React.FC = () => {
   const mentors = [
@@ -28,6 +29,10 @@ const Mentors: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-transparent relative overflow-hidden py-20">
+      <SEO 
+        title="Mentores de Trading e Inversiones | FA Academy"
+        description="Conoce al equipo de expertos y traders profesionales en FA Academy que te guiarán paso a paso en tu camino a la rentabilidad." 
+      />
       {/* Background Effects matching Home */}
       <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-20">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-400 rounded-full blur-[120px]" />

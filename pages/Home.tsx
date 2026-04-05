@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MODULES, getIcon } from '../constants';
 import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronRight, MessageCircle, Search, TrendingDown, Sprout, Rocket, CheckCircle2, AlertCircle, AlertTriangle, TrendingUp, Coins, Info } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const TradingViewHeatmap: React.FC = () => {
   const container = useRef<HTMLDivElement>(null);
@@ -297,6 +298,10 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-transparent">
+      <SEO 
+        title="Cursos de Inversiones y Trading | FA Academy"
+        description="Domina tu capital y diseña tu futuro. Cursos certificados de finanzas personales, análisis técnico y construcción de portafolios de inversión en bolsa." 
+      />
 
       {showQuiz && <InvestorQuizModal onClose={() => setShowQuiz(false)} />}
 
@@ -317,6 +322,7 @@ const Home: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
+                  aria-label="Abrir test de inversionista y empezar gratis"
                   onClick={() => setShowQuiz(true)}
                   className="px-8 py-4 bg-primary-600 hover:bg-primary-500 text-white rounded-xl font-bold shadow-[0_0_25px_rgba(13,148,136,0.3)] transition-all transform hover:-translate-y-1"
                 >

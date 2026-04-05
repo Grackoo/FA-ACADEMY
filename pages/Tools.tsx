@@ -3,6 +3,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import { Calculator, Target, PiggyBank, ArrowDownToLine, Flame, TrendingUp, Coins, Info, ArrowRight, AlertCircle, TrendingDown } from 'lucide-react';
+import SEO from '../components/SEO';
 
 // --- Components for Tools ---
 
@@ -618,6 +619,10 @@ const DebtVsInvestmentTool = () => {
 const Tools: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-transparent relative overflow-hidden pb-20 pt-10">
+      <SEO 
+        title="Calculadoras de Inversión y Simulador FIRE | FA Academy"
+        description="Herramientas profesionales para calcular interés compuesto, amortización de deudas, y simular el portafolio necesario para tu retiro." 
+      />
       {/* Background Effects matching Home */}
       <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-400 rounded-full blur-[120px]" />
