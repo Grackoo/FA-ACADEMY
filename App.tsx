@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -30,9 +30,9 @@ const Footer: React.FC = () => (
         <h4 className="text-white font-bold mb-4">Plataforma</h4>
         <ul className="space-y-2 text-sm">
           <li><a href="/#catalog" className="hover:text-primary-400 transition-colors">Academy</a></li>
-          <li><a href="#/mentors" className="hover:text-primary-400 transition-colors">Mentores</a></li>
-          <li><a href="#/pricing" className="hover:text-primary-400 transition-colors">Precios</a></li>
-          <li><a href="#/tools" className="hover:text-primary-400 transition-colors">Herramientas</a></li>
+          <li><a href="/mentors" className="hover:text-primary-400 transition-colors">Mentores</a></li>
+          <li><a href="/pricing" className="hover:text-primary-400 transition-colors">Precios</a></li>
+          <li><a href="/tools" className="hover:text-primary-400 transition-colors">Herramientas</a></li>
         </ul>
       </div>
       <div>

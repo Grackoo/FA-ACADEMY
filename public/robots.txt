@@ -7,4 +7,4 @@ Disallow: /admin/
 Disallow: /private/
 
 # Sitemap location
-Sitemap: https://fa-academy.com/sitemap.xml
+Sitemap: https://fa-academy.vercel.app/sitemap.xml
