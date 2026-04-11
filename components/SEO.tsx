@@ -6,15 +6,17 @@ interface SEOProps {
   description: string;
   name?: string;
   type?: string;
+  url?: string;
 }
 
-const SEO: React.FC<SEOProps> = ({ title, description, name = "FA Academy", type = "website" }) => {
+const SEO: React.FC<SEOProps> = ({ title, description, name = "FA Academy", type = "website", url = "https://fa-academy.vercel.app" }) => {
   return (
     <Helmet>
       {/* Etiqueta Título estándar */}
       <title>{title}</title>
       {/* Etiquetas Meta Básicas */}
       <meta name='description' content={description} />
+      <link rel="canonical" href={url} />
       {/* Twitter Tags */}
       <meta name='twitter:creator' content={name} />
       <meta name='twitter:card' content={type} />
@@ -24,6 +26,7 @@ const SEO: React.FC<SEOProps> = ({ title, description, name = "FA Academy", type
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta property='og:type' content={type} />
+      <meta property='og:url' content={url} />
     </Helmet>
   );
 };

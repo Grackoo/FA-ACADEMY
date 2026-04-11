@@ -8,6 +8,7 @@ const Pricing: React.FC = () => {
       <SEO 
         title="Precios y Planes de Inversión | FA Academy"
         description="Planes accesibles para dominar la bolsa de valores. Empieza gratis con el Plan Cimientos o escala a Inversor Pro." 
+        url="https://fa-academy.vercel.app/pricing"
       />
       {/* Background Effects matching Home */}
       <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-20">

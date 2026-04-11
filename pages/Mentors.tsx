@@ -32,6 +32,7 @@ const Mentors: React.FC = () => {
       <SEO 
         title="Mentores de Trading e Inversiones | FA Academy"
         description="Conoce al equipo de expertos y traders profesionales en FA Academy que te guiarán paso a paso en tu camino a la rentabilidad." 
+        url="https://fa-academy.vercel.app/mentors"
       />
       {/* Background Effects matching Home */}
       <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-20">

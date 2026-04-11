@@ -622,6 +622,7 @@ const Tools: React.FC = () => {
       <SEO 
         title="Calculadoras de Inversión y Simulador FIRE | FA Academy"
         description="Herramientas profesionales para calcular interés compuesto, amortización de deudas, y simular el portafolio necesario para tu retiro." 
+        url="https://fa-academy.vercel.app/tools"
       />
       {/* Background Effects matching Home */}
       <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">

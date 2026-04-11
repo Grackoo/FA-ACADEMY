@@ -301,6 +301,7 @@ const Home: React.FC = () => {
       <SEO 
         title="Cursos de Inversiones y Trading | FA Academy"
         description="Domina tu capital y diseña tu futuro. Cursos certificados de finanzas personales, análisis técnico y construcción de portafolios de inversión en bolsa." 
+        url="https://fa-academy.vercel.app/"
       />
 
       {showQuiz && <InvestorQuizModal onClose={() => setShowQuiz(false)} />}
