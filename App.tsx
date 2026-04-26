@@ -23,7 +23,12 @@ const Footer: React.FC = () => (
   <footer className="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div>
-        <h3 className="text-white font-bold text-lg mb-4">FA Academy</h3>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white/5">
+            <img src="/logo.png" alt="FA Academy Logo" className="w-full h-full object-contain" />
+          </div>
+          <h3 className="text-white font-bold text-lg">FA Academy</h3>
+        </div>
         <p className="text-sm text-slate-400">Educación financiera de clase mundial para inversores independientes.</p>
       </div>
       <div>

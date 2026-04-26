@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, GraduationCap } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,8 +47,8 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-[0_0_15px_rgba(13,148,136,0.5)]">
-                <GraduationCap size={20} />
+              <div className="w-10 h-10 flex items-center justify-center shadow-[0_0_15px_rgba(13,148,136,0.5)] rounded-lg overflow-hidden bg-slate-900/50">
+                <img src="/logo.png" alt="FA Academy Logo" className="w-full h-full object-contain" />
               </div>
               <span className="font-display font-bold text-xl tracking-tight text-white">
                 FA Academy

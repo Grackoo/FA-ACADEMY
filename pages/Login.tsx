@@ -28,8 +28,8 @@ const Login: React.FC = () => {
             <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
                 <div className="p-8">
                     <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-primary-900/30 text-primary-400 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary-500/30">
-                            <Lock size={32} />
+                        <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden bg-slate-900/50 shadow-[0_0_20px_rgba(13,148,136,0.3)]">
+                            <img src="/logo.png" alt="FA Academy Logo" className="w-full h-full object-contain" />
                         </div>
                         <h1 className="text-2xl font-display font-bold text-white mb-2">Acceso Restringido</h1>
                         <p className="text-slate-400 text-sm">
