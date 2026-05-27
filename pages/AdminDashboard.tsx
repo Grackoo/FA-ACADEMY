@@ -4,7 +4,7 @@ import { config } from '../config';
 import { 
   Users, CheckCircle2, Award, UserPlus, Search, 
   ExternalLink, Copy, Check, Send, Sparkles, Shield,
-  BookOpen, ChevronRight, RefreshCw, AlertCircle
+  BookOpen, ChevronRight, RefreshCw, AlertCircle, Phone
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
@@ -16,6 +16,7 @@ interface Client {
   allowed_phases: string[];
   super_link_token: string;
   created_at: string;
+  phone: string;
 }
 
 interface ProgressRecord {
@@ -50,10 +51,10 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   
-  // Registration form state
-  const [newUsername, setNewUsername] = useState('');
+  // Registration form state (Auto-generated credentials)
+  const [fullName, setFullName] = useState('');
   const [newEmail, setNewEmail] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [newPhone, setNewPhone] = useState('');
   const [selectedPhases, setSelectedPhases] = useState<string[]>(['1', '2', '3', '4', '5']);
   const [registrationError, setRegistrationError] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState<any>(null);
@@ -85,7 +86,8 @@ export default function AdminDashboard() {
           role: u.role,
           allowed_phases: u.allowed_phases || [],
           super_link_token: u.super_link_token || '',
-          created_at: u.created_at
+          created_at: u.created_at,
+          phone: u.phone || ''
         }));
         
         setClients(formattedClients);
@@ -118,12 +120,39 @@ export default function AdminDashboard() {
     loadData();
   }, [isMock]);
 
+  // Helper para generar usuario y contraseña legibles basados en el nombre
+  const generateCredentials = (name: string) => {
+    const cleanWords = name
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Remueve acentos
+      .replace(/[^a-z0-9 ]/g, "") // Remueve caracteres especiales
+      .split(/\s+/)
+      .filter(w => w.length > 0);
+
+    const firstName = cleanWords[0] || 'alumno';
+    const firstSurname = cleanWords[1] || '';
+    
+    // Usuario: nombre + primer apellido + 3 números aleatorios
+    const randNum = Math.floor(100 + Math.random() * 900);
+    const username = `${firstName}${firstSurname}${randNum}`;
+    
+    // Contraseña: fa-nombre-4 números
+    const randPass = Math.floor(1000 + Math.random() * 9000);
+    const password = `fa-${firstName}-${randPass}`;
+    
+    return { username, password };
+  };
+
   const handleRegisterClient = async (e: React.FormEvent) => {
     e.preventDefault();
     setRegistrationError('');
     setRegistrationSuccess(null);
     setIsRegistering(true);
     
+    // Generar credenciales automáticamente
+    const { username, password } = generateCredentials(fullName);
     const allowedPhasesStr = selectedPhases.sort().join(',');
     
     try {
@@ -134,17 +163,17 @@ export default function AdminDashboard() {
         // Verificar duplicados
         const exists = localUsers.some(
           (u: any) => 
-            u.username.toLowerCase() === newUsername.toLowerCase() || 
+            u.username.toLowerCase() === username.toLowerCase() || 
             u.email.toLowerCase() === newEmail.toLowerCase()
         );
         
         if (exists) {
-          throw new Error('El nombre de usuario o correo ya existe en la simulación.');
+          throw new Error('El correo electrónico ya está registrado.');
         }
         
         const userId = 'USR_' + Math.floor(Math.random() * 900000 + 100000);
         // Hashing
-        const msgBuffer = new TextEncoder().encode(newPassword);
+        const msgBuffer = new TextEncoder().encode(password);
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const passHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -153,14 +182,15 @@ export default function AdminDashboard() {
         
         const newUser = {
           id: userId,
-          username: newUsername,
+          username: username,
           email: newEmail,
           password_hash: passHash,
           role: 'student',
           allowed_phases: selectedPhases,
           super_link_token: token,
           token_expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-          created_at: new Date().toISOString()
+          created_at: new Date().toISOString(),
+          phone: newPhone
         };
         
         localUsers.push(newUser);
@@ -168,19 +198,21 @@ export default function AdminDashboard() {
         
         const successClient = {
           id: userId,
-          username: newUsername,
+          username: username,
           email: newEmail,
           allowed_phases: selectedPhases,
-          super_link_token: token
+          super_link_token: token,
+          password: password, // Retener contraseña plana en memoria para el banner de éxito
+          phone: newPhone
         };
         
         setRegistrationSuccess(successClient);
         setGeneratedLink(`${window.location.origin}/login?token=${token}`);
         
         // Reset form
-        setNewUsername('');
+        setFullName('');
         setNewEmail('');
-        setNewPassword('');
+        setNewPhone('');
         loadData();
       } else {
         // Registro real API
@@ -189,20 +221,24 @@ export default function AdminDashboard() {
           headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify({
             action: 'registerClient',
-            username: newUsername,
+            username: username,
             email: newEmail,
-            password: newPassword,
+            password: password,
+            phone: newPhone,
             allowedPhases: allowedPhasesStr,
             secret: config.sheetsApiSecret
           })
         });
         const data = await response.json();
         if (data.success) {
-          setRegistrationSuccess(data.client);
+          setRegistrationSuccess({
+            ...data.client,
+            password: password // Conservamos contraseña generada para mostrarla en el banner
+          });
           setGeneratedLink(`${window.location.origin}/login?token=${data.client.super_link_token}`);
-          setNewUsername('');
+          setFullName('');
           setNewEmail('');
-          setNewPassword('');
+          setNewPhone('');
           loadData();
         } else {
           setRegistrationError(data.error || 'Error registrando al cliente.');
@@ -367,12 +403,12 @@ export default function AdminDashboard() {
             
             <form onSubmit={handleRegisterClient} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs text-slate-400 font-medium">Nombre de usuario</label>
+                <label className="text-xs text-slate-400 font-medium">Nombre Completo del Cliente</label>
                 <input 
                   type="text" 
-                  value={newUsername} 
-                  onChange={(e) => setNewUsername(e.target.value)}
-                  placeholder="ej: carlosm"
+                  value={fullName} 
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="ej: Joel Manuel Jaen Moreno"
                   className="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent transition-all"
                   required
                 />
@@ -384,24 +420,28 @@ export default function AdminDashboard() {
                   type="email" 
                   value={newEmail} 
                   onChange={(e) => setNewEmail(e.target.value)}
-                  placeholder="ej: carlos@gmail.com"
-                  className="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent transition-all"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-1.5">
-                <label className="text-xs text-slate-400 font-medium">Contraseña Temporal</label>
-                <input 
-                  type="password" 
-                  value={newPassword} 
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Contraseña del cliente"
+                  placeholder="ej: joel@gmail.com"
                   className="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent transition-all"
                   required
                 />
               </div>
 
+              <div className="space-y-1.5">
+                <label className="text-xs text-slate-400 font-medium">Teléfono (WhatsApp)</label>
+                <input 
+                  type="text" 
+                  value={newPhone} 
+                  onChange={(e) => setNewPhone(e.target.value)}
+                  placeholder="ej: 521234567890 (código país + número)"
+                  className="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent transition-all"
+                  required
+                />
+              </div>
+
+              <div className="text-[11px] text-slate-500 italic bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/50">
+                🔒 El nombre de usuario y contraseña se generarán automáticamente a partir del nombre ingresado para optimizar el registro.
+              </div>
+              
               {/* Phase permissions */}
               <div className="space-y-2">
                 <label className="text-xs text-slate-400 font-medium block">Fases de Acceso Permitidas</label>
@@ -445,11 +485,30 @@ export default function AdminDashboard() {
                 <div className="flex items-center gap-1.5 text-teal-400 text-xs font-bold">
                   <Sparkles size={14} /> ¡Cliente Creado Exitosamente!
                 </div>
+                
+                {/* Mostrar credenciales generadas */}
+                <div className="space-y-1.5 bg-slate-900 border border-slate-800 p-3 rounded-lg text-xs leading-relaxed">
+                  <div className="flex justify-between text-slate-400">
+                    <span>Usuario Generado:</span>
+                    <strong className="text-white select-all font-mono">{registrationSuccess.username}</strong>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Contraseña Generada:</span>
+                    <strong className="text-white select-all font-mono">{registrationSuccess.password}</strong>
+                  </div>
+                  {registrationSuccess.phone && (
+                    <div className="flex justify-between text-slate-400">
+                      <span>Teléfono:</span>
+                      <strong className="text-white font-mono">{registrationSuccess.phone}</strong>
+                    </div>
+                  )}
+                </div>
+
                 <div className="text-xs text-slate-400">
-                  Envíale este enlace a <strong>{registrationSuccess.username}</strong> para que inicie sesión inmediatamente sin ingresar contraseña:
+                  Enlace de acceso directo (Super Link):
                 </div>
                 
-                <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-2 rounded-lg text-slate-300 text-xs select-all break-all relative">
+                <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-2 rounded-lg text-slate-300 text-[11px] select-all break-all relative">
                   {generatedLink}
                 </div>
                 
@@ -470,10 +529,12 @@ export default function AdminDashboard() {
                   </button>
                   
                   <a
-                    href={`https://wa.me/?text=Hola%20${registrationSuccess.username}!%20Aqu%C3%AD%20tienes%20tu%20enlace%20de%20acceso%20directo%20a%20FA%20Academy%20para%20comenzar%20tu%20curso:%20${encodeURIComponent(generatedLink)}`}
+                    href={`https://wa.me/${registrationSuccess.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                      `¡Hola *${registrationSuccess.username}*! 👋 Bienvenid@ a *FA Academy*.\n\nAquí tienes tus credenciales de acceso:\n👤 *Usuario:* ${registrationSuccess.username}\n🔑 *Contraseña:* ${registrationSuccess.password}\n\nO puedes entrar directamente sin ingresar contraseña usando tu *Super Link*:\n🔗 ${generatedLink}\n\n¡Mucho éxito en tu aprendizaje! 🎓`
+                    )}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="py-2 bg-[#25D366] hover:opacity-90 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1 transition-all text-center"
+                    className="py-2 bg-[#25D366] hover:opacity-90 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 transition-all text-center font-semibold"
                   >
                     <Send size={12} /> WhatsApp
                   </a>
@@ -515,7 +576,7 @@ export default function AdminDashboard() {
                   <thead>
                     <tr className="border-b border-slate-800 text-slate-500 text-xs font-bold">
                       <th className="pb-3 pr-4 font-semibold">Usuario</th>
-                      <th className="pb-3 px-4 font-semibold">Correo</th>
+                      <th className="pb-3 px-4 font-semibold">Contacto</th>
                       <th className="pb-3 px-4 font-semibold">Fases Permitidas</th>
                       <th className="pb-3 px-4 font-semibold">Progreso Académico</th>
                       <th className="pb-3 pl-4 font-semibold text-right">Acceso Rápido</th>
@@ -533,7 +594,22 @@ export default function AdminDashboard() {
                             <span className="font-semibold text-white block">{client.username}</span>
                             <span className="text-[10px] text-slate-500">ID: {client.id}</span>
                           </td>
-                          <td className="py-4 px-4 text-slate-400 select-all">{client.email}</td>
+                          <td className="py-4 px-4 text-slate-400 select-all">
+                            <div className="font-medium text-slate-300">{client.email}</div>
+                            {client.phone && (
+                              <div className="text-[10px] text-slate-500 flex items-center gap-1 mt-1">
+                                <Phone size={10} className="text-emerald-500" />
+                                <a 
+                                  href={`https://wa.me/${client.phone.replace(/[^0-9]/g, '')}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-emerald-400 hover:text-emerald-300 hover:underline transition-colors"
+                                >
+                                  {client.phone}
+                                </a>
+                              </div>
+                            )}
+                          </td>
                           <td className="py-4 px-4">
                             <div className="flex flex-wrap gap-1">
                               {client.allowed_phases.map(p => (
@@ -544,7 +620,6 @@ export default function AdminDashboard() {
                             </div>
                           </td>
                           <td className="py-4 px-4 space-y-2">
-                            {/* Mostrar progreso de las fases protegidas (Fase 3, 4, 5) */}
                             {[1, 2, 3, 4, 5].map((phNum) => {
                               const pct = getProgressPercentage(client.username, phNum);
                               const details = getProgressLessonString(client.username, phNum);
@@ -586,11 +661,13 @@ export default function AdminDashboard() {
                                   )}
                                 </button>
                                 <a
-                                  href={`https://wa.me/?text=Hola%20${client.username}!%20Aqu%C3%AD%20tienes%20tu%20enlace%20de%20acceso%20directo%20a%20FA%20Academy%20para%20comenzar%20tu%20curso:%20${encodeURIComponent(linkUrl)}`}
+                                  href={`https://wa.me/${client.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                                    `¡Hola! 👋 Aquí tienes tu *Super Link* de acceso directo a *FA Academy* (sin contraseña):\n🔗 ${linkUrl}`
+                                  )}`}
                                   target="_blank"
                                   rel="noreferrer"
                                   className="p-1.5 bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/30 rounded-lg transition-all"
-                                  title="Enviar por WhatsApp"
+                                  title="Enviar Super Link por WhatsApp"
                                 >
                                   <Send size={14} />
                                 </a>

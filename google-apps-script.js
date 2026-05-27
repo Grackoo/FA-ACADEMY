@@ -25,11 +25,11 @@ function initSheets() {
   var userSheet = ss.getSheetByName("users");
   if (!userSheet) {
     userSheet = ss.insertSheet("users");
-    userSheet.appendRow(["id", "username", "email", "password_hash", "role", "allowed_phases", "super_link_token", "token_expires", "created_at"]);
+    userSheet.appendRow(["id", "username", "email", "password_hash", "role", "allowed_phases", "super_link_token", "token_expires", "created_at", "phone"]);
     // Crear un usuario admin por defecto si está vacío
     // Contraseña por defecto: fa-academy-2026 (Hash SHA-256 de fa-academy-2026)
     var defaultAdminHash = computeSHA256("fa-academy-2026");
-    userSheet.appendRow(["USR_ADMIN", "admin", "admin@fa-academy.com", defaultAdminHash, "admin", "1,2,3,4,5", "", "", new Date().toISOString()]);
+    userSheet.appendRow(["USR_ADMIN", "admin", "admin@fa-academy.com", defaultAdminHash, "admin", "1,2,3,4,5", "", "", new Date().toISOString(), ""]);
   }
   
   // 2. Tabla de Progreso
@@ -128,7 +128,8 @@ function doGet(e) {
           role: data[i][4],
           allowed_phases: data[i][5] ? String(data[i][5]).split(",") : [],
           super_link_token: data[i][6] || "",
-          created_at: data[i][8]
+          created_at: data[i][8],
+          phone: data[i].length > 9 ? data[i][9] : ""
         });
       }
       return jsonResponse({ success: true, clients: clients });
@@ -237,6 +238,7 @@ function doPost(e) {
       var username = postData.username;
       var email = postData.email;
       var password = postData.password;
+      var phone = postData.phone || "";
       var allowedPhases = postData.allowedPhases || "1,2"; // ej: "1,2,3"
       
       var sheet = ss.getSheetByName("users");
@@ -269,7 +271,8 @@ function doPost(e) {
         allowedPhases,
         superLinkToken,
         expires.toISOString(),
-        new Date().toISOString()
+        new Date().toISOString(),
+        phone
       ]);
       
       return jsonResponse({
@@ -279,7 +282,8 @@ function doPost(e) {
           username: username,
           email: email,
           allowed_phases: allowedPhases.split(","),
-          super_link_token: superLinkToken
+          super_link_token: superLinkToken,
+          phone: phone
         }
       });
     }
