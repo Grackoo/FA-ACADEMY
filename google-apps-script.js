@@ -185,10 +185,13 @@ function doPost(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     
     var postData;
-    if (e.postData.type === "application/json") {
-      postData = JSON.parse(e.postData.contents);
+    if (e.postData && e.postData.contents) {
+      try {
+        postData = JSON.parse(e.postData.contents);
+      } catch (jsonErr) {
+        postData = e.parameter;
+      }
     } else {
-      // Intenta parsear parámetros si vienen de formulario directo
       postData = e.parameter;
     }
     
