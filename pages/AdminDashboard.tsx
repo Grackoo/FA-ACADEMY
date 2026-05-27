@@ -529,7 +529,7 @@ export default function AdminDashboard() {
                   </button>
                   
                   <a
-                    href={`https://wa.me/${registrationSuccess.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                    href={`https://wa.me/${String(registrationSuccess.phone).replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
                       `¡Hola *${registrationSuccess.username}*! 👋 Bienvenid@ a *FA Academy*.\n\nAquí tienes tus credenciales de acceso:\n👤 *Usuario:* ${registrationSuccess.username}\n🔑 *Contraseña:* ${registrationSuccess.password}\n\nO puedes entrar directamente sin ingresar contraseña usando tu *Super Link*:\n🔗 ${generatedLink}\n\n¡Mucho éxito en tu aprendizaje! 🎓`
                     )}`}
                     target="_blank"
@@ -600,7 +600,7 @@ export default function AdminDashboard() {
                               <div className="text-[10px] text-slate-500 flex items-center gap-1 mt-1">
                                 <Phone size={10} className="text-emerald-500" />
                                 <a 
-                                  href={`https://wa.me/${client.phone.replace(/[^0-9]/g, '')}`}
+                                  href={`https://wa.me/${String(client.phone).replace(/[^0-9]/g, '')}`}
                                   target="_blank"
                                   rel="noreferrer"
                                   className="text-emerald-400 hover:text-emerald-300 hover:underline transition-colors"
@@ -661,7 +661,7 @@ export default function AdminDashboard() {
                                   )}
                                 </button>
                                 <a
-                                  href={`https://wa.me/${client.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                                  href={`https://wa.me/${String(client.phone).replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
                                     `¡Hola! 👋 Aquí tienes tu *Super Link* de acceso directo a *FA Academy* (sin contraseña):\n🔗 ${linkUrl}`
                                   )}`}
                                   target="_blank"
