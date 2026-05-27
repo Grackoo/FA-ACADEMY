@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ArrowRight, ArrowLeft, TrendingUp, Activity, 
   Target, Send, Info, BookOpen, PieChart,  
@@ -9,6 +9,7 @@ import {
   Calculator, UserCheck, Newspaper, ShieldAlert,
   Zap, Search, BarChart2, Globe, Building2
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 // --- DATOS FA ACADEMY: ESTRATEGIA MAESTRA Y FISCALIDAD 2026 ---
 
@@ -751,15 +752,22 @@ const ConceptsBar = ({ concepts }) => {
 // --- COMPONENTE PRINCIPAL APP FA ACADEMY - MODULO 3 ---
 
 export default function AppFAAcademyEstrategia() {
+  const { user, updateProgress, submitTestResult } = useAuth();
   const [currentModule, setCurrentModule] = useState(0);
   const [currentLesson, setCurrentLesson] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [quizAnswers, setQuizAnswers] = useState({});
+  const [quizAnswers, setQuizAnswers] = useState<any>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [score, setScore] = useState(0);
 
   const moduleData = courseData[currentModule];
   const lessonData = moduleData.lessons[currentLesson];
+
+  useEffect(() => {
+    if (user) {
+      updateProgress(4, currentLesson, moduleData.lessons.length);
+    }
+  }, [currentLesson, user]);
   const totalModules = courseData.length;
 
   const handleNext = () => {
@@ -783,6 +791,9 @@ export default function AppFAAcademyEstrategia() {
     quizQuestions.forEach(q => { if (quizAnswers[q.id] === q.correct) calculatedScore++; });
     setScore(calculatedScore);
     setQuizSubmitted(true);
+    if (user) {
+      submitTestResult(4, calculatedScore, quizQuestions.length);
+    }
   };
 
   const generateWhatsAppLink = () => {

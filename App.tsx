@@ -13,6 +13,7 @@ import CoursePlayerPhase2 from './pages/CoursePlayerPhase2';
 import CoursePlayerPhase3 from './pages/CoursePlayerPhase3';
 import CoursePlayerPhase4 from './pages/CoursePlayerPhase4';
 import CoursePlayerPhase5 from './pages/CoursePlayerPhase5';
+import AdminDashboard from './pages/AdminDashboard';
 
 import Tools from './pages/Tools';
 import Mentors from './pages/Mentors';
@@ -97,18 +98,25 @@ const App: React.FC = () => {
 
               {/* Protected Phases */}
               <Route path="/course/phase/3" element={
-                <ProtectedRoute>
+                <ProtectedRoute phase={3}>
                   <CoursePlayerPhase3 />
                 </ProtectedRoute>
               } />
               <Route path="/course/phase/4" element={
-                <ProtectedRoute>
+                <ProtectedRoute phase={4}>
                   <CoursePlayerPhase4 />
                 </ProtectedRoute>
               } />
               <Route path="/course/phase/5" element={
-                <ProtectedRoute>
+                <ProtectedRoute phase={5}>
                   <CoursePlayerPhase5 />
+                </ProtectedRoute>
+              } />
+
+              {/* Admin Panel */}
+              <Route path="/admin" element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminDashboard />
                 </ProtectedRoute>
               } />
 

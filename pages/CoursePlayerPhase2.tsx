@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ArrowRight, ArrowLeft, TrendingUp, Activity, 
   Target, Send, Info, BookOpen, Calculator,
@@ -7,6 +7,7 @@ import {
   LineChart, CheckCircle, ChevronRight, Book, Scale,
   Factory, Globe, Coins, UserCheck, ShieldCheck
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 // --- DATOS FA ACADEMY: MÓDULO 2 ---
 
@@ -533,15 +534,22 @@ const ConceptsBar = ({ concepts }) => {
 // --- COMPONENTE PRINCIPAL APP FA ACADEMY - MODULO 2 ---
 
 export default function AppFAAcademyModulo2() {
+  const { user, updateProgress, submitTestResult } = useAuth();
   const [currentModule, setCurrentModule] = useState(0);
   const [currentLesson, setCurrentLesson] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [quizAnswers, setQuizAnswers] = useState({});
+  const [quizAnswers, setQuizAnswers] = useState<any>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [score, setScore] = useState(0);
 
   const moduleData = courseData[currentModule];
   const lessonData = moduleData.lessons[currentLesson];
+
+  useEffect(() => {
+    if (user) {
+      updateProgress(2, currentLesson, moduleData.lessons.length);
+    }
+  }, [currentLesson, user]);
   const totalModules = courseData.length;
 
   const handleNext = () => {
@@ -565,6 +573,9 @@ export default function AppFAAcademyModulo2() {
     quizQuestions.forEach(q => { if (quizAnswers[q.id] === q.correct) calculatedScore++; });
     setScore(calculatedScore);
     setQuizSubmitted(true);
+    if (user) {
+      submitTestResult(2, calculatedScore, quizQuestions.length);
+    }
   };
 
   const generateWhatsAppLink = () => {

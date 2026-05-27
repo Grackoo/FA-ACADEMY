@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     ArrowRight, ArrowLeft, TrendingUp, Activity,
     Target, Send, Info, BookOpen, PieChart,
@@ -6,6 +6,7 @@ import {
     AlertTriangle, BarChart2, Layers, Zap, Crosshair,
     CheckCircle, ChevronRight, Book, RefreshCw, TrendingDown
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 // --- DATOS FASE 5: MAESTRÍA Y ESTRATEGIA AVANZADA ---
 
@@ -331,6 +332,7 @@ const ConceptsBar = ({ concepts }: { concepts: any[] }) => {
 // --- COMPONENTE PRINCIPAL APP FASE 5 ---
 
 export default function CoursePlayerPhase5() {
+    const { user, updateProgress, submitTestResult } = useAuth();
     const [currentLesson, setCurrentLesson] = useState(0);
     const [showQuiz, setShowQuiz] = useState(false);
     const [quizAnswers, setQuizAnswers] = useState<any>({});
@@ -339,6 +341,12 @@ export default function CoursePlayerPhase5() {
 
     const moduleData = courseData[0];
     const lessonData = moduleData.lessons[currentLesson];
+
+    useEffect(() => {
+        if (user) {
+            updateProgress(5, currentLesson, moduleData.lessons.length);
+        }
+    }, [currentLesson, user]);
 
     const handleNext = () => {
         if (currentLesson < moduleData.lessons.length - 1) {
@@ -361,6 +369,9 @@ export default function CoursePlayerPhase5() {
         quizQuestions.forEach(q => { if (quizAnswers[q.id] === q.correct) calculatedScore++; });
         setScore(calculatedScore);
         setQuizSubmitted(true);
+        if (user) {
+            submitTestResult(5, calculatedScore, quizQuestions.length);
+        }
     };
 
     const generateWhatsAppLink = () => {

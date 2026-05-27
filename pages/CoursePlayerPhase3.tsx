@@ -6,6 +6,7 @@ import {
     CandlestickChart, Zap, Layers, AlertCircle, Percent,
     Brain // Agregado: Faltaba este componente
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 // --- DATOS FASE 3: ANÁLISIS TÉCNICO Y TRADING ---
 
@@ -976,6 +977,7 @@ const ConceptsBar = ({ concepts }: { concepts: any[] }) => {
 // --- COMPONENTE PRINCIPAL APP FASE 3 ---
 
 export default function CoursePlayerPhase3() {
+    const { user, updateProgress, submitTestResult } = useAuth();
     const [currentLesson, setCurrentLesson] = useState(0);
     const [showQuiz, setShowQuiz] = useState(false);
     const [quizAnswers, setQuizAnswers] = useState<any>({});
@@ -984,6 +986,12 @@ export default function CoursePlayerPhase3() {
 
     const moduleData = courseData[0]; // Solo 1 módulo en esta app
     const lessonData = moduleData.lessons[currentLesson];
+
+    useEffect(() => {
+        if (user) {
+            updateProgress(3, currentLesson, moduleData.lessons.length);
+        }
+    }, [currentLesson, user]);
 
     const handleNext = () => {
         if (currentLesson < moduleData.lessons.length - 1) {
@@ -1006,6 +1014,9 @@ export default function CoursePlayerPhase3() {
         quizQuestions.forEach(q => { if (quizAnswers[q.id] === q.correct) calculatedScore++; });
         setScore(calculatedScore);
         setQuizSubmitted(true);
+        if (user) {
+            submitTestResult(3, calculatedScore, quizQuestions.length);
+        }
     };
 
     const generateWhatsAppLink = () => {
