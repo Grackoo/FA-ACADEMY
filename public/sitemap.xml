@@ -24,11 +24,4 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Mentores -->
-  <url>
-    <loc>https://fa-academy.vercel.app/mentors</loc>
-    <lastmod>2026-03-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
 </urlset>

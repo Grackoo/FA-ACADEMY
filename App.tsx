@@ -16,7 +16,6 @@ import CoursePlayerPhase5 from './pages/CoursePlayerPhase5';
 import AdminDashboard from './pages/AdminDashboard';
 
 import Tools from './pages/Tools';
-import Mentors from './pages/Mentors';
 import Pricing from './pages/Pricing';
 import ParticleBackground from './components/ParticleBackground';
 
@@ -36,7 +35,6 @@ const Footer: React.FC = () => (
         <h4 className="text-white font-bold mb-4">Plataforma</h4>
         <ul className="space-y-2 text-sm">
           <li><a href="/#catalog" className="hover:text-primary-400 transition-colors">Academy</a></li>
-          <li><a href="/mentors" className="hover:text-primary-400 transition-colors">Mentores</a></li>
           <li><a href="/pricing" className="hover:text-primary-400 transition-colors">Precios</a></li>
           <li><a href="/tools" className="hover:text-primary-400 transition-colors">Herramientas</a></li>
         </ul>
@@ -88,7 +86,6 @@ const App: React.FC = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/academy" element={<Home />} />
               <Route path="/tools" element={<Tools />} />
-              <Route path="/mentors" element={<Mentors />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/academy/:id" element={<CourseDetail />} />
 
