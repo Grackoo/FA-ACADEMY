@@ -32,11 +32,10 @@ export const MODULES: Module[] = [
     level: 'Básico',
     duration: '4 Semanas',
     rating: 4.9,
-    description: 'Antes de comprar una acción, debes romper las barreras psicológicas y entender el terreno donde estás pisando.',
+    description: 'Aprende a definir tus objetivos financieros, saldar deudas malas y utilizar la magia del interés compuesto antes de comprar tu primera acción.',
     icon: 'Building2',
     color: 'bg-emerald-500',
-    // Image related to foundations/mentalidad
-    image: 'https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&q=80&w=800', 
+    image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800', 
     topics: [
       {
         title: 'El "Por Qué" antes del "Cómo"',
@@ -63,10 +62,9 @@ export const MODULES: Module[] = [
     level: 'Básico',
     duration: '6 Semanas',
     rating: 4.8,
-    description: 'Aquí es donde entiendes dónde estás parado. Aprende a moverte por los diferentes mercados y plataformas de forma segura.',
+    description: 'Aprende a utilizar casas de bolsa reguladas en México (como GBM), comprar ETFs o FIBRAS, y analizar los fundamentos financieros de empresas reales.',
     icon: 'Search',
     color: 'bg-blue-500',
-    // Image related to analysis/documents
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
@@ -94,11 +92,10 @@ export const MODULES: Module[] = [
     level: 'Intermedio',
     duration: '5 Semanas',
     rating: 4.7,
-    description: 'Enfoque en el "cuándo" comprar o vender basado en el precio.',
+    description: 'Domina la lectura de gráficos, patrones de velas japonesas, soportes, resistencias e indicadores técnicos (RSI, MACD) para optimizar tus entradas y salidas.',
     icon: 'CandlestickChart',
     color: 'bg-indigo-500',
-    // Image related to charts/trading
-    image: 'https://images.unsplash.com/photo-1611974765270-ca12586343bb?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'Principios del Análisis Técnico',
@@ -125,10 +122,9 @@ export const MODULES: Module[] = [
     level: 'Avanzado',
     duration: '4 Semanas',
     rating: 5.0,
-    description: 'La diferencia entre un apostador y un inversor profesional.',
+    description: 'Domina la regla del 1-2%, la asignación de activos bajo modelos como Core-Satellite y la optimización fiscal de tus ganancias de capital.',
     icon: 'ShieldAlert',
     color: 'bg-amber-500',
-    // Image related to portfolio/balance/risk
     image: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
@@ -156,11 +152,10 @@ export const MODULES: Module[] = [
     level: 'Experto',
     duration: '8 Semanas',
     rating: 4.9,
-    description: 'Módulos para usuarios que buscan optimizar rendimientos o protegerse.',
+    description: 'Domina herramientas avanzadas como opciones financieras, ventas en corto, inversión Value vs Growth y la automatización mediante trading algorítmico.',
     icon: 'Bot',
     color: 'bg-rose-500',
-    // Image related to code/algo/advanced
-    image: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'Opciones Financieras',
