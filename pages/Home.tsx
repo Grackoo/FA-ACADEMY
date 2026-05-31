@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MODULES, getIcon } from '../constants';
-import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronRight, MessageCircle, Search, TrendingDown, Sprout, Rocket, CheckCircle2, AlertCircle, AlertTriangle, TrendingUp, Coins, Info } from 'lucide-react';
+import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronLeft, ChevronRight, MessageCircle, Search, TrendingDown, Sprout, Rocket, CheckCircle2, AlertCircle, AlertTriangle, TrendingUp, Coins, Info } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const TradingViewHeatmap: React.FC = () => {
@@ -217,9 +217,163 @@ const StepCard = ({ step, index, total }: { step: any, index: number, total: num
   );
 };
 
+const CountUp: React.FC<{
+  end: number;
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  startTrigger?: boolean;
+}> = ({ end, duration = 1500, prefix = "", suffix = "", decimals = 0, startTrigger = false }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!startTrigger) {
+      setCount(0);
+      return;
+    }
+    
+    let startTime: number | null = null;
+    const startValue = 0;
+    
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easeProgress = progress * (2 - progress);
+      const currentValue = startValue + easeProgress * (end - startValue);
+      setCount(currentValue);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [end, duration, startTrigger]);
+
+  const formattedValue = count.toLocaleString('es-MX', {
+    minimumFractionDigits: count === end && end % 1 === 0 ? 0 : decimals,
+    maximumFractionDigits: decimals,
+  });
+
+  return (
+    <span>
+      {prefix}
+      {formattedValue}
+      {suffix}
+    </span>
+  );
+};
+
+const TESTIMONIALS = [
+  {
+    quote: "FA Academy transformó mi manera de ver el dinero. Pasé de tener mis ahorros devaluándose en una cuenta tradicional a gestionar una cartera diversificada en CETES, SOFIPOs y ETFs en solo 3 meses.",
+    name: "Carlos M.",
+    role: "Inversor Junior",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100"
+  },
+  {
+    quote: "Como emprendedora, mi ingreso varía mucho. Aprender a separar mi fondo de emergencia (mi 'colchón de paz') y automatizar mis aportaciones me quitó un peso enorme de encima. Ahora sé exactamente cuánto puedo invertir mes con mes.",
+    name: "Sofía R.",
+    role: "Emprendedora",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100"
+  },
+  {
+    quote: "Llevaba un año intentando hacer trading por mi cuenta en la bolsa y solo perdía dinero. El módulo de gestión de riesgo cambió todo por completo: entendí que no se trata de adivinar el futuro, sino de controlar las pérdidas.",
+    name: "Alejandro G.",
+    role: "Trader Independiente",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100"
+  },
+  {
+    quote: "Toda la vida le tuve pánico a perder dinero en bolsa. Ver explicados los conceptos de interés compuesto paso a paso y la parte fiscal me dio la confianza absoluta para abrir mi cuenta y comprar mis primeros activos sin miedo.",
+    name: "Mariana L.",
+    role: "Profesionista Independiente",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=100"
+  }
+];
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [showQuiz, setShowQuiz] = useState(false);
+
+  // --- Dynamic Modules Count ---
+  const totalModulesCount = MODULES.reduce((sum, mod) => sum + (mod.topics?.length || 0), 0);
+
+  // --- Intersection Observer for Stats Counter ---
+  const statsRef = useRef<HTMLDivElement>(null);
+  const [startCount, setStartCount] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStartCount(true);
+          if (statsRef.current) {
+            observer.unobserve(statsRef.current);
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // --- Testimonial Carousel State & Logic ---
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isTestimonialFading, setIsTestimonialFading] = useState(false);
+  const timerRef = useRef<number | null>(null);
+
+  const startTestimonialTimer = () => {
+    if (timerRef.current) window.clearInterval(timerRef.current);
+    timerRef.current = window.setInterval(() => {
+      setIsTestimonialFading(true);
+      setTimeout(() => {
+        setCurrentTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
+        setIsTestimonialFading(false);
+      }, 250);
+    }, 6000);
+  };
+
+  const handleTestimonialChange = (newIndex: number) => {
+    setIsTestimonialFading(true);
+    setTimeout(() => {
+      setCurrentTestimonial(newIndex);
+      setIsTestimonialFading(false);
+    }, 250);
+    startTestimonialTimer();
+  };
+
+  const nextTestimonial = () => {
+    const nextIndex = (currentTestimonial + 1) % TESTIMONIALS.length;
+    handleTestimonialChange(nextIndex);
+  };
+
+  const prevTestimonial = () => {
+    const prevIndex = (currentTestimonial - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
+    handleTestimonialChange(prevIndex);
+  };
+
+  const handleDotClick = (idx: number) => {
+    if (idx !== currentTestimonial) {
+      handleTestimonialChange(idx);
+    }
+  };
+
+  useEffect(() => {
+    startTestimonialTimer();
+    return () => {
+      if (timerRef.current) window.clearInterval(timerRef.current);
+    };
+  }, []);
 
   // --- Financial Health Test State ---
   const [showFinancialTest, setShowFinancialTest] = useState(false);
@@ -542,33 +696,87 @@ const Home: React.FC = () => {
             <span className="text-2xl font-bold tracking-tighter">YAHOO! Finance</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-slate-800 pt-12">
+          <div ref={statsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-slate-800 pt-12">
             <div className="p-6">
-              <div className="text-4xl font-bold text-primary-400 mb-2">500+</div>
+              <div className="text-4xl font-bold text-primary-400 mb-2">
+                <CountUp end={500} suffix="+" startTrigger={startCount} />
+              </div>
               <div className="text-slate-400">Alumnos Activos</div>
             </div>
             <div className="p-6">
-              <div className="text-4xl font-bold text-primary-400 mb-2">20+</div>
+              <div className="text-4xl font-bold text-primary-400 mb-2">
+                <CountUp end={totalModulesCount} suffix="+" startTrigger={startCount} />
+              </div>
               <div className="text-slate-400">Módulos Especializados</div>
             </div>
             <div className="p-6">
-              <div className="text-4xl font-bold text-primary-400 mb-2">$2M+</div>
-              <div className="text-slate-400">Capital Simulado Gestionado</div>
+              <div className="text-4xl font-bold text-primary-400 mb-2">
+                <CountUp end={2} prefix="$" suffix="M+" decimals={1} startTrigger={startCount} />
+              </div>
+              <div className="text-slate-400">Capital Gestionado</div>
             </div>
           </div>
 
-          <div className="mt-16 max-w-3xl mx-auto">
-            <blockquote className="text-xl font-medium italic text-slate-300">
-              "FA Academy transformó mi manera de ver el dinero. Pasé de tener mis ahorros debajo del colchón a gestionar una cartera diversificada en solo 3 meses."
-            </blockquote>
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <div className="w-10 h-10 bg-slate-700 rounded-full overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" alt="User" />
+          {/* Testimonials Carousel */}
+          <div className="mt-16 max-w-4xl mx-auto relative px-4 md:px-12">
+            <div className="bg-slate-800/40 backdrop-blur-md border border-slate-700/60 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden min-h-[250px] flex flex-col justify-between">
+              
+              <div className="absolute -top-4 -left-2 text-primary-500/10 text-9xl font-serif select-none pointer-events-none">
+                “
               </div>
-              <div className="text-left">
-                <div className="font-bold text-white text-sm">Carlos M.</div>
-                <div className="text-xs text-slate-500">Inversor Junior</div>
+
+              <div className={`transition-all duration-300 ease-in-out ${isTestimonialFading ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+                <blockquote className="text-lg md:text-xl font-medium italic text-slate-200 relative z-10 leading-relaxed mb-6">
+                  "{TESTIMONIALS[currentTestimonial].quote}"
+                </blockquote>
+                
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-slate-700 rounded-full overflow-hidden border-2 border-primary-500/50">
+                    <img 
+                      src={TESTIMONIALS[currentTestimonial].image} 
+                      alt={TESTIMONIALS[currentTestimonial].name} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-white text-sm md:text-base">{TESTIMONIALS[currentTestimonial].name}</div>
+                    <div className="text-xs text-primary-400 font-medium">{TESTIMONIALS[currentTestimonial].role}</div>
+                  </div>
+                </div>
               </div>
+
+              <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 md:px-4 pointer-events-none">
+                <button
+                  onClick={prevTestimonial}
+                  aria-label="Opinión anterior"
+                  className="w-10 h-10 rounded-full bg-slate-900/60 hover:bg-primary-600 border border-slate-700 hover:border-primary-400 flex items-center justify-center text-white hover:text-white transition-all pointer-events-auto backdrop-blur-sm cursor-pointer shadow-lg active:scale-95"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  onClick={nextTestimonial}
+                  aria-label="Siguiente opinión"
+                  className="w-10 h-10 rounded-full bg-slate-900/60 hover:bg-primary-600 border border-slate-700 hover:border-primary-400 flex items-center justify-center text-white hover:text-white transition-all pointer-events-auto backdrop-blur-sm cursor-pointer shadow-lg active:scale-95"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+
+            </div>
+
+            <div className="flex justify-center gap-2 mt-6">
+              {TESTIMONIALS.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleDotClick(idx)}
+                  aria-label={`Ir a la opinión ${idx + 1}`}
+                  className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    idx === currentTestimonial 
+                      ? 'w-8 bg-primary-500 shadow-[0_0_8px_rgba(13,148,136,0.6)]' 
+                      : 'w-2.5 bg-slate-700 hover:bg-slate-500'
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </div>
