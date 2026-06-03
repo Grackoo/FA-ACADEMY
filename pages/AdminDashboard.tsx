@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { config } from '../config';
-import { 
-  Users, CheckCircle2, Award, UserPlus, Search, 
+import {
+  Users, CheckCircle2, Award, UserPlus, Search,
   ExternalLink, Copy, Check, Send, Sparkles, Shield,
   BookOpen, ChevronRight, RefreshCw, AlertCircle, Phone
 } from 'lucide-react';
@@ -43,14 +43,14 @@ interface TestResult {
 
 export default function AdminDashboard() {
   const { user, isMock } = useAuth();
-  
+
   // State for data
   const [clients, setClients] = useState<Client[]>([]);
   const [progress, setProgress] = useState<ProgressRecord[]>([]);
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  
+
   // Registration form state (Auto-generated credentials)
   const [fullName, setFullName] = useState('');
   const [newEmail, setNewEmail] = useState('');
@@ -59,25 +59,25 @@ export default function AdminDashboard() {
   const [registrationError, setRegistrationError] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState<any>(null);
   const [isRegistering, setIsRegistering] = useState(false);
-  
+
   // Search state
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   // UI states
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
   const [generatedLink, setGeneratedLink] = useState('');
-  
+
   const loadData = async (showRefreshIndicator = false) => {
     if (showRefreshIndicator) setRefreshing(true);
     else setLoading(true);
-    
+
     try {
       if (isMock) {
         // Cargar desde localStorage
         const localUsers = JSON.parse(localStorage.getItem('fa_mock_users') || '[]');
         const localProgress = JSON.parse(localStorage.getItem('fa_mock_progress') || '[]');
         const localTests = JSON.parse(localStorage.getItem('fa_mock_test_results') || '[]');
-        
+
         // Mapear al tipo Client
         const formattedClients = localUsers.map((u: any) => ({
           id: u.id,
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
           created_at: u.created_at,
           phone: u.phone || ''
         }));
-        
+
         setClients(formattedClients);
         setProgress(localProgress);
         setTestResults(localTests);
@@ -97,13 +97,13 @@ export default function AdminDashboard() {
         // Cargar desde la API real de Google Sheets
         const secret = config.sheetsApiSecret;
         const url = config.sheetsApiUrl;
-        
+
         const [clientsRes, progressRes, testsRes] = await Promise.all([
           fetch(`${url}?action=getClients&secret=${encodeURIComponent(secret)}`).then(r => r.json()),
           fetch(`${url}?action=getProgress&secret=${encodeURIComponent(secret)}`).then(r => r.json()),
           fetch(`${url}?action=getTestResults&secret=${encodeURIComponent(secret)}`).then(r => r.json())
         ]);
-        
+
         if (clientsRes.success) setClients(clientsRes.clients);
         if (progressRes.success) setProgress(progressRes.progress);
         if (testsRes.success) setTestResults(testsRes.results);
@@ -133,15 +133,15 @@ export default function AdminDashboard() {
 
     const firstName = cleanWords[0] || 'alumno';
     const firstSurname = cleanWords[1] || '';
-    
+
     // Usuario: nombre + primer apellido + 3 números aleatorios
     const randNum = Math.floor(100 + Math.random() * 900);
     const username = `${firstName}${firstSurname}${randNum}`;
-    
+
     // Contraseña: fa-nombre-4 números
     const randPass = Math.floor(1000 + Math.random() * 9000);
     const password = `fa-${firstName}-${randPass}`;
-    
+
     return { username, password };
   };
 
@@ -150,36 +150,36 @@ export default function AdminDashboard() {
     setRegistrationError('');
     setRegistrationSuccess(null);
     setIsRegistering(true);
-    
+
     // Generar credenciales automáticamente
     const { username, password } = generateCredentials(fullName);
     const allowedPhasesStr = selectedPhases.sort().join(',');
-    
+
     try {
       if (isMock) {
         // Registro simulado
         const localUsers = JSON.parse(localStorage.getItem('fa_mock_users') || '[]');
-        
+
         // Verificar duplicados
         const exists = localUsers.some(
-          (u: any) => 
-            u.username.toLowerCase() === username.toLowerCase() || 
+          (u: any) =>
+            u.username.toLowerCase() === username.toLowerCase() ||
             u.email.toLowerCase() === newEmail.toLowerCase()
         );
-        
+
         if (exists) {
           throw new Error('El correo electrónico ya está registrado.');
         }
-        
+
         const userId = 'USR_' + Math.floor(Math.random() * 900000 + 100000);
         // Hashing
         const msgBuffer = new TextEncoder().encode(password);
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const passHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        
+
         const token = 'SL_' + Math.random().toString(36).substring(2, 10).toUpperCase() + '_' + Math.floor(Math.random() * 9000 + 1000);
-        
+
         const newUser = {
           id: userId,
           username: username,
@@ -192,10 +192,10 @@ export default function AdminDashboard() {
           created_at: new Date().toISOString(),
           phone: newPhone
         };
-        
+
         localUsers.push(newUser);
         localStorage.setItem('fa_mock_users', JSON.stringify(localUsers));
-        
+
         const successClient = {
           id: userId,
           username: username,
@@ -205,10 +205,10 @@ export default function AdminDashboard() {
           password: password, // Retener contraseña plana en memoria para el banner de éxito
           phone: newPhone
         };
-        
+
         setRegistrationSuccess(successClient);
         setGeneratedLink(`${window.location.origin}/login?token=${token}`);
-        
+
         // Reset form
         setFullName('');
         setNewEmail('');
@@ -261,7 +261,7 @@ export default function AdminDashboard() {
           localUsers[idx].super_link_token = token;
           localUsers[idx].token_expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
           localStorage.setItem('fa_mock_users', JSON.stringify(localUsers));
-          
+
           alert(`Nuevo Super Link generado para ${clientUsername}:\n${window.location.origin}/login?token=${token}`);
           loadData();
         }
@@ -304,8 +304,8 @@ export default function AdminDashboard() {
   };
 
   // Filter clients based on search query
-  const filteredClients = clients.filter(c => 
-    c.username.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const filteredClients = clients.filter(c =>
+    c.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
     c.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -330,7 +330,7 @@ export default function AdminDashboard() {
       <SEO title="Panel de Administración | FA Academy" description="Monitoreo y administración de clientes y progreso académico." />
 
       <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-        
+
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
           <div>
@@ -347,9 +347,9 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-display font-bold text-white tracking-tight">FA Academy Control Panel</h1>
             <p className="text-slate-400 text-sm">Gestiona clientes, genera Super Links y evalúa progresos en tiempo real.</p>
           </div>
-          
-          <button 
-            onClick={() => loadData(true)} 
+
+          <button
+            onClick={() => loadData(true)}
             disabled={refreshing}
             className="self-start md:self-center flex items-center gap-2 px-4 py-2.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 font-medium rounded-xl transition-all cursor-pointer disabled:opacity-50"
           >
@@ -369,7 +369,7 @@ export default function AdminDashboard() {
               <span className="text-2xl font-bold text-white block mt-0.5">{totalStudents}</span>
             </div>
           </div>
-          
+
           <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 flex items-center gap-4 shadow-xl backdrop-blur-sm">
             <div className="w-12 h-12 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400">
               <BookOpen size={24} />
@@ -379,7 +379,7 @@ export default function AdminDashboard() {
               <span className="text-2xl font-bold text-white block mt-0.5">{activeStudents}</span>
             </div>
           </div>
-          
+
           <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 flex items-center gap-4 shadow-xl backdrop-blur-sm">
             <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
               <Award size={24} />
@@ -393,34 +393,34 @@ export default function AdminDashboard() {
 
         {/* Form and Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
+
           {/* Add Client Form */}
           <div className="lg:col-span-1 bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm h-fit">
             <div className="flex items-center gap-2 mb-6">
               <UserPlus className="text-primary-400" size={20} />
               <h2 className="text-xl font-bold text-white">Dar de Alta Cliente</h2>
             </div>
-            
+
             <form onSubmit={handleRegisterClient} className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-xs text-slate-400 font-medium">Nombre Completo del Cliente</label>
-                <input 
-                  type="text" 
-                  value={fullName} 
+                <input
+                  type="text"
+                  value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="ej: Joel Manuel Jaen Moreno"
+                  placeholder="ej: Simon Jose Torres Orozco"
                   className="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent transition-all"
                   required
                 />
               </div>
-              
+
               <div className="space-y-1.5">
                 <label className="text-xs text-slate-400 font-medium">Correo Electrónico</label>
-                <input 
-                  type="email" 
-                  value={newEmail} 
+                <input
+                  type="email"
+                  value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
-                  placeholder="ej: joel@gmail.com"
+                  placeholder="ej: Josesi@gmail.com"
                   className="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent transition-all"
                   required
                 />
@@ -428,9 +428,9 @@ export default function AdminDashboard() {
 
               <div className="space-y-1.5">
                 <label className="text-xs text-slate-400 font-medium">Teléfono (WhatsApp)</label>
-                <input 
-                  type="text" 
-                  value={newPhone} 
+                <input
+                  type="text"
+                  value={newPhone}
                   onChange={(e) => setNewPhone(e.target.value)}
                   placeholder="ej: 521234567890 (código país + número)"
                   className="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent transition-all"
@@ -441,7 +441,7 @@ export default function AdminDashboard() {
               <div className="text-[11px] text-slate-500 italic bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/50">
                 🔒 El nombre de usuario y contraseña se generarán automáticamente a partir del nombre ingresado para optimizar el registro.
               </div>
-              
+
               {/* Phase permissions */}
               <div className="space-y-2">
                 <label className="text-xs text-slate-400 font-medium block">Fases de Acceso Permitidas</label>
@@ -451,27 +451,26 @@ export default function AdminDashboard() {
                       type="button"
                       key={phaseNum}
                       onClick={() => togglePhaseCheckbox(phaseNum)}
-                      className={`py-2 text-center text-xs font-bold rounded-lg border transition-all ${
-                        selectedPhases.includes(phaseNum)
+                      className={`py-2 text-center text-xs font-bold rounded-lg border transition-all ${selectedPhases.includes(phaseNum)
                           ? 'bg-teal-950 border-teal-500/60 text-teal-400 shadow-md shadow-teal-500/5'
                           : 'bg-slate-800/50 border-transparent text-slate-400 hover:bg-slate-800'
-                      }`}
+                        }`}
                     >
                       F{phaseNum}
                     </button>
                   ))}
                 </div>
               </div>
-              
+
               {registrationError && (
                 <div className="bg-red-950/20 border border-red-500/30 text-red-200 p-3 rounded-xl flex items-start gap-2 text-xs">
                   <AlertCircle size={14} className="text-red-400 mt-0.5 shrink-0" />
                   <span>{registrationError}</span>
                 </div>
               )}
-              
-              <button 
-                type="submit" 
+
+              <button
+                type="submit"
                 disabled={isRegistering}
                 className="w-full py-2.5 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
@@ -485,7 +484,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center gap-1.5 text-teal-400 text-xs font-bold">
                   <Sparkles size={14} /> ¡Cliente Creado Exitosamente!
                 </div>
-                
+
                 {/* Mostrar credenciales generadas */}
                 <div className="space-y-1.5 bg-slate-900 border border-slate-800 p-3 rounded-lg text-xs leading-relaxed">
                   <div className="flex justify-between text-slate-400">
@@ -507,11 +506,11 @@ export default function AdminDashboard() {
                 <div className="text-xs text-slate-400">
                   Enlace de acceso directo (Super Link):
                 </div>
-                
+
                 <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-2 rounded-lg text-slate-300 text-[11px] select-all break-all relative">
                   {generatedLink}
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => copyToClipboard(generatedLink, 'reg_link')}
@@ -527,7 +526,7 @@ export default function AdminDashboard() {
                       </>
                     )}
                   </button>
-                  
+
                   <a
                     href={`https://wa.me/${String(registrationSuccess.phone).replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
                       `¡Hola *${registrationSuccess.username}*! 👋 Bienvenid@ a *FA Academy*.\n\nAquí tienes tus credenciales de acceso:\n👤 *Usuario:* ${registrationSuccess.username}\n🔑 *Contraseña:* ${registrationSuccess.password}\n\nO puedes entrar directamente sin ingresar contraseña usando tu *Super Link*:\n🔗 ${generatedLink}\n\n¡Mucho éxito en tu aprendizaje! 🎓`
@@ -542,16 +541,16 @@ export default function AdminDashboard() {
               </div>
             )}
           </div>
-          
+
           {/* Main Clients and Progress List */}
           <div className="lg:col-span-2 bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <h2 className="text-xl font-bold text-white">Monitoreo de Alumnos</h2>
-              
+
               {/* Search Bar */}
               <div className="relative max-w-xs w-full">
                 <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
-                <input 
+                <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -560,7 +559,7 @@ export default function AdminDashboard() {
                 />
               </div>
             </div>
-            
+
             {loading ? (
               <div className="py-20 text-center text-slate-500 text-sm">
                 <RefreshCw size={24} className="animate-spin mx-auto mb-2 text-teal-400" />
@@ -585,9 +584,9 @@ export default function AdminDashboard() {
                   <tbody className="divide-y divide-slate-800/60 text-xs">
                     {filteredClients.map((client) => {
                       if (client.role === 'admin') return null; // Omitir administradores
-                      
+
                       const linkUrl = `${window.location.origin}/login?token=${client.super_link_token}`;
-                      
+
                       return (
                         <tr key={client.id} className="hover:bg-slate-800/10 transition-colors">
                           <td className="py-4 pr-4">
@@ -599,7 +598,7 @@ export default function AdminDashboard() {
                             {client.phone && (
                               <div className="text-[10px] text-slate-500 flex items-center gap-1 mt-1">
                                 <Phone size={10} className="text-emerald-500" />
-                                <a 
+                                <a
                                   href={`https://wa.me/${String(client.phone).replace(/[^0-9]/g, '')}`}
                                   target="_blank"
                                   rel="noreferrer"
@@ -624,19 +623,18 @@ export default function AdminDashboard() {
                               const pct = getProgressPercentage(client.username, phNum);
                               const details = getProgressLessonString(client.username, phNum);
                               const numericPct = parseInt(pct) || 0;
-                              
+
                               return (
                                 <div key={phNum} className="flex items-center gap-2">
                                   <span className="text-[10px] font-bold text-slate-500 w-4">F{phNum}:</span>
                                   <div className="flex-grow h-1.5 bg-slate-800 rounded-full overflow-hidden w-20 relative">
-                                    <div 
-                                      className={`h-full rounded-full ${
-                                        numericPct === 100 
-                                          ? 'bg-emerald-500' 
-                                          : numericPct > 0 
-                                            ? 'bg-teal-500' 
+                                    <div
+                                      className={`h-full rounded-full ${numericPct === 100
+                                          ? 'bg-emerald-500'
+                                          : numericPct > 0
+                                            ? 'bg-teal-500'
                                             : 'bg-slate-700/50'
-                                      }`}
+                                        }`}
                                       style={{ width: pct }}
                                     ></div>
                                   </div>
@@ -697,7 +695,7 @@ export default function AdminDashboard() {
             <Award className="text-purple-400" size={20} />
             <h2 className="text-xl font-bold text-white">Resultados de Evaluaciones Finales</h2>
           </div>
-          
+
           {loading ? (
             <div className="py-10 text-center text-slate-500 text-sm">
               Cargando historial de exámenes...
@@ -724,7 +722,7 @@ export default function AdminDashboard() {
                     const scoreNum = Number(test.score);
                     const totalNum = Number(test.total);
                     const pctVal = totalNum > 0 ? (scoreNum / totalNum) * 100 : 0;
-                    
+
                     return (
                       <tr key={test.id} className="hover:bg-slate-800/10 transition-colors">
                         <td className="py-3.5 pr-4 font-semibold text-white">{test.username}</td>
@@ -734,13 +732,12 @@ export default function AdminDashboard() {
                           {test.score} / {test.total}
                         </td>
                         <td className="py-3.5 px-4">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                            pctVal >= 80 
-                              ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/20' 
-                              : pctVal >= 60 
-                                ? 'bg-amber-950 text-amber-400 border border-amber-500/20' 
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${pctVal >= 80
+                              ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/20'
+                              : pctVal >= 60
+                                ? 'bg-amber-950 text-amber-400 border border-amber-500/20'
                                 : 'bg-red-950 text-red-400 border border-red-500/20'
-                          }`}>
+                            }`}>
                             {test.percentage}
                           </span>
                         </td>
