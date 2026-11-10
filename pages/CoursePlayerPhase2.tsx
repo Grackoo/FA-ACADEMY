@@ -546,6 +546,13 @@ export default function AppFAAcademyModulo2() {
   const lessonData = moduleData.lessons[currentLesson];
 
   useEffect(() => {
+    try {
+      localStorage.setItem('fa_phase_2_progress', currentLesson.toString());
+      localStorage.setItem('fa_phase_2_total', moduleData.lessons.length.toString());
+    } catch (e) {
+      // ignore localstorage errors
+    }
+
     if (user) {
       updateProgress(2, currentLesson, moduleData.lessons.length);
     }

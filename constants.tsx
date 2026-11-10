@@ -14,14 +14,14 @@ import {
 } from 'lucide-react';
 
 export const MARKET_DATA: MarketItem[] = [
-  { symbol: 'S&P 500', price: '4,783.45', change: '+1.2%', isUp: true },
-  { symbol: 'NASDAQ', price: '15,310.97', change: '+0.8%', isUp: true },
-  { symbol: 'BTC/USD', price: '43,250.00', change: '-0.5%', isUp: false },
-  { symbol: 'EUR/USD', price: '1.09', change: '+0.1%', isUp: true },
-  { symbol: 'GOLD', price: '2,045.30', change: '+0.4%', isUp: true },
-  { symbol: 'TSLA', price: '245.10', change: '-1.2%', isUp: false },
-  { symbol: 'AAPL', price: '193.50', change: '+0.5%', isUp: true },
-  { symbol: 'NVDA', price: '480.90', change: '+2.1%', isUp: true },
+  { symbol: 'S&P 500', price: '5,864.67', change: '+0.8%', isUp: true },
+  { symbol: 'NASDAQ', price: '18,518.61', change: '+1.1%', isUp: true },
+  { symbol: 'IPC BMV', price: '52,430.15', change: '+0.4%', isUp: true },
+  { symbol: 'CETES 28D', price: '10.20%', change: '-0.1%', isUp: false },
+  { symbol: 'USD/MXN', price: '18.45', change: '-0.3%', isUp: false },
+  { symbol: 'BIMBOA', price: '68.50', change: '+1.5%', isUp: true },
+  { symbol: 'CEMEXCPO', price: '14.20', change: '+2.1%', isUp: true },
+  { symbol: 'AAPL', price: '228.40', change: '+0.9%', isUp: true },
 ];
 
 export const MODULES: Module[] = [
@@ -32,26 +32,38 @@ export const MODULES: Module[] = [
     level: 'Básico',
     duration: '4 Semanas',
     rating: 4.9,
-    description: 'Aprende a definir tus objetivos financieros, saldar deudas malas y utilizar la magia del interés compuesto antes de comprar tu primera acción.',
+    description: 'Diagnostica tu salud financiera, erradica la deuda mala y comprende las matemáticas del interés compuesto y el sistema regulado en México.',
     icon: 'Building2',
     color: 'bg-emerald-500',
     image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800', 
     topics: [
       {
+        title: 'El Perfil del Inversionista 2026',
+        content: 'Tolerancia al riesgo, horizonte temporal y diagnóstico psicológico para evitar el FOMO según directrices de la AMIB.'
+      },
+      {
+        title: 'Matemáticas: El Poder del Interés Compuesto',
+        content: 'Diferencia crítica entre tasa nominal y tasa real (descontando inflación de Banxico) para construir riqueza sostenible.'
+      },
+      {
+        title: 'El Ecosistema: Sistema Financiero Mexicano',
+        content: 'Conoce los árbitros que protegen tu capital (CNBV, Banxico, CONDUSEF, SIPRES) y las dos bolsas del país (BMV y BIVA).'
+      },
+      {
         title: 'El "Por Qué" antes del "Cómo"',
-        content: 'Definición de Objetivos Financieros. No es lo mismo ahorrar por ahorrar que invertir para un retiro a los 50 años o para capitalizar un negocio como SIATEC.'
+        content: 'Definición de objetivos financieros claros: no es lo mismo invertir para capitalizar un negocio que para un retiro a 30 años.'
       },
       {
         title: 'Deuda vs. Inversión (Deuda Mala vs. Deuda Buena)',
-        content: 'Es vital sanar tus finanzas antes de comprar tu primera acción de Meta o Novo Nordisk. Pierde el miedo a invertir manejando inteligentemente tus tarjetas de crédito.'
+        content: 'Por qué es matemáticamente inviable invertir si arrastras tarjetas de crédito con CAT superior al 50%. Sanación antes de invertir.'
       },
       {
-        title: 'Interés Compuesto (La Magia)',
-        content: 'Visualiza el impacto real de empezar a invertir a los 26 años frente a los 40. Descubre la abismal diferencia de dinero que te motivará a comenzar hoy mismo.'
+        title: 'Interés Compuesto (La Magia del Tiempo)',
+        content: 'Visualización con números reales: el impacto multimillonario de iniciar a los 26 años frente a los 40 años.'
       },
       {
-        title: 'Introducción al Sistema Financiero',
-        content: '¿Qué es la bolsa? ¿Cómo funcionan los mercados y quiénes son los participantes (bróker, bolsa, reguladores)? Entenderemos el flujo de capital.'
+        title: 'Introducción al Mercado de Valores',
+        content: 'Cómo fluye el capital entre emisoras, intermediarios bursátiles autorizados y ahorradores en el ecosistema regulado.'
       }
     ]
   },
@@ -62,26 +74,34 @@ export const MODULES: Module[] = [
     level: 'Básico',
     duration: '6 Semanas',
     rating: 4.8,
-    description: 'Aprende a utilizar casas de bolsa reguladas en México (como GBM), comprar ETFs o FIBRAS, y analizar los fundamentos financieros de empresas reales.',
+    description: 'Aprende a operar a través de casas de bolsa reguladas en México (GBM), diferenciar series accionarias y diversificar con ETFs y FIBRAS.',
     icon: 'Search',
     color: 'bg-blue-500',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
-        title: 'Diferenciación de Mercados (BMV vs. BIVA vs. SIC)',
-        content: 'El Sistema Internacional de Cotizaciones (SIC). El "ajá moment": descubre cómo es posible y legal ser dueño de una fracción de Occidental Petroleum desde una app mexicana.'
+        title: 'La Anatomía de una Acción',
+        content: 'Series accionarias (A, B, L), derechos patrimoniales y Certificados de Participación Ordinaria (CPOs) como CEMEXCPO.'
       },
       {
-        title: 'Casas de Bolsa y Seguridad',
-        content: 'Guía rápida y confiable sobre cómo elegir una casa de bolsa regulada por la CNBV (como GBM o Kuspit), enfocándonos en la seguridad absoluta de tus fondos.'
+        title: 'Análisis Fundamental: Evaluando el Negocio',
+        content: 'Lectura de estados financieros: Margen EBITDA, Return on Equity (ROE) y Flujo de Caja Libre (Free Cash Flow).'
       },
       {
-        title: 'Tipos de Activos (Más allá de las acciones)',
-        content: 'Introducción a ETFs (como VOO o IVVPESO) y las FIBRAS. Aprende por qué empezar con ETFs es mucho más seguro para un principiante que elegir acciones individuales.'
+        title: 'Caso Práctico 2026: CEMEX ($CEMEXCPO)',
+        content: 'Análisis de una empresa cíclica global, desapalancamiento financiero, grado de inversión y efecto del nearshoring.'
       },
       {
-        title: 'Análisis Fundamental Básico',
-        content: 'Una introducción a cómo valorar la salud de una empresa leyendo sus Estados Financieros para saber qué estás comprando realmente.'
+        title: 'Análisis Técnico: La Psicología de Masas',
+        content: 'Introducción al rastro del dinero institucional: Velas Japonesas, Media Móvil de 200 días y niveles de sobrecompra en RSI.'
+      },
+      {
+        title: 'El Ecosistema de Diversificación',
+        content: 'Expansión de cartera: Rentas inmobiliarias con FIBRAS (FMTY14, FUNO11), ETFs globales (VOO, IVVPESO) y activos asimétricos.'
+      },
+      {
+        title: 'Diferenciación de Mercados (BMV vs. SIC)',
+        content: 'El Sistema Internacional de Cotizaciones: cómo comprar Wall Street desde México en pesos y con ventaja fiscal del Art. 129 LISR.'
       }
     ]
   },
@@ -92,26 +112,54 @@ export const MODULES: Module[] = [
     level: 'Intermedio',
     duration: '5 Semanas',
     rating: 4.7,
-    description: 'Domina la lectura de gráficos, patrones de velas japonesas, soportes, resistencias e indicadores técnicos (RSI, MACD) para optimizar tus entradas y salidas.',
+    description: 'Domina la lectura de gráficos, acción del precio (BOS/CHoCH), Fibonacci, gestión de riesgo con breakeven al 25% y simulador TradingView.',
     icon: 'CandlestickChart',
     color: 'bg-indigo-500',
     image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
-        title: 'Principios del Análisis Técnico',
-        content: 'La historia se repite. Teoría de Dow, identificación de soportes (piso), resistencias (techo) y líneas de tendencia dinámicas.'
+        title: 'El Lenguaje de las Velas Japonesas',
+        content: 'Anatomía OHLC, cuerpo vs mechas, Doji, Marubozu y patrones de reversión e indecisión.'
       },
       {
-        title: 'Lectura de Velas Japonesas',
-        content: 'El lenguaje del precio. Patrones de reversión (Martillo, Estrella Fugaz) y continuación (Banderas, Triángulos).'
+        title: 'Estructura de Mercado: Soportes y Resistencias',
+        content: 'La memoria del precio: zonas de oferta y demanda, rupturas válidas (breakouts) y testeos (pullbacks).'
       },
       {
-        title: 'Indicadores y Osciladores',
-        content: 'Herramientas matemáticas: RSI para sobrecompra/sobreventa, MACD para momentum, Medias Móviles para tendencia y Bandas de Bollinger para volatilidad.'
+        title: 'Acción del Precio y Estructura (HH/LL)',
+        content: 'Tendencias alcistas (HH/HL) y bajistas (LH/LL), Ruptura de Estructura (BOS) y Cambio de Carácter (CHoCH).'
       },
       {
-        title: 'Estructura de Mercado',
-        content: 'Identificación de fases del mercado institucional: Acumulación, Tendencia Alcista, Distribución y Tendencia Bajista.'
+        title: 'Indicadores Técnicos: RSI y Medias Móviles',
+        content: 'Medias Móviles (SMA 50/200), zonas de sobrecompra (>70) y sobreventa (<30), y señal de Cruce Dorado.'
+      },
+      {
+        title: 'Retrocesos y Extensiones de Fibonacci',
+        content: 'Fundamento matemático del Número Áureo (61.8%), niveles clave (38.2%, 50%, 78.6%) y proyecciones de precio con ejemplos reales.'
+      },
+      {
+        title: 'Volumen Real vs. Volumen de Tick: Rupturas Institucionales',
+        content: 'Volumen medio diario (ADV), confirmación de breakouts institucionales y cómo detectar trampas alcistas (Bull Traps).'
+      },
+      {
+        title: 'Gestión de Riesgo y Esperanza Matemática',
+        content: 'Ratio Riesgo/Beneficio: por qué con ratio 1:3 el punto de equilibrio es 25% de acierto y cómo calcular tu expectativa matemática.'
+      },
+      {
+        title: 'Gestión Visual de R:B con Apple (AAPL)',
+        content: 'Caso real con entrada $168, Stop $158 y Take Profit $195 (Ratio 1:2.7, equilibrio 27.02%, rentable con 37% de acierto).'
+      },
+      {
+        title: 'Uso de Temporalidades: El Marco Manda (Multi-Timeframe)',
+        content: 'Análisis Top-Down (Semanal, Diario, 4H) y ciclo de 4 fases de Stan Weinstein para evitar operar contra la marea.'
+      },
+      {
+        title: 'Trading Journal y Backtesting Cuantitativo',
+        content: 'Metodología para registrar cada operación, controlar el drawdown y auditar la ventaja estadística de tu estrategia.'
+      },
+      {
+        title: 'Estación de Trabajo TradingView y Psicología',
+        content: 'Práctica en simulador interactivo, calibración de Stop Loss y superación del FOMO y el Revenge Trading.'
       }
     ]
   },
@@ -122,26 +170,42 @@ export const MODULES: Module[] = [
     level: 'Avanzado',
     duration: '4 Semanas',
     rating: 5.0,
-    description: 'Domina la regla del 1-2%, la asignación de activos bajo modelos como Core-Satellite y la optimización fiscal de tus ganancias de capital.',
+    description: 'Aprende a construir carteras Core-Satellite, rebalancear anualmente, calcular ratios Sharpe/Sortino y optimizar tu Declaración Anual ante el SAT.',
     icon: 'ShieldAlert',
     color: 'bg-amber-500',
     image: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
-        title: 'Gestión Monetaria (Money Management)',
-        content: 'La regla del 1-2%. Cálculo del tamaño de la posición adecuado. Riesgo por operación vs Riesgo de Ruina. Diversificación inteligente.'
+        title: 'Caso de Estudio: Bimbo vs Flowers Foods (BMV / NYSE)',
+        content: 'Análisis del reporte 4T23 de Bimbo: corrección de $82.50 a $67.80 en BMV por costo de trigo y tipo de cambio, con EBITDA sólido del 13.9%.'
       },
       {
-        title: 'Construcción de Portafolios',
-        content: 'Modelos de asignación de activos. Estrategia Core-Satellite (Núcleo pasivo, Satélites activos) y la Cartera Permanente de Harry Browne.'
+        title: 'Asset Allocation y la Frontera Eficiente',
+        content: 'Estudio de Brinson, Hood y Beebower: más del 90% de la variabilidad de retornos en el tiempo proviene de la asignación de activos.'
       },
       {
-        title: 'Rebalanceo y Seguimiento',
-        content: 'La disciplina del éxito. Cuándo vender una acción ganadora o perdedora. Cómo ajustar el portafolio según tu edad y ciclo de vida.'
+        title: 'Modelo Core-Satellite con Portafolio Real',
+        content: 'Estructuración 70/30: Núcleo pasivo de bajo costo (VOO, Cetes, FIBRAS) y Satélites activos de alta convicción.'
       },
       {
-        title: 'Fiscalidad para Inversores',
-        content: 'Optimización fiscal. Impuestos sobre dividendos y ganancias de capital. Diferencias entre cuentas imponibles y cuentas de retiro.'
+        title: 'Rebalanceo Práctico Anual de Cartera',
+        content: 'El proceso disciplinado de vender activos sobrevalorados y comprar rezagados para restablecer ponderaciones objetivo.'
+      },
+      {
+        title: 'Métricas de Riesgo: Volatilidad, Beta, Sharpe y Sortino',
+        content: 'Cálculo numérico de la volatilidad anualizada, sensibilidad al mercado (Beta), Ratio de Sharpe y protección a la baja con Sortino.'
+      },
+      {
+        title: 'Marco Fiscal en México: Art. 129 LISR y Dividendos',
+        content: 'Tasa preferencial del 10% sobre ganancias en bolsa calculada en Declaración Anual, régimen de dividendos y FIBRAS exentas.'
+      },
+      {
+        title: 'Declaración Anual ante el SAT, Pérdidas y PPR',
+        content: 'Compensación de pérdidas fiscales bursátiles hasta por 10 años y deducciones personales de retiro (Art. 151 LISR).'
+      },
+      {
+        title: 'Ética Profesional y Deber Fiduciario',
+        content: 'Prevención de conflictos de interés, transparencia en comisiones y administración patrimonial responsable a largo plazo.'
       }
     ]
   },
@@ -152,26 +216,46 @@ export const MODULES: Module[] = [
     level: 'Experto',
     duration: '8 Semanas',
     rating: 4.9,
-    description: 'Domina herramientas avanzadas como opciones financieras, ventas en corto, inversión Value vs Growth y la automatización mediante trading algorítmico.',
+    description: 'Venta en corto, valuación por múltiplos y DCF, trading algorítmico, opciones financieras con griegas completas y tesis de inversión profesional.',
     icon: 'Bot',
     color: 'bg-rose-500',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
-        title: 'Opciones Financieras',
-        content: 'El poder del apalancamiento controlado. Compra y venta de Calls y Puts. Estrategias de cobertura y generación de ingresos (Covered Calls).'
+        title: 'Venta en Corto (Short Selling) y Short Squeeze',
+        content: 'Mecánica del préstamo de acciones, margin call, borrow fee, riesgo asimétrico infinito y análisis de short squeezes históricos.'
       },
       {
-        title: 'Venta en Corto (Short Selling)',
-        content: 'Cómo ganar dinero cuando el mercado cae. Mecánica del préstamo de acciones y riesgos de "Short Squeeze".'
+        title: 'Inversión en Valor (Value) vs. Crecimiento (Growth) & Valuación',
+        content: 'Métodos de valuación por Múltiplos (P/E, EV/EBITDA, PEG) y Descuento de Flujos de Caja (DCF) con caso Berkshire vs Nvidia.'
       },
       {
-        title: 'Inversión en Valor vs. Crecimiento',
-        content: 'Deep Dive: Value Investing (comprar 1 dólar a 50 centavos) vs. Growth Investing (empresas con alto potencial de expansión).'
+        title: 'Trading Algorítmico y Backtesting Cuantitativo',
+        content: 'Reglas cuantitativas sistemáticas, backtesting sin sesgo retrospectivo y prevención de sobreajuste de datos (curve fitting).'
       },
       {
-        title: 'Trading Algorítmico y Automatización',
-        content: 'Introducción al futuro. Herramientas para automatizar el análisis o la ejecución. Backtesting de estrategias.'
+        title: 'Opciones Financieras Completas: Calls, Puts y Las Griegas',
+        content: 'Apalancamiento controlado, contratos Call y Put, cálculo de Delta, Gamma, Theta y Vega, y estrategias Covered Calls y Spreads.'
+      },
+      {
+        title: 'La Máquina Económica y Ciclos de Deuda (Ray Dalio)',
+        content: 'Ciclos de deuda de corto y largo plazo, desapalancamiento económico e impacto macroeconómico de tasas de interés.'
+      },
+      {
+        title: 'Sesgos Cognitivos y Aversión a la Pérdida (Kahneman & Tversky)',
+        content: 'Por qué el dolor de perder es 2x a 2.5x más intenso que el placer de ganar y cómo blindar tus decisiones de inversión.'
+      },
+      {
+        title: 'Cisnes Negros y Antifragilidad (Nassim Taleb)',
+        content: 'Construcción de carteras que se benefician del desorden y la volatilidad manteniendo reservas estratégicas de efectivo.'
+      },
+      {
+        title: 'Estrategias de Salida (Exit Strategy)',
+        content: 'Principios de venta de Philip Fisher y Peter Lynch: cuándo vender por deterioro fundamental y cuándo dejar correr a los ganadores.'
+      },
+      {
+        title: 'Proyecto Final Integrador: Tesis de Inversión Profesional',
+        content: 'Elaboración guiada de una tesis fundamental con valuación, catalizadores de crecimiento, mapa de riesgos y plan de salida.'
       }
     ]
   }

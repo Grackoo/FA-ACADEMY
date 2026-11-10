@@ -4,994 +4,894 @@ import {
     Target, Send, Info, BookOpen, BarChart2,
     Maximize2, Minimize2, Crosshair, Anchor, ShieldAlert,
     CandlestickChart, Zap, Layers, AlertCircle, Percent,
-    Brain // Agregado: Faltaba este componente
+    Brain, Download, FileSpreadsheet, CheckCircle2, XCircle, HelpCircle,
+    RotateCcw, Sliders, Check
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { downloadTradingJournalTemplate } from '../utils/resources';
 
-// --- DATOS FASE 3: ANÁLISIS TÉCNICO Y TRADING ---
+// --- DATOS FASE 3: ANÁLISIS TÉCNICO Y GESTIÓN DE RIESGO PROFESIONAL ---
 
 const courseData = [
     {
         id: 1,
         title: "Módulo 3: Análisis Técnico y Gestión de Riesgo",
-        description: "Deja de adivinar. Aprende a leer la psicología del mercado a través de los gráficos.",
+        description: "Deja de apostar al azar. Aprende a leer la huella del dinero institucional y aplicar modelos matemáticos de riesgo.",
         lessons: [
             {
                 title: "El Lenguaje de las Velas Japonesas",
-                content: "Cada vela cuenta una batalla entre compradores (Toros) y vendedores (Osos).",
-                details: "Olvídate de los gráficos de línea simples. Las Velas Japonesas nos dan 4 datos clave en un solo vistazo: Precio de Apertura, Cierre, Máximo y Mínimo. El 'Cuerpo' nos dice quién ganó la sesión; la 'Mecha' (sombra) nos dice hasta dónde intentaron llegar pero fracasaron.",
+                content: "Cada vela cuenta la batalla en tiempo real entre compradores (Toros) y vendedores (Osos).",
+                details: "Olvídate de los gráficos de línea simples que solo muestran el precio de cierre. Las Velas Japonesas nos revelan 4 datos fundamentales en un instante (OHLC): Open (Apertura), High (Máximo), Low (Mínimo) y Close (Cierre). El cuerpo refleja la convicción del movimiento, mientras que las sombras o mechas revelan niveles de precios que fueron enérgicamente rechazados por el mercado.",
                 visualType: "candlestick_anatomy",
                 videoUrls: ["590LgksX6dI"],
-                speakerNotes: "Si la vela es verde y grande, los compradores tienen el control total. Si tiene una mecha superior muy larga, significa rechazo: intentaron subir y los golpearon hacia abajo.",
+                videoTitle: "Anatomía de las Velas Japonesas y Psicología OHLC",
+                videoDuration: "16 min",
+                speakerNotes: "Una mecha superior muy larga en zona de resistencia indica rechazo bajista: los compradores intentaron empujar el precio hacia arriba pero los vendedores institucionales tomaron el control.",
                 concepts: [
-                    { term: "OHLC", def: "Open, High, Low, Close. Los 4 precios que forman una vela." },
-                    { term: "Doji", def: "Una vela donde el precio de apertura y cierre son casi iguales. Significa indecisión total en el mercado." },
-                    { term: "Mecha (Sombra)", def: "Las líneas finas que salen del cuerpo. Indican precios que fueron rechazados por el mercado." },
-                    { term: "Marubozu", def: "Una vela con mucho cuerpo y sin mechas. Indica una fuerza brutal en esa dirección." }
-                ]
+                    { term: "OHLC", def: "Open, High, Low, Close. Los cuatro precios clave que estructuran cada sesión temporal." },
+                    { term: "Doji", def: "Vela donde el precio de apertura y cierre son prácticamente iguales; refleja equilibrio transitorio o indecisión." },
+                    { term: "Mecha de Rechazo", def: "Línea fina que sobresale del cuerpo; evidencia que el mercado no toleró cotizar en esos niveles." },
+                    { term: "Marubozu", def: "Vela con cuerpo extenso y sin mechas; demuestra dominio unilateral y fuerte convicción de tendencia." }
+                ],
+                miniQuiz: {
+                    question: "¿Qué nos indica una vela con cuerpo pequeño en la base y una mecha superior muy larga en una zona de resistencia?",
+                    options: [
+                        "Fuerza de compra institucional acelerada.",
+                        "Rechazo de precios altos: los vendedores tomaron el control de la sesión.",
+                        "Un error del bróker en la gráfica.",
+                        "Que no hubo volumen en toda la jornada."
+                    ],
+                    correct: 1,
+                    explanation: "La mecha superior larga representa precios que fueron alcanzados temporalmente pero fuertemente rechazados por la fuerza vendedora antes del cierre."
+                }
             },
             {
                 title: "Estructura de Mercado: Soportes y Resistencias",
-                content: "El mercado tiene memoria. Donde rebotó ayer, puede rebotar hoy.",
-                details: "El precio no se mueve en línea recta. Se mueve en zig-zag. Un 'Soporte' es un piso donde el precio ha rebotado hacia arriba antes (hay compradores esperando). Una 'Resistencia' es un techo donde el precio ha caído antes (hay vendedores esperando).",
+                content: "El mercado tiene memoria institucional. Donde hubo liquidez ayer, habrá interés hoy.",
+                details: "El precio nunca avanza en línea recta; oscila en ondas de impulso y retroceso. Un Soporte es un suelo de cotización donde la fuerza de compra supera a la oferta disponible. Una Resistencia es un techo donde la presión vendedora frena el avance. Cuando una resistencia es superada con volumen, los vendedores atrapados buscan cerrar sus pérdidas en el testeo, convirtiendo el antiguo techo en nuevo suelo.",
                 visualType: "support_resistance",
-                speakerNotes: "Regla de oro: Cuando una Resistencia se rompe, se convierte en Soporte (el techo se vuelve piso). Y viceversa.",
+                speakerNotes: "Regla de oro de la polaridad: Un nivel de resistencia vulnerado con volumen se transforma automáticamente en soporte potencial para la siguiente onda.",
                 concepts: [
-                    { term: "Soporte (Piso)", def: "Zona de precios debajo del actual donde la fuerza de compra supera a la de venta." },
-                    { term: "Resistencia (Techo)", def: "Zona de precios por encima del actual donde la fuerza de venta supera a la de compra." },
-                    { term: "Breakout (Ruptura)", def: "Cuando el precio atraviesa con fuerza un soporte o resistencia. Es una señal de entrada potente." },
-                    { term: "Pullback (Retroceso)", def: "Cuando el precio rompe un nivel y regresa a 'testearlo' antes de seguir su camino." }
-                ]
+                    { term: "Soporte (Piso)", def: "Nivel de precios donde se concentra la liquidez de compra que detiene una corrección bajista." },
+                    { term: "Resistencia (Techo)", def: "Zona donde la oferta de papel supera la demanda, provocando el retroceso del precio." },
+                    { term: "Breakout (Ruptura)", def: "Perforación decisiva de un nivel clave con aumento del volumen negociado." },
+                    { term: "Pullback (Testeo)", def: "Movimiento de retroceso hacia el nivel perforado previo para confirmar el cambio de polaridad." }
+                ],
+                miniQuiz: {
+                    question: "Según el principio de polaridad técnica, ¿qué ocurre cuando una resistencia histórica es rota con fuerte volumen?",
+                    options: [
+                        "El mercado se vuelve lateral para siempre.",
+                        "Esa zona pasa a funcionar como un nuevo soporte en los retrocesos posteriores.",
+                        "El activo debe venderse inmediatamente en corto.",
+                        "La resistencia se vuelve el doble de fuerte."
+                    ],
+                    correct: 1,
+                    explanation: "El principio de polaridad dicta que un nivel de oferta roto se convierte en un nivel de demanda (soporte) en pullbacks posteriores."
+                }
             },
             {
-                title: "Tendencias: ¿Quién Manda?",
-                content: "The Trend is your Friend (La tendencia es tu amiga).",
-                details: "Nunca operes contra la corriente. Una Tendencia Alcista se define por 'Altos más Altos' (HH) y 'Bajos más Altos' (HL). Una Tendencia Bajista es lo contrario. Si no hay tendencia clara, el mercado está 'Lateral' (consolidando) y es peligroso operar.",
-                visualType: "trend_structure",
-                speakerNotes: "Muchos pierden dinero tratando de adivinar el cambio de tendencia ('cachar el cuchillo cayendo'). Es más seguro esperar confirmación y unirte a la fuerza dominante.",
+                title: "Acción del Precio y Estructura (HH/LL/BOS/CHoCH)",
+                content: "Aprende a leer la estructura pura del precio antes de colocar cualquier indicador en tu pantalla.",
+                details: "La estructura de mercado es el fundamento del Price Action profesional. Una tendencia alcista se caracteriza por una secuencia ininterrumpida de Máximos Más Altos (Higher Highs - HH) y Mínimos Más Altos (Higher Lows - HL). Una tendencia bajista imprime Máximos Más Bajos (Lower Highs - LH) y Mínimos Más Bajos (Lower Lows - LL). La superación de un máximo estructural valida una Continuación de Estructura (Break of Structure - BOS), mientras que la pérdida del último mínimo alcista señala un Cambio de Carácter (CHoCH).",
+                visualType: "market_structure_hh_ll",
+                speakerNotes: "Stanley Druckenmiller enseñaba: 'Nunca pelees con la cinta'. Si la estructura dibuja LH y LL, comprar solo porque el oscilador RSI está en sobreventa es una trampa mortal.",
                 concepts: [
-                    { term: "HH (Higher High)", def: "Alto más Alto. El punto máximo actual es mayor que el anterior." },
-                    { term: "HL (Higher Low)", def: "Bajo más Alto. El retroceso no cae tanto como el anterior." },
-                    { term: "Tendencia Lateral", def: "Cuando el precio se mueve de lado, atrapado en un rango. Es zona de 'ruido'." }
-                ]
+                    { term: "Higher High (HH)", def: "Máximo más alto que el anterior; confirma que la presión compradora sigue superando la resistencia previa." },
+                    { term: "Higher Low (HL)", def: "Mínimo más alto que el anterior; demuestra que los vendedores claudican a precios cada vez mayores." },
+                    { term: "BOS (Break of Structure)", def: "Ruptura del último extremo en la misma dirección de la tendencia primaria." },
+                    { term: "CHoCH (Change of Character)", def: "Primera señal de alerta: el precio rompe el último mínimo estructural en una tendencia alcista." }
+                ],
+                miniQuiz: {
+                    question: "¿Cuál es la diferencia técnica entre un BOS (Break of Structure) y un CHoCH (Change of Character)?",
+                    options: [
+                        "El BOS es para Forex y el CHoCH es para acciones mexicanas.",
+                        "El BOS confirma la continuación de la tendencia actual; el CHoCH es el primer quiebre que alerta de un posible cambio de tendencia.",
+                        "Son sinónimos exactos y significan lo mismo.",
+                        "El BOS solo ocurre con medias móviles."
+                    ],
+                    correct: 1,
+                    explanation: "BOS valida la continuación de la tendencia reinante, mientras que CHoCH es la ruptura estructural en contra de la tendencia previa que avisa de una reversión."
+                }
             },
             {
                 title: "Indicadores Técnicos: RSI y Medias Móviles",
-                content: "El tablero de control de tu nave.",
-                details: "Los indicadores ayudan a filtrar el ruido. Las Medias Móviles (SMA/EMA) suavizan el precio para mostrar la tendencia real. El RSI (Índice de Fuerza Relativa) nos dice si el precio ha subido demasiado rápido (Sobrecompra) o bajado demasiado (Sobreventa).",
+                content: "Utiliza herramientas matemáticas para filtrar el ruido y confirmar la tendencia dominante.",
+                details: "Los indicadores nunca deben liderar tus decisiones, sino confirmar lo que la estructura del precio ya anticipó. Las Medias Móviles (SMA/EMA) suavizan la volatilidad: la SMA de 200 días actúa como el límite institucional entre mercados alcistas y bajistas de largo plazo. El Índice de Fuerza Relativa (RSI de 14 periodos) mide la velocidad y magnitud de los cambios de precio: lecturas por encima de 70 sugieren sobrecompra, mientras que niveles por debajo de 30 denotan sobreventa.",
                 visualType: "indicators_dashboard",
-                speakerNotes: "Cuidado: Los indicadores van con retraso (lag). No predicen el futuro, solo resumen el pasado. Úsalos como confirmación, no como bola de cristal.",
+                speakerNotes: "El 'Cruce Dorado' ocurre cuando la media móvil de 50 periodos cruza al alza la media de 200 periodos; históricamente anticipa rallies sostenidos de mediano plazo.",
                 concepts: [
-                    { term: "Media Móvil (SMA)", def: "El promedio del precio de los últimos X días. Funciona como un soporte/resistencia dinámico." },
-                    { term: "RSI > 70", def: "Sobrecompra. El precio podría estar caro y listo para caer." },
-                    { term: "RSI < 30", def: "Sobreventa. El precio podría estar barato y listo para rebotar." },
-                    { term: "Cruce Dorado", def: "Cuando una media móvil rápida (ej. 50) cruza hacia arriba a una lenta (ej. 200). Señal muy alcista." }
-                ]
+                    { term: "SMA 200 Días", def: "Promedio móvil simple de las últimas 200 sesiones; referencia institucional de tendencia estructural." },
+                    { term: "RSI (14)", def: "Oscilador de momento normalizado entre 0 y 100 que evalúa el vigor relativo de compras y ventas." },
+                    { term: "Divergencia RSI", def: "Cuando el precio marca un nuevo mínimo pero el RSI marca un mínimo más alto; aviso de pérdida de impulso." },
+                    { term: "Cruce Dorado", def: "Cruce alcista de la media rápida (ej. 50) sobre la media lenta (ej. 200); señal de fortaleza técnica." }
+                ],
+                miniQuiz: {
+                    question: "Si una acción cotiza por debajo de su SMA de 200 días y su RSI marca 25, ¿cuál es la lectura técnica profesional?",
+                    options: [
+                        "Comprar todo inmediatamente porque está regalada.",
+                        "El activo está en tendencia bajista de fondo; la sobreventa del RSI puede ser una trampa si no hay cambio de estructura en el precio.",
+                        "El indicador RSI no funciona para acciones.",
+                        "Vender en corto sin Stop Loss."
+                    ],
+                    correct: 1,
+                    explanation: "En tendencias bajistas fuertes bajo la SMA 200, los osciladores pueden permanecer en sobreventa prolongada mientras el precio sigue cayendo."
+                }
             },
             {
-                title: "Gestión de Riesgo: El Santo Grial",
-                content: "Puedes perder el 50% de las veces y aun así ser millonario.",
-                details: "La magia no está en adivinar el futuro, sino en las matemáticas. Si cuando ganas, ganas $3, y cuando pierdes, pierdes $1 (Ratio 3:1), solo necesitas acertar el 30% de las veces para ser rentable. Nunca arriesgues más del 1-2% de tu capital en una sola operación.",
-                visualType: "risk_calculator",
-                speakerNotes: "Los novatos se enfocan en cuánto pueden ganar. Los profesionales se enfocan en cuánto pueden perder. Protege tu capital a toda costa con Stop Loss.",
+                title: "Retrocesos y Extensiones de Fibonacci",
+                content: "La geometría de la naturaleza aplicada a las zonas de recarga del dinero institucional.",
+                details: "Descubierta por Leonardo de Pisa en el siglo XIII, la secuencia de Fibonacci revela proporciones armónicas que gobiernan los mercados financieros. El cociente clave es el 61.8% (Número Áureo o Golden Ratio). En un movimiento impulsivo, los retrocesos del 38.2%, 50.0% y 61.8% representan las zonas de máxima confluencia donde los fondos institucionales añaden posiciones a precios de descuento.",
+                visualType: "fibonacci_tool",
+                speakerNotes: "El nivel 61.8% no es mágico por sí solo; cobra máxima probabilidad cuando coincide exactamente con un soporte previo o una media móvil relevante.",
                 concepts: [
-                    { term: "Risk/Reward Ratio", def: "Ratio Riesgo/Beneficio. Cuánto arriesgo vs Cuánto espero ganar. Busca siempre mínimo 1:2 o 1:3." },
-                    { term: "Stop Loss", def: "Tu cinturón de seguridad. Una orden automática para salir si la operación sale mal y evitar desastres." },
-                    { term: "Position Sizing", def: "El tamaño de tu apuesta. Calculado matemáticamente para que si pierdes, solo sea el 1% de tu cuenta." }
-                ]
+                    { term: "Nivel 61.8% (Golden Ratio)", def: "El retroceso porcentual más observado por algoritmos institucionales para buscar giros tendenciales." },
+                    { term: "Nivel 38.2%", def: "Retroceso superficial típico de tendencias con altísimo momento alcista o bajista." },
+                    { term: "Confluencia de Fibonacci", def: "Coincidencia de un nivel de retroceso con un soporte horizontal o línea de tendencia dinámica." },
+                    { term: "Extensión 161.8%", def: "Proyección matemática del objetivo de beneficios tras completar un impulso y su posterior retroceso." }
+                ],
+                miniQuiz: {
+                    question: "¿Por qué el retroceso del 61.8% de Fibonacci es considerado la 'Zona Áurea' en el trading?",
+                    options: [
+                        "Porque garantiza que el precio nunca volverá a caer.",
+                        "Porque representa la proporción armónica donde históricamente convergen algoritmos y fondos institucionales para reanudar la tendencia.",
+                        "Porque es el promedio de las tasas de interés de Banxico.",
+                        "Porque solo se utiliza en activos de oro y materias primas."
+                    ],
+                    correct: 1,
+                    explanation: "El 61.8% es la proporción áurea derivada de la serie de Fibonacci, ampliamente programada en algoritmos de ejecución institucional como zona óptima de descuento."
+                }
             },
             {
-                title: "Price Action: Estructura de Mercado (HH / LL)",
-                content: "Antes de cualquier indicador: aprende a leer la huella que dejan compradores y vendedores.",
-                details: "La Estructura de Mercado es el fundamento de todo análisis técnico. Si el mercado hace Máximos Más Altos (Higher Highs) y Mínimos Más Altos (Higher Lows), está en tendencia ALCISTA. Si hace Máximos Más Bajos (Lower Highs) y Mínimos Más Bajos (Lower Lows), está en tendencia BAJISTA. Un cambio en esta estructura (denominado 'Break of Structure' o BOS) es la primera señal real de un cambio de dirección — antes que cualquier indicador. Apple (AAPL) en el primer trimestre de 2024 hizo LH y LL desde los $200, señal de debilidad estructural antes de la corrección del -15% hasta los $165.",
-                visualType: "market_structure_hh_ll",
-                speakerNotes: "Stanley Druckenmiller dijo: 'Never fight the tape.' Si la estructura es bajista, no hay RSI en sobreventa que justifique comprar. Primero espera el BOS (cambio de estructura), luego el pullback, luego la entrada.",
-                concepts: [
-                    { term: "Higher High (HH)", def: "Máximo Más Alto. El precio supera el techo anterior. Señal de que los compradores siguen empujando." },
-                    { term: "Higher Low (HL)", def: "Mínimo Más Alto. El precio no cae tan bajo como antes. Señal de que los vendedores se debilitan." },
-                    { term: "Break of Structure (BOS)", def: "Ruptura de estructura: el precio rompe el último máximo (alcista) o el último mínimo (bajista). Es la primera señal real de cambio de tendencia." },
-                    { term: "Quiebre de Estructura (CHoCH)", def: "Change of Character. El primer HH que rompe en una tendencia bajista (o primer LL en alcista). Es la señal de alerta temprana." }
-                ]
-            },
-            {
-                title: "Volumen Real vs. Volumen de Tick: Confirmando Rupturas",
-                content: "Un precio que sube sin volumen es un globo de helio: bonito, pero vacío.",
-                details: "El Volumen es el número de acciones/contratos negociados en un periodo. Es el combustible del mercado. Una ruptura (Breakout) necesita volumen alto para ser válida. Si Apple (AAPL) rompe una resistencia de $185 con volumen 3x mayor al promedio de 55 millones de acciones/día, es señal real. Si lo hace con 30% del volumen normal, hay altas probabilidades de que sea un 'Bull Trap' (trampa alcista): el precio rompe para arriba, atrae compradores, y luego colapsa. En AAPL, los días de mayor volumen coinciden con presentaciones de iPhone o reportes de resultados (earnings), lo que crea picos de volumen institucional perfectamente identificables.",
+                title: "Volumen Real vs. Volumen de Tick: Rupturas Institucionales",
+                content: "El volumen es el combustible del mercado: un avance sin volumen es solo una trampa.",
+                details: "El volumen representa el número total de acciones o contratos negociados en una sesión. Una ruptura de resistencia requiere un volumen significativamente superior al promedio diario (ADV - Average Daily Volume) para considerarse genuina. Si el precio supera un techo pero el volumen es anémico, nos encontramos ante una 'Bull Trap' (trampa alcista): los operadores institucionales inducen compras minoristas para colocar su papel a precios inflados antes de provocar la caída.",
                 visualType: "volume_analysis",
-                speakerNotes: "Jesse Livermore: 'El volumen es la huella de los grandes jugadores.' Si el precio sube pero el volumen baja (divergencia bajista de volumen), los institucionales están vendiendo discretamente mientras los minoristas compran.",
+                speakerNotes: "En septiembre de 2024, el lanzamiento del iPhone 16 generó picos de volumen institucional de más de 3.2x el volumen promedio de Apple, validando la fuerza compradora.",
                 concepts: [
-                    { term: "Volumen Promedio (ADV)", def: "Average Daily Volume. La media de contratos negociados en una ventana de tiempo (comúnmente 20 sesiones). Es la referencia para detectar anomalías." },
-                    { term: "Bull Trap", def: "Trampa alcista. El precio supera una resistencia con poco volumen, atrae compradores, y luego regresa al rango original dejando a los compradores atrapados en pérdida." },
-                    { term: "Volumen de Tick", def: "En mercados Forex/CFDs, el volumen real no existe. Se usa el 'tick volume' (número de cambios de precio), que es un proxy imperfecto del volumen real." },
-                    { term: "Divergencia de Volumen", def: "Cuando el precio sube (o baja) pero el volumen va en dirección contraria. Es señal temprana de debilitamiento de la tendencia." }
-                ]
+                    { term: "ADV (Average Daily Volume)", def: "Volumen promedio diario negociado en las últimas 20 o 50 sesiones bursátiles." },
+                    { term: "Bull Trap (Trampa Alcista)", def: "Ruptura de resistencia sin volumen que seduce a compradores minoristas antes de un colapso súbito." },
+                    { term: "Volumen de Tick", def: "Proxy basado en cantidad de cambios de precio usado en Forex; a diferencia del mercado bursátil de acciones, no mide títulos reales." },
+                    { term: "Divergencia de Volumen", def: "Precios marcando nuevos máximos acompañados de volumen decreciente; anticipa agotamiento de liquidez." }
+                ],
+                miniQuiz: {
+                    question: "Si una acción supera su resistencia anual con un volumen del 40% respecto a su ADV de 20 sesiones, ¿cuál es el mayor riesgo?",
+                    options: [
+                        "Que sea un Bull Trap (trampa alcista) por falta de respaldo institucional.",
+                        "Que la acción sea suspendida de cotización en la bolsa.",
+                        "Que el volumen no tenga ninguna relación con el precio.",
+                        "Que el dividendo se incremente al doble."
+                    ],
+                    correct: 0,
+                    explanation: "Las rupturas sin volumen suelen ser trampas de liquidez generadas por falta de compradores institucionales, provocando regresos rápidos al rango previo."
+                }
             },
             {
-                title: "Gestión de Riesgo Visual: Ratio Riesgo:Beneficio con Apple (AAPL)",
-                content: "La entrada es solo el 20% del éxito. El 80% está en dónde pones el Stop y el Target.",
-                details: "Caso real Apple Inc. (AAPL). El precio cayó a $165 USD (zona de soporte doble fondo tras corrección de inicio de 2024). El trader profesional dibuja 3 líneas: (1) ENTRADA: $168 en cierre por encima del doble fondo. (2) STOP-LOSS: $158 — debajo del soporte mínimo, si lo pierde el tesis es incorrecto. (3) TAKE PROFIT: $195 — resistencia histórica previa y zona de distribución. Esto da: Riesgo = $10 / Beneficio = $27 → Ratio R:B = 1:2.7. Con solo el 37% de operaciones ganadoras con este ratio, el sistema es RENTABLE a largo plazo.",
+                title: "Gestión de Riesgo y Esperanza Matemática",
+                content: "El secreto de la rentabilidad a largo plazo no es adivinar el futuro, sino la asimetría matemática.",
+                details: "Muchos principiantes creen erróneamente que para ser rentables necesitan acertar el 80% o 90% de sus operaciones. Matemáticamente, con un Ratio Riesgo:Beneficio de 1:3 (arriesgar $1 para ganar $3), el punto de equilibrio (Breakeven Win Rate) es exactamente del 25% (Fórmula: 1 / [1 + 3] = 0.25). Esto significa que acertando únicamente el 35% o 40% de tus operaciones con ratios asimétricos, tu sistema genera una sólida Esperanza Matemática positiva (E = [WinRate × Ganancia] - [LossRate × Pérdida]).",
+                visualType: "risk_calculator",
+                speakerNotes: "Nunca arriesgues más del 1% al 2% de tu capital total en una sola posición. Controlar el tamaño de la posición elimina el riesgo de ruina.",
+                concepts: [
+                    { term: "Ratio Riesgo:Beneficio (R:B)", def: "Relación entre el capital expuesto en el Stop Loss y el beneficio objetivo esperado en el Take Profit." },
+                    { term: "Punto de Equilibrio (Breakeven)", def: "Tasa de acierto mínima requerida para no perder capital: 1 / (1 + Ratio R:B). Para 1:3 es 25.0%." },
+                    { term: "Esperanza Matemática (E)", def: "Ganancia o pérdida promedio esperada por cada peso o dólar arriesgado en una muestra amplia de operaciones." },
+                    { term: "Regla del 1-2%", def: "Norma estricta de asignación: la pérdida máxima al tocar el Stop Loss nunca debe superar el 1% o 2% de la cartera." }
+                ],
+                miniQuiz: {
+                    question: "Si operas consistentemente con un Ratio Riesgo:Beneficio de 1:3, ¿cuál es el porcentaje mínimo de operaciones ganadoras para alcanzar el punto de equilibrio?",
+                    options: [
+                        "50.0% de aciertos.",
+                        "30.0% de aciertos.",
+                        "25.0% de aciertos.",
+                        "75.0% de aciertos."
+                    ],
+                    correct: 2,
+                    explanation: "La fórmula de breakeven es 1 / (1 + R:B). Con R:B de 1:3, 1 / (1 + 3) = 1/4 = 0.25 (25.0%). Con solo ganar 1 de cada 4 operaciones no pierdes dinero."
+                }
+            },
+            {
+                title: "Gestión Visual de R:B con Apple (AAPL)",
+                content: "La entrada es solo el 20% del éxito; el 80% restante depende de la ubicación del Stop Loss y el Take Profit.",
+                details: "Analicemos el caso real de Apple Inc. (AAPL) tras su corrección en el soporte de doble fondo en $165 USD. El trader profesional estructura su trade con 3 coordenadas técnicas: (1) ENTRADA: $168 USD tras confirmación de vela envolvente. (2) STOP LOSS: $158 USD (debajo del soporte estructural, riesgo de $10 USD). (3) TAKE PROFIT: $195 USD (resistencia histórica previa, potencial de $27 USD). Esto arroja un Ratio R:B de 1:2.7. El punto de equilibrio es del 27.02% (1 / 3.7). Con una tasa de acierto conservadora del 37%, el trade genera una ventaja estadística sobresaliente.",
                 visualType: "risk_reward_bimbo",
-                speakerNotes: "Paul Tudor Jones: 'La clave no es acertar, sino cuánto ganas cuando aciertas vs cuánto pierdes cuando te equivocas.' Un sistema con 40% de aciertos y ratio 1:3 bate a uno con 70% de aciertos y ratio 1:1.",
+                speakerNotes: "Paul Tudor Jones lo resumió con maestría: 'Busco un ratio 5:1. Cinco a uno significa que arriesgo un dólar para ganar cinco. Eso me permite tener una tasa de acierto de solo el 20% y aun así no perder dinero'.",
                 concepts: [
-                    { term: "Ratio R:B (Risk:Reward)", def: "Riesgo vs Beneficio esperado. Con ratio 1:2 necesitas acertar solo el 34% para ser rentable. Con 1:3, solo el 26%." },
-                    { term: "Stop Loss inteligente", def: "Debe ir detrás de un nivel técnico (soporte, resistencia, media móvil). Un stop de 'precio redondo' no tiene lógica técnica." },
-                    { term: "Take Profit escalonado", def: "Salida en 2 o 3 partes: 1/3 en primer objetivo, 1/3 en punto medio, 1/3 dejar correr. Optimiza la captura de tendencia." },
-                    { term: "Expectativa Matemática", def: "E = (P_ganar × Ganancia_media) - (P_perder × Pérdida_media). Si es positiva, el sistema es rentable a largo plazo." }
-                ]
+                    { term: "Stop Loss Técnico", def: "Orden automática ubicada detrás de un nivel estructural invalidante, no en una cifra redonda arbitraria." },
+                    { term: "Take Profit Escalonado", def: "Toma parcial de beneficios (ej. 50% en primer objetivo y dejar correr el resto con trailing stop)." },
+                    { term: "Trailing Stop", def: "Stop Loss dinámico que se desplaza protegiendo ganancias a medida que el precio avanza a favor." },
+                    { term: "Ventaja Estadística (Edge)", def: "Combinación de ratio R:B y tasa de aciertos que produce rendimientos acumulados positivos a largo plazo." }
+                ],
+                miniQuiz: {
+                    question: "En la operación analizada de Apple con riesgo de $10 USD y objetivo de $27 USD (Ratio 1:2.7), ¿cuál es el porcentaje de breakeven aproximado?",
+                    options: [
+                        "50.0%",
+                        "27.0%",
+                        "10.0%",
+                        "65.0%"
+                    ],
+                    correct: 1,
+                    explanation: "Breakeven = 1 / (1 + 2.7) = 1 / 3.7 = 27.02%. Ganando al menos el 27.02% de las veces con este ratio se amortiza todo el riesgo del sistema."
+                }
             },
             {
-                title: "Uso de Temporalidades: El Marco Manda",
-                content: "Una tendencia alcista diaria puede tener una corrección bajista de 4 horas. Saber cuál frame domina evita errores costosos.",
-                details: "El análisis Multi-Timeframe (MTF) es la técnica que usan los traders institucionales. La regla: el marco mayor siempre domina al marco menor. Si en el Daily de Apple (AAPL) hay tendencia bajista (LH/LL) pero en el de 15 minutos parece alcista, es un rebote dentro de una caída mayor — no un cambio real. La metodología clásica de Stan Weinstein usa el Weekly para definir la 'fase' (Acumulación, Ascenso, Distribución, Descenso). El Daily para la entrada. El 1H o 4H para el timing exacto y el Stop preciso.",
+                title: "Uso de Temporalidades: El Marco Manda (Multi-Timeframe)",
+                content: "Una corrección bajista en 15 minutos puede ser una simple oportunidad de compra en el gráfico diario.",
+                details: "El análisis Multi-Timeframe (MTF) es la técnica institucional de sincronización de marcos temporales. La regla de oro dicta que el marco temporal mayor siempre subordina al menor. El método clásico de Stan Weinstein categoriza la evolución de todo activo en 4 etapas: Etapa 1 (Acumulación/Base), Etapa 2 (Avance Alcista sostenido sobre la media), Etapa 3 (Distribución/Techo) y Etapa 4 (Declive Bajista bajo la media). El marco Semanal define el sesgo de fondo, el Diario identifica la estructura y el marco de 4H/1H calibra el timing de entrada.",
                 visualType: "multi_timeframe",
-                speakerNotes: "Riesgo del novato: ver solo el gráfico de 5 minutos y creer que tiene el panorama completo. Es como navegaren un barco mirando solo el suelo del barco. Necesitas ver el mapa completo antes.",
+                speakerNotes: "El error más costoso del operador novato es mirar únicamente el gráfico de 5 minutos: cree ver una ruptura alcista cuando en el gráfico diario es simplemente una trampa de rechazo.",
                 concepts: [
-                    { term: "Top-Down Analysis", def: "Análisis de arriba hacia abajo. Empieza en el Weekly/Monthly para el contexto macro, baja al Daily para la tendencia, entra con el H4 o H1." },
-                    { term: "Confluencia de Marcos", def: "La señal más poderosa ocurre cuando 3 temporalidades diferentes muestran la misma dirección al mismo tiempo." },
-                    { term: "Fase Weinstein (Stage 1-4)", def: "Stan Weinstein clasificó el ciclo de toda acción en 4 etapas: Acumulación (base), Avance (compra), Distribución (techo), Declive (evitar)." },
-                    { term: "Trap en Marco Menor", def: "Una señal falsa en 15min que parece breakout pero es ruido desde el Daily. Solo visible con análisis multi-marco." }
-                ]
+                    { term: "Análisis Top-Down", def: "Metodología de inspección descendente: Semanal (contexto) → Diario (tendencia) → 4H/1H (ejecución)." },
+                    { term: "Confluencia Temporal", def: "Alineación de señales en la misma dirección a través de múltiples temporalidades simultáneas." },
+                    { term: "Etapas de Weinstein", def: "Ciclo económico de 4 fases: Acumulación (1), Avance (2), Distribución (3) y Declive (4)." },
+                    { term: "Ruido Intradía", def: "Fluctuaciones menores en marcos de 1 a 15 minutos que carecen de trascendencia estructural institucional." }
+                ],
+                miniQuiz: {
+                    question: "Si el gráfico semanal muestra una Etapa 4 de Declive bajo la SMA de 30 semanas, ¿cómo debes interpretar una señal de compra en gráfico de 15 minutos?",
+                    options: [
+                        "Como una oportunidad irrepetible para entrar con todo el capital.",
+                        "Como un rebote temporal o ruido intradía contra la tendencia mayor; operar largos conlleva un riesgo sumamente elevado.",
+                        "Las etapas de Weinstein solo aplican a materias primas.",
+                        "El gráfico de 15 minutos tiene más peso que el semanal."
+                    ],
+                    correct: 1,
+                    explanation: "La temporalidad mayor manda. Un rebote en 15 minutos en plena Etapa 4 semanal suele ser un retroceso menor antes de reanudar la caída."
+                }
             },
             {
-                title: "Estación de Trabajo: Práctica en Tiempo Real",
-                content: "Usa este laboratorio para analizar el mercado aplicando todo lo que has aprendido.",
-                details: "Selecciona diferentes activos desde el panel superior para ver sus gráficas avanzadas proporcionadas por TradingView. Usa la Calculadora de Gestión de Riesgo antes de ejecutar cualquier operación en tu broker para asegurar que tu Stop Loss y la cantidad de acciones a comprar sean matemáticamente precisos.",
+                title: "Trading Journal y Backtesting Cuantitativo",
+                content: "Lo que no se mide, no se puede mejorar. El diario de operaciones es el espejo de tu disciplina.",
+                details: "Ningún trader profesional opera sin auditar sistemáticamente sus resultados. El Backtesting consiste en probar un conjunto explícito de reglas técnicas sobre datos históricos del mercado para verificar si posee una ventaja estadística real antes de arriesgar dinero en vivo. El Trading Journal registra metódicamente la fecha, ticker, timeframe, precio de entrada, Stop Loss, Take Profit, ratio R:B, resultado monetario en 'R' y el estado psicológico al ejecutar.",
+                visualType: "trading_journal_tool",
+                speakerNotes: "Un trader con un sistema con expectativa positiva pero sin diario de operaciones terminará saboteándose por indisciplina o exceso de apalancamiento.",
+                concepts: [
+                    { term: "Backtesting", def: "Simulación rigurosa de una estrategia de trading sobre series de precios históricas pasadas." },
+                    { term: "Resultado en R", def: "Medición normalizada del resultado en múltiplos del riesgo inicial (ej. +2.5R significa ganar 2.5 veces lo arriesgado)." },
+                    { term: "Maximum Drawdown", def: "La mayor racha de pérdidas acumuladas consecutivas desde el punto máximo del capital." },
+                    { term: "Curva de Capital (Equity Curve)", def: "Gráfica acumulativa del balance de la cuenta a lo largo del tiempo que evidencia la consistencia del sistema." }
+                ],
+                miniQuiz: {
+                    question: "¿Cuál es la principal ventaja de medir el rendimiento de tus trades en unidades 'R' en tu Trading Journal?",
+                    options: [
+                        "Permite evaluar la calidad técnica de las decisiones de forma normalizada, con independencia del dinero exacto de la cuenta.",
+                        "Garantiza que el bróker te devuelva las comisiones.",
+                        "Evita pagar impuestos ante el SAT.",
+                        "Hace que todas las operaciones sean ganadoras por defecto."
+                    ],
+                    correct: 0,
+                    explanation: "Medir en 'R' normaliza el análisis: ganar 3R siempre refleja una excelente ejecución con ratio 1:3, sin importar si 1R equivalía a $100 MXN o $10,000 MXN."
+                }
+            },
+            {
+                title: "Estación TradingView y Psicología del Trading",
+                content: "Tu mayor obstáculo y tu mayor activo en el mercado no es el gráfico, sino tu propia mente.",
+                details: "El mercado financiero es un mecanismo implacable que transfiere capital del impaciente al paciente. Los dos grandes destructores de cuentas son el FOMO (miedo a perderse una subida, que induce compras en máximos) y el Revenge Trading (operar compulsivamente con mayor tamaño tras una pérdida para intentar desquitarse). Utiliza la estación de trabajo integrada con herramientas de TradingView para practicar la ejecución desapasionada conforme a reglas escritas.",
                 visualType: "tradingview_station",
-                speakerNotes: "Practica trazar tus soportes, resistencias y medir el riesgo en el panel de TradingView integrado en esta estación. No operes con dinero real hasta no dominar una estrategia de gestión estricta.",
+                speakerNotes: "El trading exitoso es aburrido y metódico. Si sientes adrenalina o euforia al operar, estás apostando como en un casino, no gestionando capital.",
                 concepts: [
-                    { term: "Technical Gauge", def: "El medidor algorítmico usa más de 20 indicadores técnicos (RSI, MACD, Medias Móviles) para mostrar una aguja de Compra/Venta. No es infalible, pero ahorra tiempo de cálculo." },
-                    { term: "Position Sizing", def: "Calcular la cantidad exacta de acciones a comprar para que si se ejecuta tu Stop Loss, solo pierdas tu máximo riesgo permitido (ej. 1% de tu capital)." }
-                ]
-            },
-            {
-
-                title: "Psicología del Trading",
-                content: "Tu peor enemigo eres tú mismo.",
-                details: "El mercado está diseñado para transferir dinero del impaciente al paciente. El FOMO (miedo a perderse algo) te hará comprar caro. El miedo te hará vender barato. El 'Revenge Trading' (vengarse del mercado) te hará perder todo.",
-                visualType: "trading_psychology",
-                speakerNotes: "Escribe un plan de trading y síguelo como un robot. Si operas por emoción o 'corazonada', estás apostando, no invirtiendo.",
-                concepts: [
-                    { term: "FOMO", def: "Fear Of Missing Out. Comprar impulsivamente porque ves que el precio sube rápido." },
-                    { term: "Revenge Trading", def: "Intentar recuperar una pérdida inmediatamente con una operación más grande y arriesgada. Receta para el desastre." },
-                    { term: "Trading Plan", def: "Un conjunto de reglas escritas que define cuándo entras, cuándo sales y cuánto arriesgas antes de abrir el gráfico." }
-                ]
+                    { term: "FOMO", def: "Fear Of Missing Out: impulso emocional de comprar un activo vertical por temor a quedarse fuera." },
+                    { term: "Revenge Trading", def: "Aumentar el riesgo de forma impulsiva tras una pérdida para intentar recuperar el dinero de inmediato." },
+                    { term: "Plan de Trading", def: "Protocolo por escrito que especifica qué condiciones exactas deben cumplirse para entrar, gestionar y salir de un activo." },
+                    { term: "Overtrading", def: "Operar en exceso por ansiedad o aburrimiento en lugar de aguardar pacientemente los setups de alta probabilidad." }
+                ],
+                miniQuiz: {
+                    question: "¿Qué conducta define al 'Revenge Trading' y cómo debe prevenirse según la psicología profesional?",
+                    options: [
+                        "Comprar acciones de empresas que compiten entre sí.",
+                        "Duplicar el tamaño de la posición tras una pérdida para intentar recuperarse rápidamente; se previene apagando la pantalla y siguiendo el límite diario de pérdida.",
+                        "Revisar el informe anual de la empresa.",
+                        "Dejar correr las ganancias con trailing stop."
+                    ],
+                    correct: 1,
+                    explanation: "El Revenge Trading nace del ego herido por una pérdida; la única protección es el cese inmediato de operativa conforme al límite de riesgo diario establecido."
+                }
             }
         ]
     }
 ];
 
+// --- BANCO DE PREGUNTAS DEL EXAMEN DE CERTIFICACIÓN DE FASE 3 ---
 const quizQuestions = [
-    { id: 1, question: "En una Vela Japonesa, ¿qué indica una mecha superior muy larga?", options: ["Fuerza de compra imparable.", "Rechazo de precios altos (fuerza de venta).", "Indecisión total.", "Que el mercado está cerrado."], correct: 1 },
-    { id: 2, question: "Si una resistencia se rompe con fuerza hacia arriba, ¿en qué se convierte?", options: ["En una resistencia más fuerte.", "En un soporte (piso).", "En un vacío.", "En una tendencia bajista."], correct: 1 },
-    { id: 3, question: "¿Qué define una Tendencia Alcista?", options: ["Velas rojas grandes.", "Bajos más bajos (Lower Lows).", "Altos más altos (Higher Highs) y Bajos más altos (Higher Lows).", "Que el RSI esté en 90."], correct: 2 },
-    { id: 4, question: "Si arriesgo $100 para ganar $300, ¿cuál es mi Ratio Riesgo/Beneficio?", options: ["1:1", "1:2", "1:3", "3:1"], correct: 2 },
-    { id: 5, question: "¿Qué es el FOMO?", options: ["Un indicador técnico.", "El miedo a perderse una oportunidad que te hace comprar mal.", "Una estrategia de salida.", "Un tipo de vela japonesa."], correct: 1 },
-    { id: 6, question: "¿Cuánto capital deberías arriesgar máximo por operación?", options: ["El 50% para ganar rápido.", "Todo (All-in).", "Entre el 1% y 2%.", "Lo que te sobre de la quincena."], correct: 2 }
+    { 
+        id: 1, 
+        question: "En el análisis de Velas Japonesas (OHLC), ¿qué significa una mecha superior muy larga en una zona de resistencia?", 
+        options: [
+            "Fuerza compradora imparable que continuará al alza.", 
+            "Fuerte rechazo de precios altos: la fuerza vendedora tomó el control antes del cierre.", 
+            "Indecisión absoluta sin volumen de negociación.", 
+            "Que el mercado está cerrado por feriado bancario."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 2, 
+        question: "Según el principio de polaridad técnica de soportes y resistencias, ¿qué sucede cuando una resistencia histórica es superada con volumen?", 
+        options: [
+            "Se convierte en un soporte potencial (suelo) en futuros testeos o pullbacks.", 
+            "Desaparece permanentemente del gráfico.", 
+            "Se vuelve una resistencia el doble de fuerte.", 
+            "Indica obligatoriamente un cambio a tendencia bajista."
+        ], 
+        correct: 0 
+    },
+    { 
+        id: 3, 
+        question: "¿Qué combinación de oscilaciones define formalmente a una Tendencia Alcista en Acción del Precio (Price Action)?", 
+        options: [
+            "Lower Highs (LH) y Lower Lows (LL).", 
+            "Higher Highs (HH - Máximos Más Altos) y Higher Lows (HL - Mínimos Más Altos).", 
+            "Velas rojas consecutivas con poco volumen.", 
+            "Oscilador RSI situado permanentemente por debajo de 30."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 4, 
+        question: "¿Cuál es la diferencia entre un BOS (Break of Structure) y un CHoCH (Change of Character)?", 
+        options: [
+            "BOS confirma la continuación de la tendencia; CHoCH es la primera ruptura contra la tendencia que avisa de un cambio de dirección.", 
+            "BOS es un indicador matemático y CHoCH es una vela japonesa.", 
+            "No existe ninguna diferencia; son términos intercambiables.", 
+            "CHoCH solo se utiliza en temporalidades semanales."
+        ], 
+        correct: 0 
+    },
+    { 
+        id: 5, 
+        question: "En la teoría de retrocesos de Fibonacci, ¿cuál es el porcentaje derivado del Número Áureo (Golden Ratio) más vigilado por fondos e instituciones?", 
+        options: [
+            "23.6%", 
+            "50.0%", 
+            "61.8%", 
+            "99.0%"
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 6, 
+        question: "Si el precio de una acción supera una resistencia pero el volumen negociado es solo el 35% del promedio diario (ADV), ¿a qué fenómeno nos enfrentamos?", 
+        options: [
+            "A un Bull Trap (trampa alcista) por ausencia de demanda institucional real.", 
+            "A una compra institucional masiva y encubierta.", 
+            "A un split de acciones inminente.", 
+            "A una señal de compra libre de riesgo."
+        ], 
+        correct: 0 
+    },
+    { 
+        id: 7, 
+        question: "Si tu estrategia de trading opera estrictamente con un Ratio Riesgo:Beneficio de 1:3, ¿cuál es tu tasa de acierto de equilibrio (Breakeven)?", 
+        options: [
+            "50.0%", 
+            "33.3%", 
+            "25.0% (1 / [1 + 3] = 0.25)", 
+            "75.0%"
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 8, 
+        question: "En el caso analizado de Apple (Entrada $168, Stop $158, Target $195, Ratio 1:2.7), ¿qué tasa de acierto requieres para estar en punto de equilibrio?", 
+        options: [
+            "27.02% (1 / [1 + 2.7])", 
+            "50.0%", 
+            "10.0%", 
+            "60.0%"
+        ], 
+        correct: 0 
+    },
+    { 
+        id: 9, 
+        question: "Según el análisis Multi-Timeframe y las etapas de Stan Weinstein, ¿qué temporalidad subordina a las demás al planificar un trade?", 
+        options: [
+            "El gráfico de 5 minutos porque muestra los movimientos más rápidos.", 
+            "La temporalidad mayor (Semanal/Diario) porque establece el contexto institucional y la dirección de fondo.", 
+            "Cualquier temporalidad tiene exactamente el mismo peso estadístico.", 
+            "El gráfico de 1 minuto."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 10, 
+        question: "¿Qué es el 'Revenge Trading' y cuál es la regla psicológica fundamental para evitarlo?", 
+        options: [
+            "Operar impulsivamente con mayor volumen tras una pérdida para desquitarse; se previene respetando el límite diario de pérdida y pausando la sesión.", 
+            "Vender acciones cuando una empresa presenta utilidades récord.", 
+            "Abrir una cuenta en un bróker extranjero sin avisar.", 
+            "Comprar opciones Call de protección."
+        ], 
+        correct: 0 
+    }
 ];
 
-// --- COMPONENTES VISUALES FASE 3 (AVANZADOS) ---
+// --- COMPONENTES VISUALES TÉCNICOS FASE 3 ---
 
-// ── 1. MARKET STRUCTURE HH/LL ──────────────────────
-const MarketStructureHHLL = () => {
-    const [phase, setPhase] = useState<'alcista'|'bajista'>('alcista');
-    const bullPoints = [
-        {x:20,y:110},{x:50,y:80},{x:80,y:60},{x:110,y:85},{x:140,y:45},{x:170,y:65},{x:200,y:28},{x:230,y:50}
+// ── 1. FIBONACCI RETRACEMENT TOOL ──────────────────
+const FibonacciTool = () => {
+    const [swingHigh, setSwingHigh] = useState(200);
+    const [swingLow, setSwingLow] = useState(165);
+    const diff = swingHigh - swingLow;
+
+    const levels = [
+        { pct: 0, label: '0.0% (Swing High)', price: swingHigh, color: '#ef4444' },
+        { pct: 0.236, label: '23.6% Retroceso Menor', price: swingHigh - diff * 0.236, color: '#f97316' },
+        { pct: 0.382, label: '38.2% Retroceso Débil', price: swingHigh - diff * 0.382, color: '#f59e0b' },
+        { pct: 0.500, label: '50.0% Nivel Psicológico', price: swingHigh - diff * 0.500, color: '#3b82f6' },
+        { pct: 0.618, label: '61.8% Golden Ratio (Áureo)', price: swingHigh - diff * 0.618, color: '#10b981' },
+        { pct: 0.786, label: '78.6% Retroceso Profundo', price: swingHigh - diff * 0.786, color: '#8b5cf6' },
+        { pct: 1.0, label: '100.0% (Swing Low)', price: swingLow, color: '#ef4444' },
     ];
-    const bearPoints = [
-        {x:20,y:30},{x:50,y:55},{x:80,y:45},{x:110,y:70},{x:140,y:58},{x:170,y:85},{x:200,y:72},{x:230,y:100}
-    ];
-    const pts = phase === 'alcista' ? bullPoints : bearPoints;
-    const polyline = pts.map(p=>`${p.x},${p.y}`).join(' ');
-    const labels = phase === 'alcista'
-        ? [{x:80,y:53,t:'HH',c:'#22c55e'},{x:140,y:38,t:'HH',c:'#22c55e'},{x:200,y:21,t:'HH',c:'#22c55e'},{x:50,y:73,t:'HL',c:'#86efac'},{x:110,y:78,t:'HL',c:'#86efac'},{x:170,y:58,t:'HL',c:'#86efac'}]
-        : [{x:50,y:48,t:'LH',c:'#ef4444'},{x:110,y:63,t:'LH',c:'#ef4444'},{x:170,y:78,t:'LH',c:'#ef4444'},{x:80,y:38,t:'LL',c:'#fca5a5'},{x:140,y:51,t:'LL',c:'#fca5a5'},{x:200,y:65,t:'LL',c:'#fca5a5'}];
+
     return (
         <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
-            <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Estructura de Mercado — AAPL (NASDAQ)</h4>
-                <div className="flex gap-1">
-                    {(['alcista','bajista'] as const).map(p=>(
-                        <button key={p} onClick={()=>setPhase(p)} className={`px-3 py-1 text-xs font-bold rounded-full transition-all ${phase===p?(p==='alcista'?'bg-emerald-600 text-white':'bg-red-600 text-white'):'bg-slate-700 text-slate-400'}`}>{p==='alcista'?'📈 Alcista':'📉 Bajista'}</button>
-                    ))}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+                <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <Sliders size={16} className="text-emerald-400" />
+                        Calculadora Interactiva de Fibonacci: Caso Apple (AAPL)
+                    </h4>
+                    <p className="text-[11px] text-slate-400">Corrección real de $199.62 a $165.67 (Ene - Abr 2024)</p>
+                </div>
+                <div className="flex gap-2 text-xs">
+                    <span className="bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 px-2.5 py-1 rounded-full font-bold">
+                        Zona Óptima: $178.65 USD (61.8%)
+                    </span>
                 </div>
             </div>
-            <svg viewBox="0 0 260 130" className="w-full h-48 bg-slate-950 rounded-lg border border-slate-800">
-                {[30,60,90,120].map(y=><line key={y} x1="0" y1={y} x2="260" y2={y} stroke="#1e293b" strokeWidth="1"/>)}
-                <polyline points={polyline} fill="none" stroke={phase==='alcista'?'#22c55e':'#ef4444'} strokeWidth="2.5" strokeLinejoin="round"/>
-                {pts.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r="4" fill={phase==='alcista'?'#22c55e':'#ef4444'}/>)}
-                {labels.map((l,i)=><text key={i} x={l.x-8} y={l.y-8} fill={l.c} fontSize="9" fontWeight="bold">{l.t}</text>)}
-                {phase==='alcista' && <text x="160" y="20" fill="#22c55e" fontSize="8">BOS →</text>}
-                {phase==='bajista' && <text x="160" y="115" fill="#ef4444" fontSize="8">BOS ↓</text>}
-                <text x="5" y="12" fill="#64748b" fontSize="7">AAPL Estructura {phase==='alcista'?'Alcista':'Bajista'}</text>
-            </svg>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
-                {(phase==='alcista'
-                    ? [{l:'HH',d:'Máximo más alto',c:'text-emerald-400'},{l:'HL',d:'Mínimo más alto',c:'text-emerald-300'},{l:'BOS ↑',d:'Ruptura de estructura alcista',c:'text-emerald-400'},{l:'Señal',d:'Tendencia confirmada al subir',c:'text-white'}]
-                    : [{l:'LH',d:'Máximo más bajo',c:'text-red-400'},{l:'LL',d:'Mínimo más bajo',c:'text-red-300'},{l:'BOS ↓',d:'Ruptura de estructura bajista',c:'text-red-400'},{l:'Señal',d:'Salir / no comprar',c:'text-white'}]
-                ).map((item,i)=>(
-                    <div key={i} className="bg-slate-800 p-2 rounded-lg">
-                        <p className={`text-xs font-black ${item.c}`}>{item.l}</p>
-                        <p className="text-[10px] text-slate-400">{item.d}</p>
-                    </div>
-                ))}
-            </div>
-            <div className="mt-3 bg-amber-900/20 border border-amber-500/30 p-2 rounded-lg">
-                <p className="text-[10px] text-amber-200"><strong className="text-amber-400">📖 Bibliografía:</strong> Al Brooks — "Trading Price Action Trends" (2011) · Stan Weinstein — "Secrets for Profiting in Bull and Bear Markets" · Wyckoff Market Cycle Theory (1930s, vigente)</p>
-            </div>
-        </div>
-    );
-};
 
-// ── 2. VOLUMEN ANALYSIS ─────────────────────────────
-const VolumeAnalysis = () => {
-    const bars = [
-        {m:'Ene',p:185,v:1.1,bull:false},{m:'Feb',p:182,v:0.9,bull:false},{m:'Mar',p:171,v:1.8,bull:false},
-        {m:'Abr',p:165,v:2.9,bull:false},{m:'May',p:178,v:1.3,bull:true},{m:'Jun',p:195,v:2.1,bull:true},
-        {m:'Jul',p:198,v:0.7,bull:false},{m:'Ago',p:218,v:3.2,bull:true},{m:'Sep',p:226,v:1.5,bull:true},
-        {m:'Oct',p:222,v:1.0,bull:false},{m:'Nov',p:228,v:1.6,bull:true},{m:'Dic',p:250,v:2.4,bull:true},
-    ];
-    const maxV=Math.max(...bars.map(b=>b.v));
-    return (
-        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
-            <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Volumen vs Precio — AAPL (NASDAQ) 2024</h4>
-                <span className="text-[10px] text-amber-400 bg-amber-900/20 px-2 py-1 rounded-full font-bold">⚠️ Bull Trap → Jul</span>
-            </div>
-            {/* Price line */}
-            <svg viewBox="0 0 300 80" className="w-full h-20 bg-slate-950 rounded-t-lg border border-b-0 border-slate-800">
-                {bars.map((b,i)=>{
-                    const x=i*(300/bars.length)+5;
-                    const h=80-(b.p-160)*0.38;
-                    return <rect key={i} x={x} y={Math.max(0,h)} width="18" height={Math.max(0,80-h)} fill={b.bull?'#22c55e':'#ef4444'} opacity="0.85"/>;
-                })}
-                <text x="5" y="12" fill="#64748b" fontSize="7">Precio AAPL (USD)</text>
-                {/* Bull trap marker Jul */}
-                <line x1="141" y1="0" x2="141" y2="80" stroke="#f59e0b" strokeWidth="1" strokeDasharray="3,2"/>
-                <text x="143" y="10" fill="#f59e0b" fontSize="7">Bull Trap</text>
-            </svg>
-            {/* Volume bars */}
-            <svg viewBox="0 0 300 50" className="w-full h-16 bg-slate-900 rounded-b-lg border border-t-0 border-slate-800">
-                {bars.map((b,i)=>{
-                    const x=i*(300/bars.length)+5;
-                    const h=50-(b.v/maxV)*42;
-                    const isAnom=b.v>2;
-                    return <g key={i}>
-                        <rect x={x} y={h} width="18" height={50-h} fill={isAnom?'#f59e0b':b.bull?'#22c55e20':'#ef444420'} stroke={isAnom?'#f59e0b':b.bull?'#22c55e':'#ef4444'} strokeWidth="0.5"/>
-                        {isAnom && <text x={x-2} y={h-3} fill="#f59e0b" fontSize="6">📊</text>}
-                    </g>;
-                })}
-                {bars.map((b,i)=><text key={i} x={i*(300/bars.length)+6} y={49} fill="#64748b" fontSize="5">{b.m}</text>)}
-                <text x="5" y="10" fill="#64748b" fontSize="7">Volumen (relativo al ADV)</text>
-            </svg>
-            <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-                <div className="bg-emerald-900/20 border border-emerald-500/20 p-2 rounded-lg">
-                    <p className="text-emerald-400 font-bold">✅ Ruptura válida</p>
-                    <p className="text-[10px] text-slate-400">Jun: precio $195 + volumen 2.1x ADV tras WWDC</p>
-                </div>
-                <div className="bg-amber-900/20 border border-amber-500/20 p-2 rounded-lg">
-                    <p className="text-amber-400 font-bold">⚠️ Bull Trap</p>
-                    <p className="text-[10px] text-slate-400">Jul $198: rompe máximo pero volumen cae</p>
-                </div>
-                <div className="bg-red-900/20 border border-red-500/20 p-2 rounded-lg">
-                    <p className="text-red-400 font-bold">🟢 Volumen Institucional</p>
-                    <p className="text-[10px] text-slate-400">Ago: iPhone 16 launch → 3.2x ADV alcista</p>
-                </div>
-            </div>
-            <div className="mt-2 bg-slate-800 p-2 rounded-lg">
-                <p className="text-[10px] text-slate-300"><strong className="text-amber-400">💡 Regla Jesse Livermore:</strong> "El volumen es la huella de los grandes jugadores." Un rally sin volumen es una invitación a una trampa. Siempre compara el volumen del día con el ADV de 20 sesiones.</p>
-            </div>
-        </div>
-    );
-};
+            {/* Visual SVG de los niveles de Fibonacci */}
+            <div className="relative bg-slate-950 rounded-xl p-3 border border-slate-800 mb-4 overflow-hidden">
+                <svg viewBox="0 0 320 180" className="w-full h-52">
+                    {levels.map((lvl, idx) => {
+                        const y = 20 + idx * 23;
+                        const isGolden = lvl.pct === 0.618;
+                        return (
+                            <g key={idx}>
+                                {isGolden && (
+                                    <rect x="0" y={y - 8} width="320" height="16" fill="#10b981" opacity="0.15" />
+                                )}
+                                <line 
+                                    x1="10" y1={y} x2="310" y2={y} 
+                                    stroke={lvl.color} 
+                                    strokeWidth={isGolden ? "2" : "1"} 
+                                    strokeDasharray={isGolden ? "none" : "4,2"} 
+                                />
+                                <text x="15" y={y - 3} fill={lvl.color} fontSize="8" fontWeight="bold">
+                                    {lvl.label}
+                                </text>
+                                <text x="260" y={y - 3} fill="#f8fafc" fontSize="8" fontWeight="bold" textAnchor="end">
+                                    ${lvl.price.toFixed(2)} USD
+                                </text>
+                            </g>
+                        );
+                    })}
 
-// ── 3. RISK/REWARD BIMBO ────────────────────────────
-const RiskRewardBimbo = () => {
-    const entrada=168, stop=158, tp=195, riesgo=entrada-stop, beneficio=tp-entrada, ratio=(beneficio/riesgo);
-    const winRate=Math.round(1/(1+ratio)*100);
-    return (
-        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
-            <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-white uppercase tracking-widest">Caso Real: Apple AAPL — Riesgo:Beneficio</h4>
-                <div className="bg-emerald-900/20 border border-emerald-500/30 px-2 py-1 rounded-full">
-                    <span className="text-emerald-400 text-xs font-black">R:B = 1:{ratio.toFixed(2)}</span>
-                </div>
-            </div>
-            {/* Chart con zonas */}
-            <svg viewBox="0 0 300 140" className="w-full h-48 bg-slate-950 rounded-lg border border-slate-800 mb-3">
-                {/* Fondo zonas */}
-                <rect x="0" y="0" width="300" height="45" fill="#22c55e11"/>
-                <rect x="0" y="45" width="300" height="45" fill="#64748b11"/>
-                <rect x="0" y="90" width="300" height="50" fill="#ef444411"/>
-                {/* Líneas clave */}
-                <line x1="0" y1="10" x2="300" y2="10" stroke="#22c55e" strokeWidth="1.5" strokeDasharray="5,3"/>
-                <text x="5" y="8" fill="#22c55e" fontSize="8" fontWeight="bold">🎯 TAKE PROFIT: ${tp} USD</text>
-                <line x1="0" y1="72" x2="300" y2="72" stroke="#3b82f6" strokeWidth="2"/>
-                <text x="5" y="70" fill="#3b82f6" fontSize="8" fontWeight="bold">📍 ENTRADA: ${entrada} USD</text>
-                <line x1="0" y1="120" x2="300" y2="120" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5,3"/>
-                <text x="5" y="118" fill="#ef4444" fontSize="8" fontWeight="bold">🛑 STOP LOSS: ${stop} USD</text>
-                {/* Flecha beneficio */}
-                <line x1="270" y1="72" x2="270" y2="10" stroke="#22c55e" strokeWidth="2"/>
-                <polygon points="270,5 266,14 274,14" fill="#22c55e"/>
-                <text x="200" y="45" fill="#22c55e" fontSize="8">+${beneficio.toFixed(1)} USD</text>
-                {/* Flecha riesgo */}
-                <line x1="270" y1="72" x2="270" y2="120" stroke="#ef4444" strokeWidth="2"/>
-                <polygon points="270,125 266,116 274,116" fill="#ef4444"/>
-                <text x="200" y="100" fill="#ef4444" fontSize="8">-${riesgo.toFixed(1)} USD</text>
-                {/* Candlestick simulado */}
-                <line x1="70" y1="30" x2="70" y2="130" stroke="#64748b" strokeWidth="0.5"/>
-                <rect x="65" y="60" width="10" height="25" fill="#ef4444"/>
-                <line x1="90" y1="40" x2="90" y2="125" stroke="#64748b" strokeWidth="0.5"/>
-                <rect x="85" y="65" width="10" height="20" fill="#ef4444"/>
-                {/* Doble fondo */}
-                <circle cx="130" cy="85" r="4" fill="#22c55e"/>
-                <circle cx="160" cy="83" r="4" fill="#22c55e"/>
-                <text x="122" y="100" fill="#22c55e" fontSize="7">Doble Fondo</text>
-                {/* Entry candle */}
-                <rect x="185" y="60" width="12" height="20" fill="#22c55e"/>
-                <text x="180" y="57" fill="#22c55e" fontSize="7">Entrada</text>
-            </svg>
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                {[
-                    {l:'Entrada',v:`$${entrada}`,c:'text-blue-400'},
-                    {l:'Stop Loss',v:`$${stop}`,c:'text-red-400'},
-                    {l:'Take Profit',v:`$${tp}`,c:'text-emerald-400'},
-                    {l:'Ratio R:B',v:`1:${ratio.toFixed(2)}`,c:'text-amber-400'},
-                    {l:'Riesgo por op.',v:`$${riesgo.toFixed(1)} USD`,c:'text-red-400'},
-                    {l:'Beneficio potencial',v:`$${beneficio.toFixed(1)} USD`,c:'text-emerald-400'},
-                    {l:'WinRate mínimo',v:`${winRate}% para positivo`,c:'text-white'},
-                    {l:'Potencial retorno',v:`+${((beneficio/entrada)*100).toFixed(1)}%`,c:'text-emerald-400'},
-                ].map((s,i)=>(
-                    <div key={i} className="bg-slate-800 p-2 rounded-lg">
-                        <p className="text-[9px] text-slate-500 uppercase">{s.l}</p>
-                        <p className={`text-sm font-bold ${s.c}`}>{s.v}</p>
-                    </div>
-                ))}
-            </div>
-            <div className="mt-3 bg-blue-900/20 border border-blue-500/30 p-2 rounded-lg">
-                <p className="text-[10px] text-blue-200"><strong className="text-blue-400">📖 Paul Tudor Jones:</strong> "The secret to being successful in trading is to have an insatiable and an undying and unquenchable thirst for information and knowledge." — Pero también: Si el riesgo:beneficio no es mínimo 1:2, la operación no se hace.</p>
-            </div>
-        </div>
-    );
-};
-
-// ── 4. MULTI-TIMEFRAME ──────────────────────────────
-const MultiTimeframe = () => {
-    const [activeFrame, setActiveFrame] = useState<'weekly'|'daily'|'h4'>('weekly');
-    const frames = {
-        weekly: {
-            label:'SEMANAL (Contexto Macro)',color:'#f59e0b',
-            trend:'Bajista → Fase Weinstein 4 (Declive)',
-            signal:'❌ NO COMPRAR — La estructura mayor dice BAJISTA',
-            desc:'En el Weekly, AAPL hizo LH→LL desde finales 2023 a inicios 2024, cayendo de $200 a $165. Esto define el sesgo macro: vendedor. Cualquier rebote en temporalidades menores es ruido.',
-            weinstein:'Stage 4: Declive — El precio AAPL está por debajo de la SMA 30 semanal. Regla Weinstein: no operar largos hasta confirmar Stage 1.',
-        },
-        daily: {
-            label:'DIARIO (Tendencia)',color:'#3b82f6',
-            trend:'Estructura: Consolidación + señal de reversión alcista',
-            signal:'⚠️ VIGILAR — Doble fondo $165 AAPL, esperar BOS alcista sobre $178',
-            desc:'En el Daily, AAPL formó un doble fondo en $165-167 (Abr 2024). El RSI(14) mostró divergencia alcista con el precio. Aún no hay BOS alcista confirmado, pero el setup está en formación.',
-            weinstein:'Stage 1: Acumulación — Base formándose en $165. Volumen decrece. Riesgo de trampa alcista si no supera $178 con volumen > 1.5x ADV.',
-        },
-        h4: {
-            label:'4 HORAS (Timing de Entrada)',color:'#22c55e',
-            trend:'Alcista de corto plazo dentro de estructura de recuperación',
-            signal:'✅ ENTRADA — Daily confirmó BOS sobre $178, H4 muestra HL crecientes',
-            desc:'En H4, AAPL muestra estructura de mínimos crecientes desde el soporte $165. El cruce EMA 9/21 fue alcista. Este es el marco para calcular el Stop Loss preciso ($158) y la entrada escalonada.',
-            weinstein:'Timing AAPL: Entrada en H4 después de pullback a EMA 21 (~$168). Stop: bajo el último HL $158. Target: resistencia diaria $195 (distrib. previa).',
-        }
-    };
-    const f=frames[activeFrame];
-    return (
-        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 overflow-hidden">
-            <div className="flex border-b border-slate-700">
-                {Object.entries(frames).map(([k,v])=>(
-                    <button key={k} onClick={()=>setActiveFrame(k as any)}
-                        className={`flex-1 py-2.5 text-xs font-bold transition-all ${activeFrame===k?'border-b-2 text-white bg-slate-800':'text-slate-500 hover:text-slate-300'}`}
-                        style={activeFrame===k?{borderColor:v.color}:{}}>{v.label}</button>
-                ))}
-            </div>
-            <div className="p-4">
-                <div className="flex gap-2 items-center mb-3">
-                    <div className="w-3 h-3 rounded-full" style={{background:f.color}}/>
-                    <span className="text-xs font-bold text-white">{f.trend}</span>
-                </div>
-                {/* Chart representativo */}
-                <svg viewBox="0 0 300 90" className="w-full h-28 bg-slate-950 rounded-lg border border-slate-800 mb-3">
-                    {activeFrame==='weekly' && <>
-                        <path d="M10,20 L50,15 L90,25 L130,40 L170,35 L210,55 L250,65 L290,75" fill="none" stroke="#f59e0b" strokeWidth="2"/>
-                        <text x="10" y="88" fill="#64748b" fontSize="7">Weekly AAPL — Estructura Bajista (LH/LL) — Caída $200→$165</text>
-                        <text x="200" y="30" fill="#ef4444" fontSize="8">LH ↓</text>
-                        <text x="240" y="58" fill="#ef4444" fontSize="8">LL ↓</text>
-                        <line x1="0" y1="20" x2="300" y2="20" stroke="#ef444440" strokeWidth="1" strokeDasharray="3,2"/>
-                    </>}
-                    {activeFrame==='daily' && <>
-                        <path d="M10,60 L50,40 L90,70 L130,80 L150,75 L170,72 L210,65 L260,55 L290,50" fill="none" stroke="#3b82f6" strokeWidth="2"/>
-                        <line x1="130" y1="0" x2="130" y2="90" stroke="#22c55e40" strokeWidth="1" strokeDasharray="3,2"/>
-                        <text x="10" y="88" fill="#64748b" fontSize="7">Daily AAPL — Doble fondo $165 + divergencia RSI alcista</text>
-                        <circle cx="130" cy="80" r="4" fill="#22c55e"/>
-                        <circle cx="155" cy="74" r="4" fill="#22c55e"/>
-                        <text x="125" y="88" fill="#22c55e" fontSize="7">2F</text>
-                    </>}
-                    {activeFrame==='h4' && <>
-                        <path d="M10,70 L40,65 L70,55 L100,60 L130,48 L160,42 L190,35 L220,30 L260,22 L290,18" fill="none" stroke="#22c55e" strokeWidth="2"/>
-                        <line x1="0" y1="57" x2="300" y2="57" stroke="#3b82f630" strokeWidth="1" strokeDasharray="3,2"/>
-                        <text x="10" y="88" fill="#64748b" fontSize="7">H4 AAPL — Mínimos Crecientes (HL) → Recuperación alcista</text>
-                        <text x="220" y="18" fill="#22c55e" fontSize="8">BOS ↑</text>
-                    </>}
-                    <text x="5" y="10" fill="#475569" fontSize="6">AAPL / NASDAQ / TradingView</text>
-                </svg>
-                {/* TradingView embed — NASDAQ:AAPL */}
-                <div className="bg-slate-800 rounded-lg border border-slate-700 overflow-hidden mb-3">
-                    <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-700 bg-slate-900">
-                        <div className="w-2 h-2 rounded-full bg-emerald-400"/>
-                        <span className="text-[10px] text-slate-400 font-mono">TradingView — NASDAQ:AAPL</span>
-                        <span className="text-[10px] text-slate-500 ml-1">·</span>
-                        <span className="text-[10px] text-slate-500">{activeFrame==='weekly'?'1W':activeFrame==='daily'?'1D':'4H'}</span>
-                        <a href={`https://www.tradingview.com/chart/?symbol=NASDAQ%3AAAPL&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}`}
-                            target="_blank" rel="noopener noreferrer"
-                            className="ml-auto text-[10px] text-blue-400 hover:text-blue-300 underline">
-                            Abrir en TradingView ↗
-                        </a>
-                    </div>
-                    <iframe
-                        key={activeFrame}
-                        src={`https://s.tradingview.com/widgetembed/?symbol=NASDAQ%3AAAPL&interval=${activeFrame==='weekly'?'W':activeFrame==='daily'?'D':'240'}&theme=dark&style=1&locale=es&toolbar_bg=%230f172a&hide_top_toolbar=0&hide_legend=0&saveimage=0&watchlist=0&width=100%25&height=280`}
-                        style={{width:'100%',height:'280px',border:'none'}}
-                        title="AAPL TradingView"
-                        loading="lazy"
+                    {/* Línea simulada del precio haciendo pullback al 61.8% */}
+                    <path 
+                        d="M 25 160 L 90 20 L 160 112 L 240 70 L 300 30" 
+                        fill="none" 
+                        stroke="#f8fafc" 
+                        strokeWidth="2.5" 
                     />
-                </div>
-
-                <div className={`p-2 rounded-lg border text-xs ${f.color==='#f59e0b'?'bg-amber-900/20 border-amber-500/30 text-amber-200':f.color==='#3b82f6'?'bg-blue-900/20 border-blue-500/30 text-blue-200':'bg-emerald-900/20 border-emerald-500/30 text-emerald-200'}`}>
-                    <p className="font-bold mb-1">{f.signal}</p>
-                    <p className="text-[10px] opacity-80">{f.desc}</p>
-                    <p className="text-[10px] opacity-70 mt-1">📖 Weinstein: <em>{f.weinstein}</em></p>
-                </div>
+                    <circle cx="160" cy="112" r="5" fill="#10b981" className="animate-pulse" />
+                    <text x="165" y="128" fill="#10b981" fontSize="8" fontWeight="bold">Rebote en 61.8%</text>
+                </svg>
             </div>
-            <div className="px-4 pb-4">
-                <div className="bg-slate-800 p-3 rounded-lg">
-                    <p className="text-[10px] text-slate-400"><strong className="text-white">📚 Bibliografía:</strong> Stan Weinstein — "Secrets for Profiting in Bull and Bear Markets" (1988) · Mark Douglas — "Trading in the Zone" (2000) · Al Brooks — "Reading Price Charts Bar by Bar" · ICT (Inner Circle Trader) — Multi-Timeframe Analysis methodology</p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                    <p className="text-[10px] text-slate-400">Swing High (Máximo)</p>
+                    <p className="text-sm font-bold text-white">${swingHigh.toFixed(2)} USD</p>
+                </div>
+                <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                    <p className="text-[10px] text-slate-400">Swing Low (Mínimo)</p>
+                    <p className="text-sm font-bold text-white">${swingLow.toFixed(2)} USD</p>
+                </div>
+                <div className="bg-emerald-950/40 p-2.5 rounded-lg border border-emerald-500/40">
+                    <p className="text-[10px] text-emerald-300 font-semibold">61.8% (Golden Zone)</p>
+                    <p className="text-sm font-bold text-emerald-400">${(swingHigh - diff * 0.618).toFixed(2)} USD</p>
+                </div>
+                <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                    <p className="text-[10px] text-slate-400">Extensión 161.8% (TP)</p>
+                    <p className="text-sm font-bold text-violet-400">${(swingHigh + diff * 0.618).toFixed(2)} USD</p>
                 </div>
             </div>
         </div>
     );
 };
 
-const CandlestickAnatomy = () => (
+// ── 2. TRADING JOURNAL & BACKTESTING SIMULATOR ──────
+const TradingJournalTool = () => {
+    const [trades, setTrades] = useState([
+        { id: 1, ticker: 'AAPL', r: 2.7, win: true, note: 'Rebote en 61.8% con volumen WWDC' },
+        { id: 2, ticker: 'NVDA', r: -1.0, win: false, note: 'Stop loss ejecutado en corrección 4H' },
+        { id: 3, ticker: 'BIMBOA', r: 2.4, win: true, note: 'Entrada en soporte de reporte trimestral' },
+        { id: 4, ticker: 'TSLA', r: -1.0, win: false, note: 'Falso breakout sin volumen institucional' },
+        { id: 5, ticker: 'MSFT', r: 3.0, win: true, note: 'Pullback a la media móvil de 50 días' }
+    ]);
 
-    <div className="flex flex-col md:flex-row items-center justify-center gap-12 mt-8 animate-fade-in">
-        {/* Vela Verde (Bullish) */}
+    const totalR = trades.reduce((acc, t) => acc + t.r, 0);
+    const wins = trades.filter(t => t.win).length;
+    const winRate = ((wins / trades.length) * 100).toFixed(1);
+
+    return (
+        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <FileSpreadsheet size={16} className="text-violet-400" />
+                        Simulador de Trading Journal & Expectativa Matemática
+                    </h4>
+                    <p className="text-[11px] text-slate-400">Auditoría estadística de ventaja en múltiplos 'R'</p>
+                </div>
+                <button
+                    onClick={downloadTradingJournalTemplate}
+                    className="px-3.5 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all shadow-md active:scale-95"
+                >
+                    <Download size={14} />
+                    Descargar Plantilla Excel (.csv)
+                </button>
+            </div>
+
+            {/* Métricas del Sistema */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+                <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center">
+                    <p className="text-[10px] text-slate-400">Total Operaciones</p>
+                    <p className="text-lg font-bold text-white">{trades.length}</p>
+                </div>
+                <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center">
+                    <p className="text-[10px] text-slate-400">Tasa de Acierto (Win Rate)</p>
+                    <p className="text-lg font-bold text-blue-400">{winRate}%</p>
+                </div>
+                <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center">
+                    <p className="text-[10px] text-slate-400">Ganancia Acumulada</p>
+                    <p className="text-lg font-bold text-emerald-400">+{totalR.toFixed(1)} R</p>
+                </div>
+                <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center">
+                    <p className="text-[10px] text-slate-400">Expectativa por Trade</p>
+                    <p className="text-lg font-bold text-amber-400">+{(totalR / trades.length).toFixed(2)} R</p>
+                </div>
+            </div>
+
+            {/* Tabla resumida de operaciones */}
+            <div className="overflow-x-auto bg-slate-950 rounded-lg border border-slate-800">
+                <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-800 text-slate-400 uppercase text-[9px] border-b border-slate-700">
+                        <tr>
+                            <th className="p-2.5">Trade</th>
+                            <th className="p-2.5">Ticker</th>
+                            <th className="p-2.5">Resultado</th>
+                            <th className="p-2.5">Múltiplo R</th>
+                            <th className="p-2.5">Observación Técnica</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800 text-slate-300">
+                        {trades.map(t => (
+                            <tr key={t.id} className="hover:bg-slate-800/40">
+                                <td className="p-2.5 font-mono text-slate-500">#{t.id}</td>
+                                <td className="p-2.5 font-bold text-white">{t.ticker}</td>
+                                <td className="p-2.5">
+                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${t.win ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-red-950 text-red-400 border border-red-800'}`}>
+                                        {t.win ? 'GANADOR' : 'STOP LOSS'}
+                                    </span>
+                                </td>
+                                <td className={`p-2.5 font-bold ${t.win ? 'text-emerald-400' : 'text-red-400'}`}>
+                                    {t.r > 0 ? `+${t.r.toFixed(1)}R` : `${t.r.toFixed(1)}R`}
+                                </td>
+                                <td className="p-2.5 text-slate-400 text-[11px]">{t.note}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+};
+
+// ── 3. CANDLESTICK ANATOMY ─────────────────────────
+const CandlestickAnatomy = () => (
+    <div className="flex flex-col md:flex-row items-center justify-center gap-12 mt-6 animate-fade-in">
         <div className="relative group">
             <div className="flex flex-col items-center">
-                <span className="text-[10px] text-slate-400 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">Máximo (High)</span>
-                <div className="w-0.5 h-8 bg-slate-400"></div> {/* Mecha Superior */}
-                <div className="w-16 h-24 bg-green-500 rounded-sm relative flex items-center justify-center shadow-[0_0_15px_rgba(34,197,94,0.3)]">
-                    <span className="text-green-900 font-bold text-xs rotate-[-90deg]">Cuerpo</span>
-                    {/* Precios */}
-                    <div className="absolute -left-12 bottom-0 text-[10px] text-green-400">Apertura</div>
-                    <div className="absolute -left-12 top-0 text-[10px] text-green-400">Cierre</div>
+                <span className="text-[10px] text-slate-400 mb-1">Máximo (High)</span>
+                <div className="w-0.5 h-8 bg-emerald-400"></div>
+                <div className="w-16 h-24 bg-emerald-500 rounded-sm relative flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                    <span className="text-emerald-950 font-bold text-xs rotate-[-90deg]">Cuerpo</span>
+                    <div className="absolute -left-14 bottom-0 text-[10px] text-emerald-400 font-bold">Apertura</div>
+                    <div className="absolute -left-14 top-0 text-[10px] text-emerald-400 font-bold">Cierre</div>
                 </div>
-                <div className="w-0.5 h-8 bg-slate-400"></div> {/* Mecha Inferior */}
-                <span className="text-[10px] text-slate-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Mínimo (Low)</span>
+                <div className="w-0.5 h-8 bg-emerald-400"></div>
+                <span className="text-[10px] text-slate-400 mt-1">Mínimo (Low)</span>
             </div>
-            <p className="text-center text-green-400 font-bold mt-4">Vela Alcista (Bullish)</p>
-            <p className="text-center text-[10px] text-slate-500">Los compradores ganaron</p>
+            <p className="text-center text-emerald-400 font-bold mt-4">Vela Alcista (Bullish)</p>
+            <p className="text-center text-[10px] text-slate-500">Cierre {'>'} Apertura (Control Toro)</p>
         </div>
 
-        {/* Vela Roja (Bearish) */}
         <div className="relative group">
             <div className="flex flex-col items-center">
-                <span className="text-[10px] text-slate-400 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">Máximo (High)</span>
-                <div className="w-0.5 h-8 bg-slate-400"></div> {/* Mecha Superior */}
-                <div className="w-16 h-24 bg-red-500 rounded-sm relative flex items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.3)]">
-                    <span className="text-red-900 font-bold text-xs rotate-[-90deg]">Cuerpo</span>
-                    {/* Precios */}
-                    <div className="absolute -right-12 top-0 text-[10px] text-red-400">Apertura</div>
-                    <div className="absolute -right-12 bottom-0 text-[10px] text-red-400">Cierre</div>
+                <span className="text-[10px] text-slate-400 mb-1">Máximo (High)</span>
+                <div className="w-0.5 h-8 bg-rose-400"></div>
+                <div className="w-16 h-24 bg-rose-500 rounded-sm relative flex items-center justify-center shadow-[0_0_20px_rgba(244,63,94,0.3)]">
+                    <span className="text-rose-950 font-bold text-xs rotate-[-90deg]">Cuerpo</span>
+                    <div className="absolute -right-14 top-0 text-[10px] text-rose-400 font-bold">Apertura</div>
+                    <div className="absolute -right-14 bottom-0 text-[10px] text-rose-400 font-bold">Cierre</div>
                 </div>
-                <div className="w-0.5 h-8 bg-slate-400"></div> {/* Mecha Inferior */}
-                <span className="text-[10px] text-slate-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Mínimo (Low)</span>
+                <div className="w-0.5 h-8 bg-rose-400"></div>
+                <span className="text-[10px] text-slate-400 mt-1">Mínimo (Low)</span>
             </div>
-            <p className="text-center text-red-400 font-bold mt-4">Vela Bajista (Bearish)</p>
-            <p className="text-center text-[10px] text-slate-500">Los vendedores ganaron</p>
+            <p className="text-center text-rose-400 font-bold mt-4">Vela Bajista (Bearish)</p>
+            <p className="text-center text-[10px] text-slate-500">Cierre {'<'} Apertura (Control Oso)</p>
         </div>
     </div>
 );
 
+// ── 4. SUPPORT & RESISTANCE ────────────────────────
 const SupportResistance = () => (
     <div className="relative h-64 w-full bg-slate-900/50 rounded-xl border border-slate-700 mt-6 overflow-hidden">
-        {/* Grid */}
-        <div className="absolute inset-0 grid grid-cols-6 grid-rows-4 opacity-10">
-            {[...Array(24)].map((_, i) => <div key={i} className="border border-slate-500"></div>)}
-        </div>
-
-        {/* Resistencia */}
         <div className="absolute top-8 left-0 w-full h-8 bg-red-500/10 border-y border-red-500/30 flex items-center justify-center">
-            <span className="text-red-400 text-xs font-bold tracking-widest">ZONA DE RESISTENCIA (TECHO)</span>
+            <span className="text-red-400 text-xs font-bold tracking-widest">ZONA DE RESISTENCIA (OFERTA)</span>
         </div>
-
-        {/* Soporte */}
-        <div className="absolute bottom-8 left-0 w-full h-8 bg-green-500/10 border-y border-green-500/30 flex items-center justify-center">
-            <span className="text-green-400 text-xs font-bold tracking-widest">ZONA DE SOPORTE (PISO)</span>
+        <div className="absolute bottom-8 left-0 w-full h-8 bg-emerald-500/10 border-y border-emerald-500/30 flex items-center justify-center">
+            <span className="text-emerald-400 text-xs font-bold tracking-widest">ZONA DE SOPORTE (DEMANDA)</span>
         </div>
-
-        {/* Price Line */}
         <svg className="absolute inset-0 w-full h-full p-4" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path
-                d="M0,80 L20,30 L40,75 L60,25 L80,80 L100,50"
-                fill="none"
-                stroke="#8B5CF6"
-                strokeWidth="2"
-                vectorEffect="non-scaling-stroke"
-                className="drop-shadow-[0_0_5px_rgba(139,92,246,0.5)]"
-            />
-            {/* Bounce Points */}
-            <circle cx="20" cy="30" r="1.5" fill="#EF4444" className="animate-ping" />
-            <circle cx="60" cy="25" r="1.5" fill="#EF4444" className="animate-ping" style={{ animationDelay: '0.5s' }} />
-            <circle cx="40" cy="75" r="1.5" fill="#22C55E" className="animate-ping" style={{ animationDelay: '1s' }} />
-            <circle cx="80" cy="80" r="1.5" fill="#22C55E" className="animate-ping" style={{ animationDelay: '1.5s' }} />
+            <path d="M0,80 L20,30 L40,75 L60,25 L80,80 L100,50" fill="none" stroke="#8B5CF6" strokeWidth="2.5" />
+            <circle cx="20" cy="30" r="2" fill="#EF4444" className="animate-ping" />
+            <circle cx="60" cy="25" r="2" fill="#EF4444" className="animate-ping" style={{ animationDelay: '0.5s' }} />
+            <circle cx="40" cy="75" r="2" fill="#10B981" className="animate-ping" style={{ animationDelay: '1s' }} />
+            <circle cx="80" cy="80" r="2" fill="#10B981" className="animate-ping" style={{ animationDelay: '1.5s' }} />
         </svg>
-
-        <div className="absolute top-2 right-2 text-[9px] text-slate-500">El precio rebota en las zonas clave</div>
+        <div className="absolute top-2 right-2 text-[10px] text-slate-400 font-medium">Rebotes de memoria técnica</div>
     </div>
 );
 
-const TrendStructure = () => (
-    <div className="relative h-64 w-full bg-slate-900/50 rounded-xl border border-slate-700 mt-6 p-4">
-        <h4 className="text-center text-teal-400 font-bold mb-2">Estructura Alcista (Uptrend)</h4>
+// ── 5. MARKET STRUCTURE HH/LL/BOS ──────────────────
+const MarketStructureHHLL = () => {
+    const [phase, setPhase] = useState<'alcista' | 'bajista'>('alcista');
+    const pts = phase === 'alcista'
+        ? [{ x: 20, y: 110 }, { x: 60, y: 70 }, { x: 100, y: 90 }, { x: 150, y: 45 }, { x: 190, y: 65 }, { x: 240, y: 25 }, { x: 280, y: 45 }]
+        : [{ x: 20, y: 30 }, { x: 60, y: 75 }, { x: 100, y: 55 }, { x: 150, y: 100 }, { x: 190, y: 80 }, { x: 240, y: 125 }, { x: 280, y: 105 }];
 
-        <svg className="w-full h-full" viewBox="0 0 300 150">
-            {/* Trend Line */}
-            <line x1="20" y1="130" x2="280" y2="30" stroke="#14B8A6" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
-
-            {/* Price Action */}
-            <path d="M 20 130 L 60 90 L 90 110 L 140 60 L 170 80 L 230 20" fill="none" stroke="white" strokeWidth="2" />
-
-            {/* Labels */}
-            <text x="60" y="85" fill="#F59E0B" fontSize="10" textAnchor="middle" fontWeight="bold">HH</text>
-            <text x="140" y="55" fill="#F59E0B" fontSize="10" textAnchor="middle" fontWeight="bold">HH</text>
-            <text x="230" y="15" fill="#F59E0B" fontSize="10" textAnchor="middle" fontWeight="bold">HH</text>
-
-            <text x="90" y="125" fill="#8B5CF6" fontSize="10" textAnchor="middle" fontWeight="bold">HL</text>
-            <text x="170" y="95" fill="#8B5CF6" fontSize="10" textAnchor="middle" fontWeight="bold">HL</text>
-        </svg>
-
-        <div className="flex justify-center gap-4 text-[10px] mt-2">
-            <span className="text-amber-400 font-bold">HH: Alto más Alto</span>
-            <span className="text-violet-400 font-bold">HL: Bajo más Alto</span>
-        </div>
-    </div>
-);
-
-const IndicatorsDashboard = () => (
-    <div className="mt-6 space-y-4">
-        {/* RSI Visual */}
-        <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
-            <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-bold text-white">RSI (Fuerza Relativa)</span>
-                <span className="text-[10px] bg-slate-700 px-2 py-1 rounded text-purple-300">Valor Actual: 82</span>
-            </div>
-            <div className="relative h-12 bg-slate-900 rounded-lg overflow-hidden flex items-center px-2">
-                {/* Zones */}
-                <div className="absolute top-0 left-0 h-full w-[30%] bg-green-500/10 border-r border-green-500/30 flex items-center justify-center">
-                    <span className="text-[8px] text-green-500/50 rotate-90 md:rotate-0">Sobreventa</span>
-                </div>
-                <div className="absolute top-0 right-0 h-full w-[30%] bg-red-500/10 border-l border-red-500/30 flex items-center justify-center">
-                    <span className="text-[8px] text-red-500/50 rotate-90 md:rotate-0">Sobrecompra</span>
-                </div>
-                {/* Indicator Point */}
-                <div className="absolute top-1/2 left-[82%] w-3 h-3 bg-red-500 rounded-full border-2 border-white shadow-[0_0_10px_rgba(239,68,68,0.8)] transform -translate-y-1/2 animate-pulse"></div>
-            </div>
-            <p className="text-[10px] text-red-400 mt-2 text-center font-bold">¡ALERTA! RSI en 82 = Sobrecompra Extrema. Posible caída.</p>
-        </div>
-
-        {/* Moving Average Visual */}
-        <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
-            <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-bold text-white">Medias Móviles (SMA)</span>
-            </div>
-            <div className="h-24 w-full bg-slate-900 rounded-lg relative overflow-hidden">
-                <svg viewBox="0 0 100 50" className="w-full h-full">
-                    {/* Slow MA */}
-                    <path d="M0,40 Q50,35 100,20" fill="none" stroke="#3B82F6" strokeWidth="2" strokeDasharray="2,1" />
-                    {/* Fast MA */}
-                    <path d="M0,45 Q40,40 60,28 T100,5" fill="none" stroke="#F59E0B" strokeWidth="2" />
-                    {/* Cross */}
-                    <circle cx="75" cy="24" r="3" fill="#F59E0B" className="animate-ping" style={{ animationDuration: '3s' }} />
-                </svg>
-                <div className="absolute bottom-2 left-2 flex gap-2 text-[9px]">
-                    <span className="text-blue-400">--- SMA 200 (Lenta)</span>
-                    <span className="text-amber-400">___ SMA 50 (Rápida)</span>
-                </div>
-                <div className="absolute top-2 right-2 text-[9px] bg-amber-900/30 text-amber-200 px-2 rounded border border-amber-500/30">
-                    Cruce Dorado Detectado
+    return (
+        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+            <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider">Estructura de Mercado (BOS / CHoCH)</h4>
+                <div className="flex gap-1.5">
+                    <button 
+                        onClick={() => setPhase('alcista')} 
+                        className={`px-3 py-1 text-xs font-bold rounded-full transition-all ${phase === 'alcista' ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-400'}`}
+                    >
+                        📈 Alcista (HH/HL)
+                    </button>
+                    <button 
+                        onClick={() => setPhase('bajista')} 
+                        className={`px-3 py-1 text-xs font-bold rounded-full transition-all ${phase === 'bajista' ? 'bg-rose-600 text-white' : 'bg-slate-800 text-slate-400'}`}
+                    >
+                        📉 Bajista (LH/LL)
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
-);
-
-const RiskCalculator = () => (
-    <div className="bg-slate-800 p-6 rounded-xl border-l-4 border-violet-500 mt-6 shadow-xl">
-        <h4 className="font-bold text-white text-center mb-4 text-sm uppercase tracking-widest">Calculadora de Riesgo Mental</h4>
-
-        <div className="flex items-center justify-between gap-4 mb-6">
-            <div className="text-center bg-red-900/20 p-3 rounded-lg border border-red-500/30 flex-1">
-                <ShieldAlert className="text-red-500 mx-auto mb-1" size={20} />
-                <p className="text-[10px] text-slate-400">Riesgo (1 R)</p>
-                <p className="text-xl font-bold text-red-400">-$100</p>
-            </div>
-            <div className="text-slate-500 font-bold">VS</div>
-            <div className="text-center bg-green-900/20 p-3 rounded-lg border border-green-500/30 flex-1">
-                <Target className="text-green-500 mx-auto mb-1" size={20} />
-                <p className="text-[10px] text-slate-400">Beneficio (3 R)</p>
-                <p className="text-xl font-bold text-green-400">+$300</p>
+            <svg viewBox="0 0 300 130" className="w-full h-44 bg-slate-950 rounded-lg border border-slate-800">
+                <polyline 
+                    points={pts.map(p => `${p.x},${p.y}`).join(' ')} 
+                    fill="none" 
+                    stroke={phase === 'alcista' ? '#10b981' : '#f43f5e'} 
+                    strokeWidth="2.5" 
+                />
+                {pts.map((p, i) => (
+                    <circle key={i} cx={p.x} cy={p.y} r="4" fill={phase === 'alcista' ? '#10b981' : '#f43f5e'} />
+                ))}
+            </svg>
+            <div className="mt-2 text-center text-xs text-slate-400">
+                {phase === 'alcista' 
+                    ? 'BOS (Break of Structure): Cada superación del máximo anterior confirma la vigencia de la tendencia compradora.'
+                    : 'LH/LL: Vendedores empujan precios a mínimos inferiores. Comprar contra esta estructura implica altísimo riesgo.'}
             </div>
         </div>
+    );
+};
 
-        <div className="bg-slate-900 p-4 rounded-lg relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1/3 h-full bg-red-500/10"></div>
-            <div className="absolute top-0 left-1/3 w-2/3 h-full bg-green-500/10"></div>
-
-            <div className="flex justify-between relative z-10 text-[10px] text-slate-300">
-                <span>Stop Loss</span>
-                <span>Entrada</span>
-                <span>Take Profit</span>
+// ── 6. VOLUME ANALYSIS ─────────────────────────────
+const VolumeAnalysis = () => (
+    <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+        <div className="flex justify-between items-center mb-3">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Volumen Institucional vs Bull Trap</h4>
+            <span className="text-xs bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded">iPhone 16: Septiembre 2024</span>
+        </div>
+        <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="bg-emerald-950/30 border border-emerald-500/30 p-3 rounded-xl">
+                <p className="text-emerald-400 font-bold text-sm mb-1">✅ Ruptura Válida</p>
+                <p className="text-slate-300 leading-relaxed text-[11px]">
+                    Superación de resistencia acompañada de volumen superior a 2.5x el ADV diario. Confirma compras institucionales masivas.
+                </p>
             </div>
-
-            <div className="w-full h-2 bg-slate-700 rounded-full mt-2 relative">
-                <div className="absolute left-1/3 w-2/3 h-full bg-green-500 rounded-r-full"></div>
-                <div className="absolute left-0 w-1/3 h-full bg-red-500 rounded-l-full"></div>
-                <div className="absolute left-1/3 w-1 h-4 bg-white -top-1"></div>
-            </div>
-            <p className="text-center text-xs mt-3 font-bold text-violet-300">Ratio 1:3 (Excelente)</p>
-            <p className="text-center text-[9px] text-slate-500 mt-1">Solo necesitas ganar el 25% de las veces para no perder dinero.</p>
-        </div>
-    </div>
-);
-
-const TradingPsychology = () => (
-    <div className="grid grid-cols-2 gap-3 mt-6">
-        <div className="bg-purple-900/20 p-3 rounded-xl border border-purple-500/30 flex flex-col items-center text-center">
-            <Zap className="text-purple-400 mb-2" size={24} />
-            <h5 className="font-bold text-white text-xs">FOMO</h5>
-            <p className="text-[9px] text-slate-400 mt-1">"¡Todos están ganando menos yo!" &rarr; Compras caro y pierdes.</p>
-        </div>
-        <div className="bg-red-900/20 p-3 rounded-xl border border-red-500/30 flex flex-col items-center text-center">
-            <ShieldAlert className="text-red-400 mb-2" size={24} />
-            <h5 className="font-bold text-white text-xs">Miedo</h5>
-            <p className="text-[9px] text-slate-400 mt-1">"¡Va a seguir bajando!" &rarr; Vendes en el fondo y pierdes el rebote.</p>
-        </div>
-        <div className="col-span-2 bg-green-900/20 p-3 rounded-xl border border-green-500/30 flex items-center gap-4">
-            <div className="bg-green-500 rounded-full p-2"><Brain className="text-white" size={20} /></div>
-            <div className="text-left">
-                <h5 className="font-bold text-white text-xs">La Mente del Trader</h5>
-                <p className="text-[9px] text-slate-300">
-                    Acepta que no puedes predecir el futuro. Solo gestionas probabilidades. Si pierdes, no te enojes; es el costo de hacer negocios (como pagar la luz en una tienda).
+            <div className="bg-rose-950/30 border border-rose-500/30 p-3 rounded-xl">
+                <p className="text-rose-400 font-bold text-sm mb-1">⚠️ Bull Trap (Trampa)</p>
+                <p className="text-slate-300 leading-relaxed text-[11px]">
+                    El precio perfora la resistencia con volumen bajo o decreciente. Instituciones distribuyen papel antes de una caída severa.
                 </p>
             </div>
         </div>
     </div>
 );
 
-// --- COMPONENTES TRADINGVIEW STATION ---
-
-const TradingViewChart = ({ symbol = "NASDAQ:META" }) => {
-  const container = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-    script.type = "text/javascript";
-    script.async = true;
-    script.innerHTML = JSON.stringify({
-      "autosize": true,
-      "symbol": symbol,
-      "interval": "D",
-      "timezone": "Etc/UTC",
-      "theme": "dark",
-      "style": "1",
-      "locale": "es",
-      "enable_publishing": false,
-      "allow_symbol_change": true,
-      "calendar": false,
-      "support_host": "https://www.tradingview.com"
-    });
-    const currentContainer = container.current;
-    if (currentContainer) {
-        currentContainer.appendChild(script);
-    }
-    return () => {
-      if (currentContainer) currentContainer.innerHTML = '';
-    };
-  }, [symbol]);
-
-  return (
-    <div className="w-full h-[500px] rounded-xl overflow-hidden border border-slate-700 shadow-2xl relative z-10" ref={container}>
-      <div className="tradingview-widget-container__widget"></div>
-    </div>
-  );
-};
-
-const TechnicalGauge = ({ symbol = "NASDAQ:META" }) => {
-  const container = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js";
-    script.type = "text/javascript";
-    script.async = true;
-    script.innerHTML = JSON.stringify({
-      "interval": "1D",
-      "width": "100%",
-      "isTransparent": false,
-      "height": "450",
-      "symbol": symbol,
-      "showIntervalTabs": true,
-      "displayMode": "single",
-      "locale": "es",
-      "theme": "light"
-    });
-    const currentContainer = container.current;
-    if (currentContainer) {
-        currentContainer.appendChild(script);
-    }
-    return () => {
-      if (currentContainer) currentContainer.innerHTML = '';
-    };
-  }, [symbol]);
-
-  return (
-    <div className="w-full h-[450px] rounded-xl border border-slate-700 relative z-10 bg-white" ref={container}>
-      <div className="tradingview-widget-container__widget"></div>
-    </div>
-  );
-};
-
-const TradingViewStation = () => {
-  const [activeSymbol, setActiveSymbol] = useState("NASDAQ:META");
-  const [calc, setCalc] = useState({
-    capital: 10000,
-    risk: 1,
-    entry: 150,
-    sl: 145,
-    tp: 165
-  });
-
-  const [result, setResult] = useState({ shares: 0, riskCash: 0, rr: "0" });
-
-  useEffect(() => {
-    const riskAmount = calc.capital * (calc.risk / 100);
-    const riskPerShare = Math.abs(calc.entry - calc.sl);
-    const rewardPerShare = Math.abs(calc.tp - calc.entry);
-    const shares = riskPerShare > 0 ? Math.floor(riskAmount / riskPerShare) : 0;
-    const rr = riskPerShare > 0 ? (rewardPerShare / riskPerShare).toFixed(2) : "0";
-    
-    setResult({ shares, riskCash: riskAmount, rr });
-  }, [calc]);
-
-  const favorites = [
-    { name: "Meta", ticker: "NASDAQ:META" },
-    { name: "Occidental", ticker: "NYSE:OXY" },
-    { name: "Amazon", ticker: "NASDAQ:AMZN" },
-    { name: "Coca-Cola", ticker: "NYSE:KO" }
-  ];
-
-  return (
-    <div className="space-y-8 w-full z-10 relative mt-4">
-      {/* Header del Módulo */}
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
-        <div>
-          <h1 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500">
-            MÓDULO 3: ANÁLISIS TÉCNICO
-          </h1>
-          <p className="text-slate-400 mt-1">Estación de Trabajo FA Academy - Trading en Vivo</p>
+// ── 7. RISK CALCULATOR (BREAKEVEN 25%) ──────────────
+const RiskCalculator = () => (
+    <div className="bg-slate-900 p-6 rounded-xl border border-slate-700 mt-4 shadow-xl">
+        <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-white text-sm uppercase tracking-wider">Matemáticas del Ratio Riesgo:Beneficio</h4>
+            <span className="text-xs font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2.5 py-1 rounded-full">
+                Breakeven: 25.0%
+            </span>
         </div>
-        <div className="flex gap-2 flex-wrap">
-          {favorites.map(f => (
-            <button 
-              key={f.ticker}
-              onClick={() => setActiveSymbol(f.ticker)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeSymbol === f.ticker ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
-            >
-              {f.name}
-            </button>
-          ))}
-        </div>
-      </header>
 
-      <div className="grid lg:grid-cols-12 gap-6 w-full">
-        {/* Columna Izquierda: Gráfica Principal */}
-        <div className="lg:col-span-8 space-y-6">
-          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
-            <div className="flex justify-between items-center mb-4 px-2">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-sky-400">Gráfica Avanzada</h2>
-              <span className="text-xs text-slate-500 font-mono">{activeSymbol}</span>
+        <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="bg-rose-950/30 border border-rose-500/30 p-3 rounded-xl text-center">
+                <p className="text-xs text-rose-300">Riesgo en Stop Loss (1R)</p>
+                <p className="text-2xl font-bold text-rose-400">-$100 USD</p>
             </div>
-            <TradingViewChart symbol={activeSymbol} />
-          </div>
+            <div className="bg-emerald-950/30 border border-emerald-500/30 p-3 rounded-xl text-center">
+                <p className="text-xs text-emerald-300">Objetivo en Take Profit (3R)</p>
+                <p className="text-2xl font-bold text-emerald-400">+$300 USD</p>
+            </div>
+        </div>
 
-          <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800/50">
-            <h3 className="text-lg font-bold mb-4 text-white">Notas de la Lección</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Utiliza las herramientas de dibujo del lado izquierdo de la gráfica para trazar tus líneas de tendencia. 
-              Recuerda: El precio tiene memoria. Los soportes del pasado suelen ser las resistencias del futuro. Observa cómo empresas como <strong className="text-white">{favorites.find(f => f.ticker === activeSymbol)?.name}</strong> respetan estos niveles técnicos.
+        <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs space-y-2 text-slate-300">
+            <p className="font-semibold text-white">Fórmula de Punto de Equilibrio (Breakeven):</p>
+            <p className="font-mono text-emerald-400">WinRate Mínimo = 1 / (1 + Ratio) = 1 / (1 + 3) = 0.25 (25%)</p>
+            <p className="text-slate-400 text-[11px] leading-relaxed">
+                Si ejecutas 100 operaciones con ratio 1:3 y ganas únicamente 40 (40% de acierto), tu resultado es: (40 × $300) - (60 × $100) = $12,000 - $6,000 = <strong className="text-emerald-400">+$6,000 USD de ganancia neta</strong>.
             </p>
-          </div>
         </div>
-
-        {/* Columna Derecha: Herramientas Técnicas */}
-        <div className="lg:col-span-4 space-y-6">
-          
-          {/* Calculadora Profesional de Gestión de Riesgo */}
-          <div className="bg-gradient-to-b from-slate-900 to-[#0A0E17] rounded-2xl p-6 border border-slate-800 shadow-2xl relative overflow-hidden group">
-            {/* Destello de fondo decorativo */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl -z-10 group-hover:bg-sky-500/10 transition-colors duration-500"></div>
-
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-3 text-white">
-              <div className="p-2 bg-sky-500/10 rounded-lg border border-sky-500/20 shadow-[0_0_15px_rgba(14,165,233,0.15)]">
-                <svg className="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-              </div>
-              <span className="tracking-wide">Terminal de Riesgo</span>
-            </h2>
-            
-            <div className="space-y-5">
-              {/* Sección 1: Setup de Cuenta */}
-              <div className="grid grid-cols-2 gap-4 p-4 bg-[#111827]/80 rounded-xl border border-slate-800/80 shadow-inner">
-                <div>
-                  <label className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1.5 flex justify-between">
-                    Capital Base
-                    <span className="text-sky-400/80">$</span>
-                  </label>
-                  <input 
-                    type="number" 
-                    value={calc.capital}
-                    onChange={(e) => setCalc({...calc, capital: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono text-sm focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 outline-none transition-all placeholder-slate-700"
-                    placeholder="10000"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1.5 flex justify-between">
-                    Riesgo Máx.
-                    <span className="text-sky-400/80">%</span>
-                  </label>
-                  <input 
-                    type="number" 
-                    value={calc.risk}
-                    onChange={(e) => setCalc({...calc, risk: parseFloat(e.target.value) || 0})}
-                    className="w-full bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono text-sm focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 outline-none transition-all placeholder-slate-700"
-                    placeholder="1.0"
-                  />
-                </div>
-              </div>
-
-              {/* Sección 2: Parámetros del Trade */}
-              <div className="space-y-4 p-5 bg-[#111827]/80 rounded-xl border border-slate-800/80 relative shadow-inner">
-                {/* Linéas conectoras visuales */}
-                <div className="absolute left-[1.65rem] top-10 bottom-10 w-px bg-slate-800 z-0"></div>
-
-                <div className="grid grid-cols-12 gap-3 items-center relative z-10">
-                  <div className="col-span-2 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)] border-2 border-slate-900"></div></div>
-                  <div className="col-span-10">
-                    <label className="text-[10px] text-emerald-400 uppercase font-bold tracking-wider mb-1 block">Entrada ($)</label>
-                    <input 
-                      type="number" 
-                      value={calc.entry}
-                      onChange={(e) => setCalc({...calc, entry: parseFloat(e.target.value) || 0})}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-emerald-400 font-mono font-bold focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 outline-none transition-all"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-12 gap-3 items-center relative z-10">
-                  <div className="col-span-2 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.8)] border-2 border-slate-900"></div></div>
-                  <div className="col-span-10">
-                    <label className="text-[10px] text-red-500 uppercase font-bold tracking-wider mb-1 flex justify-between">
-                      Stop Loss ($)
-                    </label>
-                    <input 
-                      type="number" 
-                      value={calc.sl}
-                      onChange={(e) => setCalc({...calc, sl: parseFloat(e.target.value) || 0})}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-red-500 font-mono font-bold focus:border-red-500 focus:ring-1 focus:ring-red-500/50 outline-none transition-all"
-                    />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-12 gap-3 items-center relative z-10">
-                  <div className="col-span-2 flex justify-center"><div className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.8)] border-2 border-slate-900"></div></div>
-                  <div className="col-span-10">
-                    <label className="text-[10px] text-sky-400 uppercase font-bold tracking-wider mb-1 flex justify-between">
-                      Take Profit ($)
-                    </label>
-                    <input 
-                      type="number" 
-                      value={calc.tp}
-                      onChange={(e) => setCalc({...calc, tp: parseFloat(e.target.value) || 0})}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sky-400 font-mono font-bold focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 outline-none transition-all"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Sección 3: Resultados */}
-              <div className="bg-[#0B1120] p-5 rounded-xl border border-sky-500/30 text-center relative overflow-hidden group/result mt-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-sky-400 to-blue-600 left-0"></div>
-                <div className="absolute inset-0 bg-sky-500/5 opacity-0 group-hover/result:opacity-100 transition-opacity"></div>
-                
-                <p className="text-[11px] text-slate-400 uppercase font-bold tracking-widest mb-1 mt-1">Acciones a Comprar</p>
-                <div className="text-5xl font-black text-white my-2 tracking-tighter drop-shadow-2xl flex items-baseline justify-center gap-1.5">
-                  {result.shares} <span className="text-lg text-slate-500 font-medium tracking-normal">unds</span>
-                </div>
-                
-                <div className="flex justify-between items-center mt-5 border-t border-slate-800/80 pt-4 px-2">
-                  <div className="text-left">
-                    <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wider mb-0.5">Riesgo Monetario</p>
-                    <p className="text-base font-mono text-red-400 font-medium">${parseFloat(result.riskCash.toString()).toLocaleString()}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wider mb-0.5">Ratio Recompensa</p>
-                    <div className={`px-2 py-0.5 rounded text-xs font-mono font-bold inline-block ${parseFloat(result.rr as string) >= 2 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : parseFloat(result.rr as string) > 1 ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
-                      1 : {result.rr}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Medidor de Sentimiento */}
-          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl overflow-visible">
-            <div className="mb-4 px-2">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-sky-400">Análisis Algorítmico</h2>
-            </div>
-            <TechnicalGauge symbol={activeSymbol} />
-          </div>
-
-        </div>
-      </div>
     </div>
-  );
-};
+);
 
-const ConceptsBar = ({ concepts }: { concepts: any[] }) => {
-    const [activeConcept, setActiveConcept] = useState<number | null>(null);
-    if (!concepts || concepts.length === 0) return null;
-    return (
-        <div className="mt-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h4 className="text-violet-400 text-sm font-bold uppercase mb-3 flex items-center gap-2"><BookOpen size={16} /> Glosario Técnico</h4>
-            <div className="flex flex-wrap gap-2">
-                {concepts.map((concept, idx) => (
-                    <div key={idx} className="relative group">
-                        <button onClick={() => setActiveConcept(activeConcept === idx ? null : idx)} className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${activeConcept === idx ? 'bg-violet-600 text-white shadow-[0_0_15px_rgba(139,92,246,0.5)] scale-105' : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600'}`}><Info size={14} />{concept.term}</button>
-                        {activeConcept === idx && (<div className="absolute bottom-full left-0 mb-3 w-72 bg-slate-900 p-5 rounded-xl border border-violet-500 shadow-2xl z-20 animate-fade-in-up"><div className="absolute -bottom-2 left-6 w-4 h-4 bg-slate-900 border-b border-r border-violet-500 transform rotate-45"></div><h5 className="text-violet-400 font-bold mb-2 text-lg">{concept.term}</h5><p className="text-slate-200 text-sm leading-relaxed">{concept.def}</p><button onClick={(e) => { e.stopPropagation(); setActiveConcept(null); }} className="absolute top-2 right-2 text-slate-500 hover:text-white bg-slate-800 rounded-full w-6 h-6 flex items-center justify-center">×</button></div>)}
-                    </div>
-                ))}
+// ── 8. RISK/REWARD APPLE ───────────────────────────
+const RiskRewardBimbo = () => (
+    <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+        <div className="flex justify-between items-center mb-3">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Trade Real: Apple (AAPL) en Doble Suelo</h4>
+            <span className="text-xs bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded">R:B = 1:2.7</span>
+        </div>
+        <div className="grid grid-cols-3 gap-2 text-center text-xs mb-3">
+            <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                <p className="text-slate-400 text-[10px]">Entrada Confirmada</p>
+                <p className="font-bold text-blue-400">$168.00 USD</p>
+            </div>
+            <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                <p className="text-slate-400 text-[10px]">Stop Loss Estructural</p>
+                <p className="font-bold text-rose-400">$158.00 USD (-$10)</p>
+            </div>
+            <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                <p className="text-slate-400 text-[10px]">Take Profit Resistencia</p>
+                <p className="font-bold text-emerald-400">$195.00 USD (+$27)</p>
             </div>
         </div>
-    );
-};
+        <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 text-[11px] text-slate-300">
+            <p><strong className="text-amber-400">Paul Tudor Jones:</strong> "Busco operaciones con ratio 5:1 o superior. Eso me permite tener razón solo el 20% de las veces y aun así nunca perder dinero. Si el riesgo:beneficio no es asimétrico, la operación se descarta".</p>
+            <p className="mt-1 text-slate-400">Punto de equilibrio para AAPL: 1 / (1 + 2.7) = <strong>27.02%</strong>. Con un 37% de acierto, el sistema arroja alto rendimiento.</p>
+        </div>
+    </div>
+);
 
-// --- COMPONENTE PRINCIPAL APP FASE 3 ---
+// ── 9. MULTI-TIMEFRAME ─────────────────────────────
+const MultiTimeframe = () => (
+    <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+        <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">Análisis Top-Down: El Marco Mayor Domina</h4>
+        <div className="space-y-2 text-xs">
+            <div className="bg-slate-800 p-2.5 rounded-lg border-l-4 border-amber-500 flex justify-between items-center">
+                <div>
+                    <span className="font-bold text-amber-400 block">1. Semanal (Macro / Sesgo de Fondo)</span>
+                    <span className="text-[11px] text-slate-400">Determina la fase de Weinstein (Etapa 1 Acumulación vs Etapa 4 Declive).</span>
+                </div>
+                <span className="text-amber-300 font-mono text-[10px]">Contexto</span>
+            </div>
+            <div className="bg-slate-800 p-2.5 rounded-lg border-l-4 border-blue-500 flex justify-between items-center">
+                <div>
+                    <span className="font-bold text-blue-400 block">2. Diario (Tendencia y Estructura)</span>
+                    <span className="text-[11px] text-slate-400">Identifica soportes clave, resistencias y secuencias de HH/HL o LH/LL.</span>
+                </div>
+                <span className="text-blue-300 font-mono text-[10px]">Estructura</span>
+            </div>
+            <div className="bg-slate-800 p-2.5 rounded-lg border-l-4 border-emerald-500 flex justify-between items-center">
+                <div>
+                    <span className="font-bold text-emerald-400 block">3. 4H / 1H (Timing y Calibración del Stop)</span>
+                    <span className="text-[11px] text-slate-400">Ajusta el gatillo de entrada tras pullback para minimizar el riesgo en Stop Loss.</span>
+                </div>
+                <span className="text-emerald-300 font-mono text-[10px]">Ejecución</span>
+            </div>
+        </div>
+    </div>
+);
+
+// ── 10. TRADINGVIEW STATION ────────────────────────
+const TradingViewStation = () => (
+    <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
+        <div className="flex justify-between items-center mb-3">
+            <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider">Estación de Trabajo en Tiempo Real (TradingView)</h4>
+            </div>
+            <span className="text-xs text-slate-400">NASDAQ:AAPL</span>
+        </div>
+        <div className="rounded-lg overflow-hidden border border-slate-800 h-80 w-full bg-slate-950">
+            <iframe
+                src="https://s.tradingview.com/widgetembed/?symbol=NASDAQ%3AAAPL&interval=D&theme=dark&style=1&locale=es&toolbar_bg=%230f172a&hide_top_toolbar=0&hide_legend=0&saveimage=0&watchlist=0&width=100%25&height=100%25"
+                className="w-full h-full border-none"
+                title="TradingView AAPL Chart"
+                loading="lazy"
+            />
+        </div>
+        <p className="text-[11px] text-slate-500 mt-2 text-center">
+            Aplica trazado de soportes, retrocesos de Fibonacci y confirmación de volumen antes de ejecutar cualquier posición.
+        </p>
+    </div>
+);
+
+// ── 11. INDICATORS DASHBOARD ───────────────────────
+const IndicatorsDashboard = () => (
+    <div className="mt-4 bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-4">
+        <div className="bg-slate-800 p-3 rounded-lg border border-slate-700">
+            <div className="flex justify-between items-center mb-2">
+                <span className="text-xs font-bold text-white">Oscilador RSI (14 periodos)</span>
+                <span className="text-[10px] bg-slate-700 text-purple-300 px-2 py-0.5 rounded font-mono">Lectura: 78 (Sobrecompra)</span>
+            </div>
+            <div className="relative h-8 bg-slate-950 rounded-lg overflow-hidden flex items-center">
+                <div className="w-[30%] h-full bg-emerald-500/15 border-r border-emerald-500/30 flex items-center justify-center text-[9px] text-emerald-400">{'< 30'} Sobreventa</div>
+                <div className="w-[40%] h-full flex items-center justify-center text-[9px] text-slate-500">Zona Neutra</div>
+                <div className="w-[30%] h-full bg-rose-500/15 border-l border-rose-500/30 flex items-center justify-center text-[9px] text-rose-400">{'> 70'} Sobrecompra</div>
+                <div className="absolute left-[78%] w-3 h-3 bg-rose-500 rounded-full border border-white transform -translate-x-1/2"></div>
+            </div>
+            <p className="text-[10px] text-rose-300 mt-2 text-center font-semibold">Alerta: La sobrecompra avisa de desaceleración del impulso; no compres tras rallies verticales.</p>
+        </div>
+    </div>
+);
+
+// --- COMPONENTE PRINCIPAL COURSE PLAYER FASE 3 ---
 
 export default function CoursePlayerPhase3() {
     const { user, updateProgress, submitTestResult } = useAuth();
     const [currentLesson, setCurrentLesson] = useState(0);
     const [showQuiz, setShowQuiz] = useState(false);
-    const [quizAnswers, setQuizAnswers] = useState<any>({});
+    const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
     const [quizSubmitted, setQuizSubmitted] = useState(false);
     const [score, setScore] = useState(0);
 
-    const moduleData = courseData[0]; // Solo 1 módulo en esta app
+    // Mini-quiz por lección
+    const [lessonQuizAnswer, setLessonQuizAnswer] = useState<number | null>(null);
+    const [showLessonFeedback, setShowLessonFeedback] = useState(false);
+
+    const moduleData = courseData[0];
     const lessonData = moduleData.lessons[currentLesson];
 
+    // Cargar progreso guardado al iniciar
     useEffect(() => {
+        try {
+            const saved = localStorage.getItem('fa_phase_3_progress');
+            if (saved) {
+                const idx = parseInt(saved, 10);
+                if (!isNaN(idx) && idx >= 0 && idx < moduleData.lessons.length) {
+                    setCurrentLesson(idx);
+                }
+            }
+        } catch {
+            // fallback
+        }
+    }, [moduleData.lessons.length]);
+
+    // Actualizar progreso persistente
+    useEffect(() => {
+        try {
+            localStorage.setItem('fa_phase_3_progress', currentLesson.toString());
+            localStorage.setItem('fa_phase_3_total', moduleData.lessons.length.toString());
+        } catch (e) {
+            // ignore
+        }
         if (user) {
             updateProgress(3, currentLesson, moduleData.lessons.length);
         }
-    }, [currentLesson, user]);
+        setLessonQuizAnswer(null);
+        setShowLessonFeedback(false);
+    }, [currentLesson, user, moduleData.lessons.length]);
 
     const handleNext = () => {
         if (currentLesson < moduleData.lessons.length - 1) {
@@ -1006,12 +906,14 @@ export default function CoursePlayerPhase3() {
     };
 
     const handleQuizAnswer = (qId: number, optionIdx: number) => {
-        setQuizAnswers({ ...quizAnswers, [qId]: optionIdx });
+        setQuizAnswers(prev => ({ ...prev, [qId]: optionIdx }));
     };
 
     const submitQuiz = () => {
         let calculatedScore = 0;
-        quizQuestions.forEach(q => { if (quizAnswers[q.id] === q.correct) calculatedScore++; });
+        quizQuestions.forEach(q => {
+            if (quizAnswers[q.id] === q.correct) calculatedScore++;
+        });
         setScore(calculatedScore);
         setQuizSubmitted(true);
         if (user) {
@@ -1021,56 +923,113 @@ export default function CoursePlayerPhase3() {
 
     const generateWhatsAppLink = () => {
         const phoneNumber = "527711960057";
-        let message = `📊 *Resultados FASE 3 (Técnico)* 📊%0A%0A`;
-        message += `Calificación: *${score}/${quizQuestions.length}* ⭐️%0A%0A`;
+        let message = `📊 *Certificación Aprobada - Fase 3 (Análisis Técnico y Riesgo)* 📊%0A%0A`;
+        message += `Calificación Oficial: *${score}/${quizQuestions.length}* ⭐️%0A`;
+        message += `Aprobado con Breakeven 25% y Gestión R:B comprobada. Solicitud de diploma y acceso a Fase 4.`;
         return `https://wa.me/${phoneNumber}?text=${message}`;
     };
 
     const renderVisual = (type: string) => {
         switch (type) {
-            case 'market_structure_hh_ll': return <MarketStructureHHLL />;
-            case 'volume_analysis': return <VolumeAnalysis />;
-            case 'risk_reward_bimbo': return <RiskRewardBimbo />;
-            case 'multi_timeframe': return <MultiTimeframe />;
             case 'candlestick_anatomy': return <CandlestickAnatomy />;
             case 'support_resistance': return <SupportResistance />;
-            case 'trend_structure': return <TrendStructure />;
+            case 'market_structure_hh_ll': return <MarketStructureHHLL />;
             case 'indicators_dashboard': return <IndicatorsDashboard />;
+            case 'fibonacci_tool': return <FibonacciTool />;
+            case 'volume_analysis': return <VolumeAnalysis />;
             case 'risk_calculator': return <RiskCalculator />;
-            case 'trading_psychology': return <TradingPsychology />;
+            case 'risk_reward_bimbo': return <RiskRewardBimbo />;
+            case 'multi_timeframe': return <MultiTimeframe />;
+            case 'trading_journal_tool': return <TradingJournalTool />;
+            case 'tradingview_station': return <TradingViewStation />;
             default: return null;
         }
     };
 
+    // VISTA DE EXAMEN DE CERTIFICACIÓN
     if (showQuiz) {
         return (
             <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans p-4 md:p-8 flex flex-col items-center">
-                <div className="max-w-2xl w-full animate-fade-in">
-                    <h1 className="text-3xl font-bold text-violet-400 mb-2 text-center">Examen Fase 3</h1>
-                    <p className="text-slate-400 text-center mb-8">Análisis Técnico y Riesgo</p>
+                <div className="max-w-3xl w-full animate-fade-in">
+                    <div className="text-center mb-8">
+                        <span className="text-xs font-bold uppercase tracking-widest text-violet-400 bg-violet-950/60 px-3 py-1 rounded-full border border-violet-800">
+                            Examen Oficial de Acreditación
+                        </span>
+                        <h1 className="text-3xl md:text-4xl font-extrabold text-white mt-3 mb-2">
+                            Certificación Fase 3: Análisis Técnico & Riesgo
+                        </h1>
+                        <p className="text-sm text-slate-400">
+                            10 preguntas de validación sobre lectura de velas, Fibonacci, ratios R:B y control de Drawdown.
+                        </p>
+                    </div>
+
                     {!quizSubmitted ? (
                         <div className="space-y-6">
                             {quizQuestions.map((q, index) => (
-                                <div key={q.id} className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
-                                    <p className="font-bold text-lg mb-4 text-white"><span className="text-violet-500 mr-2">#{index + 1}</span> {q.question}</p>
-                                    <div className="space-y-2">
+                                <div key={q.id} className="bg-slate-800/90 p-6 rounded-2xl border border-slate-700 shadow-xl">
+                                    <p className="font-bold text-base md:text-lg mb-4 text-white flex items-start gap-3">
+                                        <span className="bg-violet-600/30 text-violet-400 border border-violet-500/40 text-xs px-2.5 py-1 rounded-full font-bold">
+                                            #{index + 1}
+                                        </span>
+                                        {q.question}
+                                    </p>
+                                    <div className="space-y-2.5">
                                         {q.options.map((opt, i) => (
-                                            <button key={i} onClick={() => handleQuizAnswer(q.id, i)} className={`w-full text-left p-4 rounded-lg transition-all border ${quizAnswers[q.id] === i ? 'bg-violet-600 border-violet-400 text-white font-bold' : 'bg-slate-700/50 border-transparent hover:bg-slate-700 text-slate-300'}`}>{opt}</button>
+                                            <button 
+                                                key={i} 
+                                                onClick={() => handleQuizAnswer(q.id, i)} 
+                                                className={`w-full text-left p-4 rounded-xl transition-all border text-sm leading-relaxed ${
+                                                    quizAnswers[q.id] === i 
+                                                        ? 'bg-violet-600 border-violet-400 text-white font-bold shadow-md' 
+                                                        : 'bg-slate-900/60 border-slate-700/80 hover:bg-slate-700/60 text-slate-300'
+                                                }`}
+                                            >
+                                                {opt}
+                                            </button>
                                         ))}
                                     </div>
                                 </div>
                             ))}
-                            <div className="pt-4 pb-8"><button onClick={submitQuiz} disabled={Object.keys(quizAnswers).length < quizQuestions.length} className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold py-4 rounded-xl text-xl hover:opacity-90 disabled:opacity-50">Terminar Fase 3</button></div>
+                            <div className="pt-4 pb-12">
+                                <button 
+                                    onClick={submitQuiz} 
+                                    disabled={Object.keys(quizAnswers).length < quizQuestions.length} 
+                                    className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold py-4 rounded-xl text-lg hover:opacity-95 disabled:opacity-40 transition-all shadow-xl shadow-violet-900/30 cursor-pointer"
+                                >
+                                    Calificar Certificación ({Object.keys(quizAnswers).length}/{quizQuestions.length} respondidas)
+                                </button>
+                            </div>
                         </div>
                     ) : (
-                        <div className="text-center animate-fade-in py-10">
-                            <div className="bg-slate-800 p-8 rounded-2xl border border-violet-500/50 mb-8 max-w-md mx-auto shadow-[0_0_30px_rgba(139,92,246,0.2)]">
-                                <Target className="w-24 h-24 text-violet-400 mx-auto mb-4 animate-bounce" />
-                                <h2 className="text-2xl font-bold text-white">¡Nivel Avanzado Superado!</h2>
-                                <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-500 my-6">{score} / {quizQuestions.length}</div>
+                        <div className="text-center animate-fade-in py-8">
+                            <div className="bg-slate-800/90 p-8 rounded-3xl border border-violet-500/40 mb-8 max-w-md mx-auto shadow-[0_0_40px_rgba(139,92,246,0.25)]">
+                                <Target className="w-20 h-20 text-violet-400 mx-auto mb-4 animate-bounce" />
+                                <h2 className="text-2xl font-extrabold text-white">¡Examen de Fase 3 Calificado!</h2>
+                                <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-400 my-6">
+                                    {score} / {quizQuestions.length}
+                                </div>
+                                <p className="text-sm text-slate-300 leading-relaxed">
+                                    {score >= 7 
+                                        ? '¡Felicidades! Has acreditado con éxito las competencias técnicas de estructura, Fibonacci y gestión matemática de riesgo.' 
+                                        : 'Te sugerimos repasar los módulos de Fibonacci y punto de equilibrio (Breakeven 25%) antes de reenviar tus resultados.'}
+                                </p>
                             </div>
-                            <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-8 rounded-full text-lg transition-transform hover:scale-105 shadow-lg"><Send size={24} /> Enviar Resultados</a>
-                            <button onClick={() => { setShowQuiz(false); setQuizSubmitted(false); setQuizAnswers({}); setCurrentLesson(0); }} className="block mx-auto mt-8 text-slate-500 hover:text-violet-400 text-sm underline">Reiniciar</button>
+                            <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                <a 
+                                    href={generateWhatsAppLink()} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3.5 px-8 rounded-full text-base transition-transform hover:scale-105 shadow-lg"
+                                >
+                                    <Send size={20} /> Solicitar Diploma Oficial (WhatsApp)
+                                </a>
+                                <button 
+                                    onClick={() => { setShowQuiz(false); setQuizSubmitted(false); setQuizAnswers({}); setCurrentLesson(0); }} 
+                                    className="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full text-base font-bold transition-all border border-slate-700"
+                                >
+                                    Reiniciar Módulo
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -1078,68 +1037,212 @@ export default function CoursePlayerPhase3() {
         );
     }
 
+    // VISTA PRINCIPAL DEL REPRODUCTOR
     return (
         <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans flex flex-col">
+            {/* Header de navegación */}
             <header className="bg-[#0f172a]/95 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50">
-                <div className="max-w-4xl mx-auto flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                        <div className="bg-violet-500/10 p-2 rounded-lg"><Activity className="text-violet-400" size={20} /></div>
-                        <div><span className="font-bold text-white tracking-wider text-sm md:text-base block">MERCADOS<span className="text-violet-400">301</span></span><span className="text-[10px] text-slate-500 uppercase tracking-widest hidden md:block">Fase 3: Técnico</span></div>
+                <div className="max-w-5xl mx-auto flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-violet-500/10 p-2 rounded-xl border border-violet-500/20">
+                            <CandlestickChart className="text-violet-400" size={22} />
+                        </div>
+                        <div>
+                            <span className="font-extrabold text-white tracking-wider text-sm md:text-base block">
+                                FA ACADEMY <span className="text-violet-400 font-normal">| Fase 3</span>
+                            </span>
+                            <span className="text-[10px] text-slate-400 uppercase tracking-widest hidden md:block">
+                                Análisis Técnico y Gestión de Riesgo
+                            </span>
+                        </div>
                     </div>
-                    <div className="text-xs md:text-sm font-medium text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">Lección {currentLesson + 1} <span className="text-slate-600">/</span> {moduleData.lessons.length}</div>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={downloadTradingJournalTemplate}
+                            className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 transition-colors"
+                        >
+                            <FileSpreadsheet size={14} className="text-violet-400" />
+                            Diario Excel
+                        </button>
+                        <div className="text-xs md:text-sm font-bold text-slate-300 bg-slate-800/90 px-3.5 py-1.5 rounded-full border border-slate-700">
+                            Lección {currentLesson + 1} <span className="text-slate-500">/</span> {moduleData.lessons.length}
+                        </div>
+                    </div>
                 </div>
-                <div className="absolute bottom-0 left-0 h-1 bg-slate-800 w-full"><div className="h-full bg-gradient-to-r from-violet-500 to-amber-500 transition-all duration-500 ease-out" style={{ width: `${((currentLesson + 1) * 100) / moduleData.lessons.length}%` }}></div></div>
+                <div className="absolute bottom-0 left-0 h-1 bg-slate-800 w-full">
+                    <div 
+                        className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 transition-all duration-500 ease-out" 
+                        style={{ width: `${((currentLesson + 1) * 100) / moduleData.lessons.length}%` }}
+                    ></div>
+                </div>
             </header>
 
-            <main className="flex-1 max-w-4xl mx-auto w-full p-4 md:p-8 flex flex-col justify-start">
-                {lessonData.visualType !== 'tradingview_station' && (
-                  <div className="mb-4 animate-fade-in">
-                      <div className="flex items-center gap-2 mb-2"><span className="bg-violet-500/10 text-violet-400 font-bold text-[10px] md:text-xs px-2 py-0.5 rounded uppercase tracking-wider border border-violet-500/20">{moduleData.title}</span></div>
-                      <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{lessonData.title}</h1>
-                  </div>
-                )}
+            <main className="flex-1 max-w-5xl mx-auto w-full p-4 md:p-8 flex flex-col justify-start">
+                <div className="mb-4 animate-fade-in">
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="bg-violet-500/15 text-violet-400 font-bold text-[10px] md:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-violet-500/30">
+                            Lección {currentLesson + 1}: {lessonData.title}
+                        </span>
+                    </div>
+                    <h1 className="text-2xl md:text-4xl font-extrabold text-white mb-2 leading-tight">
+                        {lessonData.title}
+                    </h1>
+                </div>
 
+                {/* Reproductor de Video si existe */}
                 {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
-                  <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full"
-                      src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
+                    <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
+                        <iframe
+                            className="absolute top-0 left-0 w-full h-full"
+                            src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+                            title={lessonData.videoTitle || "Clase de Análisis Técnico"}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
                 ))}
 
-                {lessonData.visualType === 'tradingview_station' ? (
-                  <div className="mb-6 w-full relative z-10 animate-fade-in">
-                      <TradingViewStation />
-                  </div>
-                ) : (
-                  <>
-                    <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Crosshair size={120} className="text-slate-500" /></div>
-                        {renderVisual(lessonData.visualType)}
+                {/* Componente Visual Técnico */}
+                <div className="bg-slate-900/60 rounded-2xl p-4 md:p-6 border border-slate-800 shadow-xl mb-6 min-h-[300px] flex flex-col justify-center relative overflow-hidden">
+                    {renderVisual(lessonData.visualType)}
+                </div>
+
+                {/* Contenido Teórico y Conceptos */}
+                <div className="space-y-6 mb-8 animate-fade-in">
+                    <div className="bg-gradient-to-r from-slate-800 to-slate-850 p-6 rounded-2xl border-l-4 border-violet-500 shadow-lg">
+                        <p className="text-base md:text-lg text-violet-100 font-medium leading-relaxed">
+                            {lessonData.content}
+                        </p>
                     </div>
-                    <div className="space-y-6 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                        <div className="bg-gradient-to-r from-slate-800 to-slate-800/50 p-6 rounded-xl border-l-4 border-violet-500 shadow-lg"><p className="text-lg md:text-xl text-violet-100 font-medium leading-relaxed">{lessonData.content}</p></div>
-                        <div className="flex gap-4 items-start"><div className="bg-slate-700 rounded-full p-2 mt-1 shrink-0"><Brain size={20} className="text-slate-300" /></div><div><p className="text-slate-300 leading-relaxed text-sm md:text-base">{lessonData.details}</p><p className="mt-4 text-slate-400 text-sm italic bg-slate-900/30 p-3 rounded-lg border border-slate-700/50 flex gap-2"><span className="text-violet-500 font-bold not-italic">💡 Tip:</span>{lessonData.speakerNotes}</p></div></div>
-                        <ConceptsBar concepts={lessonData.concepts} />
+
+                    <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <p className="text-slate-300 leading-relaxed text-sm md:text-base">
+                            {lessonData.details}
+                        </p>
+                        {lessonData.speakerNotes && (
+                            <div className="text-slate-400 text-xs md:text-sm italic bg-slate-950/60 p-4 rounded-xl border border-slate-800 flex items-start gap-3">
+                                <Brain size={18} className="text-violet-400 shrink-0 mt-0.5" />
+                                <div>
+                                    <strong className="text-violet-300 not-italic block mb-0.5">Nota de Operativa Profesional:</strong>
+                                    {lessonData.speakerNotes}
+                                </div>
+                            </div>
+                        )}
                     </div>
-                  </>
-                )}
+
+                    {/* Glosario de Conceptos de la Lección */}
+                    {lessonData.concepts && (
+                        <div className="bg-slate-900/60 rounded-2xl border border-slate-800 p-5">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+                                <BookOpen size={16} className="text-violet-400" />
+                                Conceptos Clave de la Lección
+                            </h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {lessonData.concepts.map((c, idx) => (
+                                    <div key={idx} className="bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+                                        <p className="text-xs font-bold text-violet-300 mb-1">{c.term}</p>
+                                        <p className="text-[11px] text-slate-400 leading-relaxed">{c.def}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Mini-Quiz Interactivo por Lección */}
+                    {lessonData.miniQuiz && (
+                        <div className="bg-gradient-to-br from-slate-900 to-slate-850 p-6 rounded-2xl border border-violet-500/30 shadow-lg">
+                            <div className="flex items-center gap-2 mb-3">
+                                <HelpCircle size={18} className="text-violet-400" />
+                                <span className="text-xs font-bold text-violet-300 uppercase tracking-wider">
+                                    Mini-Quiz de Comprobación
+                                </span>
+                            </div>
+                            <p className="text-sm font-semibold text-white mb-4">
+                                {lessonData.miniQuiz.question}
+                            </p>
+                            <div className="space-y-2 mb-4">
+                                {lessonData.miniQuiz.options.map((opt, i) => {
+                                    const isSelected = lessonQuizAnswer === i;
+                                    const isCorrect = i === lessonData.miniQuiz!.correct;
+                                    let btnStyle = 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-750';
+                                    
+                                    if (showLessonFeedback) {
+                                        if (isCorrect) {
+                                            btnStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-200 font-bold';
+                                        } else if (isSelected) {
+                                            btnStyle = 'bg-rose-950/80 border-rose-500 text-rose-200 font-bold';
+                                        }
+                                    } else if (isSelected) {
+                                        btnStyle = 'bg-violet-600 border-violet-400 text-white font-bold';
+                                    }
+
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => {
+                                                setLessonQuizAnswer(i);
+                                                setShowLessonFeedback(true);
+                                            }}
+                                            className={`w-full text-left p-3.5 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between ${btnStyle}`}
+                                        >
+                                            <span>{opt}</span>
+                                            {showLessonFeedback && isCorrect && <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />}
+                                            {showLessonFeedback && isSelected && !isCorrect && <XCircle size={16} className="text-rose-400 shrink-0" />}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            {showLessonFeedback && (
+                                <div className={`p-3.5 rounded-xl text-xs leading-relaxed border animate-fade-in ${
+                                    lessonQuizAnswer === lessonData.miniQuiz.correct 
+                                        ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300' 
+                                        : 'bg-rose-950/40 border-rose-500/40 text-rose-300'
+                                }`}>
+                                    <strong>{lessonQuizAnswer === lessonData.miniQuiz.correct ? '¡Correcto!' : 'Explicación didáctica:'}</strong> {lessonData.miniQuiz.explanation}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </main>
 
+            {/* Footer con Controles de Lección */}
             <footer className="bg-[#0f172a] border-t border-slate-800 p-4 pb-8 md:pb-4">
-                <div className="max-w-4xl mx-auto flex justify-between items-center">
-                    <button onClick={handlePrev} disabled={currentLesson === 0} className="flex items-center gap-2 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors px-4 py-2 rounded-lg hover:bg-slate-800"><ArrowLeft size={20} /><span className="hidden md:inline font-medium">Anterior</span></button>
-                    <div className="flex gap-1.5">{moduleData.lessons.map((_, idx) => (<div key={idx} className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300 ${idx === currentLesson ? 'bg-violet-500 scale-125' : 'bg-slate-700'}`}></div>))}</div>
-                    <button onClick={handleNext} className="flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-full font-bold transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] active:scale-95"><span className="hidden md:inline">{currentLesson === moduleData.lessons.length - 1 ? 'Ir al Examen' : 'Siguiente'}</span><span className="md:hidden">{currentLesson === moduleData.lessons.length - 1 ? 'Examen' : 'Sig.'}</span><ArrowRight size={20} /></button>
+                <div className="max-w-5xl mx-auto flex justify-between items-center">
+                    <button 
+                        onClick={handlePrev} 
+                        disabled={currentLesson === 0} 
+                        className="flex items-center gap-2 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors px-4 py-2.5 rounded-xl hover:bg-slate-800 text-sm font-semibold"
+                    >
+                        <ArrowLeft size={18} />
+                        <span className="hidden sm:inline">Lección Anterior</span>
+                    </button>
+
+                    <div className="flex gap-1.5 overflow-x-auto max-w-[40%] px-2">
+                        {moduleData.lessons.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setCurrentLesson(idx)}
+                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 shrink-0 ${
+                                    idx === currentLesson ? 'bg-violet-500 scale-125' : 'bg-slate-700 hover:bg-slate-500'
+                                }`}
+                                title={`Ir a Lección ${idx + 1}`}
+                            />
+                        ))}
+                    </div>
+
+                    <button 
+                        onClick={handleNext} 
+                        className="flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] active:scale-95"
+                    >
+                        <span>{currentLesson === moduleData.lessons.length - 1 ? 'Ir al Examen de Certificación' : 'Siguiente Lección'}</span>
+                        <ArrowRight size={18} />
+                    </button>
                 </div>
             </footer>
-            <style>{`@keyframes fade-in {from { opacity: 0; transform: translateY(10px); }to { opacity: 1; transform: translateY(0); }}@keyframes fade-in-up {from { opacity: 0; transform: translateY(5px); }to { opacity: 1; transform: translateY(0); }}.animate-fade-in {animation: fade-in 0.5s ease-out forwards;}.animate-fade-in-up {animation: fade-in-up 0.2s ease-out forwards;}`}</style>
         </div>
     );
 }

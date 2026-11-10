@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MODULES, getIcon } from '../constants';
-import { ArrowLeft, BookOpen, BarChart3, Lock, PlayCircle } from 'lucide-react';
+import { 
+  ArrowLeft, BookOpen, BarChart3, Lock, PlayCircle, 
+  Download, FileSpreadsheet, Printer, CheckCircle2, Award, 
+  ShieldCheck, ArrowRight, Clock, Star 
+} from 'lucide-react';
 import {
   AreaChart,
   Area,
@@ -15,39 +19,119 @@ import {
   LineChart,
   Line
 } from 'recharts';
+import { 
+  downloadTradingJournalTemplate, 
+  downloadAssetAllocationTemplate, 
+  downloadFiscalDeclarationTemplate, 
+  downloadInvestmentThesisTemplate, 
+  openPrintableStudyGuide 
+} from '../utils/resources';
 
-// Mock data for charts visualization
+// Datos para gráficos interactivos
 const CHART_DATA_GROWTH = [
   { name: 'Año 1', value: 1000 },
-  { name: 'Año 2', value: 1200 },
-  { name: 'Año 3', value: 1500 },
-  { name: 'Año 4', value: 1900 },
-  { name: 'Año 5', value: 2500 },
-  { name: 'Año 6', value: 3400 },
+  { name: 'Año 2', value: 1250 },
+  { name: 'Año 3', value: 1600 },
+  { name: 'Año 4', value: 2100 },
+  { name: 'Año 5', value: 2800 },
+  { name: 'Año 6', value: 3900 },
 ];
 
-const CHART_DATA_MACRO = [
-  { name: '2020', inflation: 1.2, rates: 0.5 },
-  { name: '2021', inflation: 4.5, rates: 0.5 },
-  { name: '2022', inflation: 8.5, rates: 2.5 },
-  { name: '2023', inflation: 4.1, rates: 5.25 },
-  { name: '2024', inflation: 3.2, rates: 4.8 },
+const CHART_DATA_FUNDAMENTALS = [
+  { name: 'CEMEX', ebitda: 18.5, roe: 9.8, pe: 11.2 },
+  { name: 'BIMBO', ebitda: 13.9, roe: 13.2, pe: 16.5 },
+  { name: 'WALMEX', ebitda: 10.4, roe: 24.1, pe: 22.0 },
+  { name: 'FEMSA', ebitda: 14.1, roe: 14.5, pe: 18.2 },
+];
+
+const CHART_DATA_EFFICIENT_FRONTIER = [
+  { name: '100% Cetes', riesgo: 3.5, retorno: 10.2 },
+  { name: 'Conservador (80/20)', riesgo: 6.2, retorno: 12.0 },
+  { name: 'Balanceado (50/50)', riesgo: 10.5, retorno: 14.5 },
+  { name: 'Óptimo Sharpe (70/30)', riesgo: 12.8, retorno: 16.8 },
+  { name: 'Agresivo (90/10)', riesgo: 17.5, retorno: 18.5 },
+  { name: '100% Acciones', riesgo: 21.0, retorno: 19.8 },
+];
+
+const CHART_DATA_PAYOFF_OPTIONS = [
+  { precio: '$140', spot: -15, put: +20, portafolioProtegido: +5 },
+  { precio: '$150', spot: -10, put: +10, portafolioProtegido: 0 },
+  { precio: '$160', spot: 0, put: -5, portafolioProtegido: -5 },
+  { precio: '$170', spot: +10, put: -5, portafolioProtegido: +5 },
+  { precio: '$180', spot: +20, put: -5, portafolioProtegido: +15 },
 ];
 
 const CourseDetail: React.FC = () => {
   const { id } = useParams();
   const module = MODULES.find(m => m.id === id);
 
+  const [progressPercent, setProgressPercent] = useState(0);
+  const [currentLessonIdx, setCurrentLessonIdx] = useState(0);
+
+  useEffect(() => {
+    if (!module) return;
+    try {
+      const mockProgress = JSON.parse(localStorage.getItem('fa_mock_progress') || '[]');
+      const userStr = localStorage.getItem('fa_academy_user');
+      const user = userStr ? JSON.parse(userStr) : null;
+      
+      const found = mockProgress.find((p: any) => 
+        (user ? p.username === user.username : true) && Number(p.phase) === module.phase
+      );
+      
+      const localDirect = localStorage.getItem(`fa_phase_${module.phase}_progress`);
+      
+      if (found) {
+        const pct = Math.min(100, Math.round(((found.lesson_index + 1) / module.topics.length) * 100));
+        setProgressPercent(pct);
+        setCurrentLessonIdx(found.lesson_index);
+      } else if (localDirect) {
+        const idx = parseInt(localDirect, 10);
+        const pct = Math.min(100, Math.round(((idx + 1) / module.topics.length) * 100));
+        setProgressPercent(pct);
+        setCurrentLessonIdx(idx);
+      }
+    } catch {
+      // Ignorar errores de parsing
+    }
+  }, [module]);
+
   if (!module) {
     return <div className="p-20 text-center text-white">Módulo no encontrado</div>;
   }
 
-  // Helper to render a chart based on the phase to make it look "real"
+  const handleDownloadTemplate = () => {
+    if (module.phase === 3) {
+      downloadTradingJournalTemplate();
+    } else if (module.phase === 4) {
+      downloadAssetAllocationTemplate();
+    } else if (module.phase === 5) {
+      downloadInvestmentThesisTemplate();
+    } else {
+      downloadAssetAllocationTemplate();
+    }
+  };
+
+  const handleOpenStudyGuide = () => {
+    openPrintableStudyGuide(
+      module.phase,
+      module.title,
+      module.topics.map(t => ({
+        title: t.title,
+        content: t.content,
+        details: t.content
+      }))
+    );
+  };
+
   const renderChart = () => {
     if (module.phase === 1) {
       return (
         <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
-          <h4 className="font-bold text-slate-200 mb-4">El Poder del Interés Compuesto</h4>
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">El Poder del Interés Compuesto (Tasa Real vs Nominal)</h4>
+            <span className="text-xs bg-emerald-500/20 text-emerald-400 font-bold px-2 py-1 rounded">Riqueza Exponencial</span>
+          </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={CHART_DATA_GROWTH}>
@@ -61,39 +145,93 @@ const CourseDetail: React.FC = () => {
                 <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#94a3b8' }} stroke="#475569" />
                 <YAxis tick={{ fontSize: 12, fill: '#94a3b8' }} stroke="#475569" />
                 <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
-                <Area type="monotone" dataKey="value" stroke="#10b981" fillOpacity={1} fill="url(#colorValue)" />
+                <Area type="monotone" dataKey="value" stroke="#10b981" fillOpacity={1} fill="url(#colorValue)" name="Capital ($)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          <p className="text-xs text-slate-500 mt-2 text-center">Proyección de crecimiento de capital con aportes constantes.</p>
+          <p className="text-xs text-slate-500 mt-2 text-center">Proyección de reinversión automática de rendimientos con aportes disciplinados.</p>
         </div>
       );
     }
 
-    if (module.phase === 2 || module.phase === 4) {
+    if (module.phase === 2) {
       return (
         <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
-          <h4 className="font-bold text-slate-200 mb-4">Tasas vs. Inflación (Macroeconomía)</h4>
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">Análisis Fundamental Comparado: Margen EBITDA y ROE</h4>
+            <span className="text-xs bg-blue-500/20 text-blue-400 font-bold px-2 py-1 rounded">BMV vs Sector</span>
+          </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={CHART_DATA_MACRO}>
+              <BarChart data={CHART_DATA_FUNDAMENTALS}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
                 <XAxis dataKey="name" tick={{ fill: '#94a3b8' }} stroke="#475569" />
                 <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" />
                 <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
-                <Bar dataKey="inflation" fill="#ef4444" name="Inflación" />
-                <Bar dataKey="rates" fill="#3b82f6" name="Tasas Interés" />
+                <Bar dataKey="ebitda" fill="#3b82f6" name="Margen EBITDA (%)" />
+                <Bar dataKey="roe" fill="#10b981" name="ROE (%)" />
               </BarChart>
             </ResponsiveContainer>
           </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">Evaluación de salud operativa y eficiencia del capital accionarial en empresas líderes de la BMV.</p>
         </div>
       );
     }
 
-    // Default chart (Technical / Expert)
+    if (module.phase === 4) {
+      return (
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">Frontera Eficiente de Markowitz: Riesgo ($\sigma$) vs. Retorno Esperado</h4>
+            <span className="text-xs bg-amber-500/20 text-amber-400 font-bold px-2 py-1 rounded">Modelo Core-Satellite</span>
+          </div>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={CHART_DATA_EFFICIENT_FRONTIER}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="riesgo" tick={{ fill: '#94a3b8' }} stroke="#475569" label={{ value: 'Volatilidad / Riesgo (%)', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 11 }} />
+                <YAxis dataKey="retorno" tick={{ fill: '#94a3b8' }} stroke="#475569" label={{ value: 'Retorno (%)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
+                <Line type="monotone" dataKey="retorno" stroke="#f59e0b" strokeWidth={3} dot={{ r: 6, fill: '#f59e0b' }} name="Retorno Anual (%)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">Optimización de pesos para maximizar el Ratio de Sharpe y amortiguar el Maximum Drawdown.</p>
+        </div>
+      );
+    }
+
+    if (module.phase === 5) {
+      return (
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">Curva de Payoff: Cobertura con Opciones Put (Protección de Portafolio)</h4>
+            <span className="text-xs bg-rose-500/20 text-rose-400 font-bold px-2 py-1 rounded">Riesgo Asimétrico</span>
+          </div>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={CHART_DATA_PAYOFF_OPTIONS}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="precio" tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
+                <Line type="monotone" dataKey="portafolioProtegido" stroke="#10b981" strokeWidth={3} dot={{ r: 5 }} name="Portafolio con Cobertura Put" />
+                <Line type="monotone" dataKey="spot" stroke="#ef4444" strokeWidth={1.5} strokeDasharray="3 3" name="Portafolio Desprotegido" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">El seguro de portafolio: limitando la caída en caídas severas mientras se mantiene el potencial alcista.</p>
+        </div>
+      );
+    }
+
+    // Default chart (Technical)
     return (
       <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
-        <h4 className="font-bold text-slate-200 mb-4">Análisis de Tendencia</h4>
+        <div className="flex justify-between items-center mb-4">
+          <h4 className="font-bold text-slate-200">Estructura de Mercado y Ruptura de Tendencia (BOS)</h4>
+          <span className="text-xs bg-indigo-500/20 text-indigo-400 font-bold px-2 py-1 rounded">Price Action</span>
+        </div>
         <div className="h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={CHART_DATA_GROWTH}>
@@ -101,10 +239,11 @@ const CourseDetail: React.FC = () => {
               <XAxis dataKey="name" tick={{ fill: '#94a3b8' }} stroke="#475569" />
               <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" />
               <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
-              <Line type="step" dataKey="value" stroke="#8884d8" strokeWidth={2} dot={{ r: 4 }} />
+              <Line type="step" dataKey="value" stroke="#818cf8" strokeWidth={3} dot={{ r: 5 }} name="Precio / Estructura" />
             </LineChart>
           </ResponsiveContainer>
         </div>
+        <p className="text-xs text-slate-500 mt-2 text-center">Identificación de Máximos Más Altos (HH) y confirmación con volumen institucional.</p>
       </div>
     );
   };
@@ -129,6 +268,12 @@ const CourseDetail: React.FC = () => {
                 <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wide flex items-center gap-1">
                   <BarChart3 size={12} /> {module.level}
                 </span>
+                <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wide flex items-center gap-1">
+                  <Clock size={12} /> {module.duration}
+                </span>
+                <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wide flex items-center gap-1 text-amber-300">
+                  <Star size={12} fill="currentColor" /> {module.rating}
+                </span>
               </div>
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">{module.title}</h1>
               <p className="text-white/90 max-w-2xl text-lg leading-relaxed">{module.description}</p>
@@ -150,27 +295,35 @@ const CourseDetail: React.FC = () => {
               <div className="p-6 border-b border-slate-700 flex justify-between items-center">
                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
                   <BookOpen size={20} className="text-primary-500" />
-                  Contenido del Módulo
+                  Contenido del Curso
                 </h3>
-                <span className="text-sm text-slate-400">{module.topics.length} Lecciones</span>
+                <span className="text-sm text-slate-300 font-semibold bg-slate-700/60 px-3 py-1 rounded-full border border-slate-600">
+                  {module.topics.length} Lecciones Especializadas
+                </span>
               </div>
 
               <div className="divide-y divide-slate-700">
                 {module.topics.map((topic, index) => (
-                  <div key={index} className="p-6 hover:bg-slate-750 transition-colors group cursor-pointer hover:bg-slate-700/50">
+                  <Link 
+                    to={`/course/phase/${module.phase}`} 
+                    key={index} 
+                    className="p-6 hover:bg-slate-750 transition-colors group cursor-pointer block hover:bg-slate-700/50"
+                  >
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-sm font-bold flex-shrink-0 group-hover:bg-primary-900 group-hover:text-primary-400 transition-colors">
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-slate-200 mb-2 group-hover:text-primary-400">{topic.title}</h4>
+                        <h4 className="font-bold text-slate-200 mb-2 group-hover:text-primary-400 transition-colors">
+                          {topic.title}
+                        </h4>
                         <p className="text-sm text-slate-400 leading-relaxed">{topic.content}</p>
                       </div>
                       <div className="self-center">
-                        <PlayCircle size={24} className="text-slate-600 group-hover:text-primary-500" />
+                        <PlayCircle size={24} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -180,36 +333,96 @@ const CourseDetail: React.FC = () => {
           <div className="lg:col-span-1 space-y-6">
             {/* Progress Card */}
             <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
-              <h3 className="font-bold text-white mb-4">Tu Progreso</h3>
-              <div className="w-full bg-slate-700 rounded-full h-2.5 mb-4">
-                <div className="bg-primary-600 h-2.5 rounded-full" style={{ width: '0%' }}></div>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-bold text-white">Tu Progreso</h3>
+                <span className="text-xs font-bold text-primary-400 bg-primary-950/60 px-2.5 py-1 rounded-full border border-primary-800">
+                  {progressPercent}% completado
+                </span>
               </div>
-              <p className="text-sm text-slate-400 mb-6">0% completado</p>
+              <div className="w-full bg-slate-700 rounded-full h-3 mb-4 overflow-hidden">
+                <div 
+                  className="bg-gradient-to-r from-primary-600 to-emerald-400 h-3 rounded-full transition-all duration-500" 
+                  style={{ width: `${progressPercent}%` }}
+                ></div>
+              </div>
+              <p className="text-xs text-slate-400 mb-6">
+                {progressPercent === 0 
+                  ? `Inicia la lección 1 de ${module.topics.length} para avanzar en tu certificación.` 
+                  : `Lección ${Math.min(currentLessonIdx + 1, module.topics.length)} de ${module.topics.length} registrada.`}
+              </p>
               <Link
                 to={`/course/phase/${module.phase}`}
-                className="w-full py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-500 transition-colors shadow-lg shadow-primary-900/50 block text-center"
+                className="w-full py-3.5 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-500 transition-all shadow-lg shadow-primary-900/50 flex items-center justify-center gap-2"
               >
-                Empezar Curso
+                {progressPercent === 0 ? 'Empezar Curso' : 'Continuar Curso'}
+                <ArrowRight size={18} />
               </Link>
             </div>
 
-            {/* Instructor / Meta */}
+            {/* Descargas Reales de Recursos */}
             <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
-              <h3 className="font-bold text-white mb-4">Incluido en este curso</h3>
-              <ul className="space-y-3 text-sm text-slate-400">
-                <li className="flex items-center gap-3">
-                  <div className="w-6 flex justify-center"><PlayCircle size={18} className="text-primary-500" /></div>
-                  2.5 horas de video on-demand
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-6 flex justify-center"><BookOpen size={18} className="text-primary-500" /></div>
-                  4 Guías descargables (PDF)
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-6 flex justify-center"><BarChart3 size={18} className="text-primary-500" /></div>
-                  Acceso a plantillas de Excel
-                </li>
-              </ul>
+              <h3 className="font-bold text-white mb-4 flex items-center gap-2">
+                <Download size={18} className="text-primary-400" />
+                Materiales Descargables
+              </h3>
+              <p className="text-xs text-slate-400 mb-4 leading-relaxed">
+                Herramientas profesionales y guías de estudio creadas para aplicar los conceptos directamente en tu operativa:
+              </p>
+
+              <div className="space-y-3">
+                <button
+                  onClick={handleOpenStudyGuide}
+                  className="w-full py-2.5 px-4 bg-slate-700 hover:bg-slate-650 text-slate-200 hover:text-white rounded-xl text-xs font-semibold flex items-center justify-between border border-slate-600 transition-all hover:border-primary-500"
+                >
+                  <span className="flex items-center gap-2">
+                    <Printer size={16} className="text-primary-400" />
+                    Guía Oficial de Estudio (PDF)
+                  </span>
+                  <Download size={14} className="text-slate-400" />
+                </button>
+
+                <button
+                  onClick={handleDownloadTemplate}
+                  className="w-full py-2.5 px-4 bg-slate-700 hover:bg-slate-650 text-slate-200 hover:text-white rounded-xl text-xs font-semibold flex items-center justify-between border border-slate-600 transition-all hover:border-emerald-500"
+                >
+                  <span className="flex items-center gap-2">
+                    <FileSpreadsheet size={16} className="text-emerald-400" />
+                    {module.phase === 3 ? 'Plantilla Diario de Trading (Excel)' :
+                     module.phase === 4 ? 'Plantilla Asset Allocation (Excel)' :
+                     module.phase === 5 ? 'Plantilla Tesis de Inversión (Excel)' :
+                     'Plantilla Financiera (Excel)'}
+                  </span>
+                  <Download size={14} className="text-slate-400" />
+                </button>
+
+                {module.phase === 4 && (
+                  <button
+                    onClick={downloadFiscalDeclarationTemplate}
+                    className="w-full py-2.5 px-4 bg-slate-700 hover:bg-slate-650 text-slate-200 hover:text-white rounded-xl text-xs font-semibold flex items-center justify-between border border-slate-600 transition-all hover:border-amber-500"
+                  >
+                    <span className="flex items-center gap-2">
+                      <FileSpreadsheet size={16} className="text-amber-400" />
+                      Calculadora Fiscal SAT LISR (Excel)
+                    </span>
+                    <Download size={14} className="text-slate-400" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Certificación Acreditada */}
+            <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
+              <h3 className="font-bold text-white mb-3 flex items-center gap-2">
+                <Award size={18} className="text-amber-400" />
+                Acreditación de Fase {module.phase}
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Completa las {module.topics.length} lecciones especializadas y aprueba el examen final para certificar tu dominio en {module.title}.
+              </p>
+              <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-950/40 p-3 rounded-xl border border-emerald-800/50">
+                <CheckCircle2 size={16} className="shrink-0" />
+                <span>Incluye evaluación interactiva por lección y examen final de validación.</span>
+              </div>
             </div>
 
             {/* Next Module Teaser */}
@@ -217,10 +430,11 @@ const CourseDetail: React.FC = () => {
               <div className="bg-slate-900 p-6 rounded-2xl text-white relative overflow-hidden border border-slate-800">
                 <div className="relative z-10">
                   <p className="text-xs text-slate-500 font-bold uppercase mb-2">Siguiente Fase</p>
-                  <h4 className="font-bold mb-4">Fase {module.phase + 1}</h4>
-                  <div className="flex items-center gap-2 text-sm text-slate-400">
+                  <h4 className="font-bold mb-2">Fase {module.phase + 1}</h4>
+                  <p className="text-xs text-slate-400 mb-4">{MODULES[module.phase]?.title}</p>
+                  <div className="flex items-center gap-2 text-xs text-slate-400">
                     <Lock size={14} />
-                    <span>Bloqueado hasta completar fase actual</span>
+                    <span>Se desbloquea al aprobar el examen de la fase actual</span>
                   </div>
                 </div>
                 <div className="absolute top-0 right-0 -mt-6 -mr-6 w-24 h-24 bg-white/5 rounded-full"></div>
