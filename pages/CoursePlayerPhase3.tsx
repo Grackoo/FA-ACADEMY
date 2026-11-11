@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { downloadTradingJournalTemplate } from '../utils/resources';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // --- DATOS FASE 3: ANÁLISIS TÉCNICO Y GESTIÓN DE RIESGO PROFESIONAL ---
 
@@ -23,9 +24,9 @@ const courseData = [
                 content: "Cada vela cuenta la batalla en tiempo real entre compradores (Toros) y vendedores (Osos).",
                 details: "Olvídate de los gráficos de línea simples que solo muestran el precio de cierre. Las Velas Japonesas nos revelan 4 datos fundamentales en un instante (OHLC): Open (Apertura), High (Máximo), Low (Mínimo) y Close (Cierre). El cuerpo refleja la convicción del movimiento, mientras que las sombras o mechas revelan niveles de precios que fueron enérgicamente rechazados por el mercado.",
                 visualType: "candlestick_anatomy",
-                videoUrls: ["590LgksX6dI"],
-                videoTitle: "Anatomía de las Velas Japonesas y Psicología OHLC",
-                videoDuration: "16 min",
+                videoUrls: ["khSSR5xN4HQ"],
+                videoTitle: "Curso Completo de Velas Japonesas y Psicología OHLC",
+                videoDuration: "25 min",
                 speakerNotes: "Una mecha superior muy larga en zona de resistencia indica rechazo bajista: los compradores intentaron empujar el precio hacia arriba pero los vendedores institucionales tomaron el control.",
                 concepts: [
                     { term: "OHLC", def: "Open, High, Low, Close. Los cuatro precios clave que estructuran cada sesión temporal." },
@@ -433,7 +434,7 @@ const FibonacciTool = () => {
                 </div>
                 <div className="flex gap-2 text-xs">
                     <span className="bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 px-2.5 py-1 rounded-full font-bold">
-                        Zona Óptima: $178.65 USD (61.8%)
+                        Zona Óptima: ${(swingHigh - diff * 0.618).toFixed(2)} USD (61.8%)
                     </span>
                 </div>
             </div>
@@ -1106,7 +1107,9 @@ export default function CoursePlayerPhase3() {
 
                 {/* Componente Visual Técnico */}
                 <div className="bg-slate-900/60 rounded-2xl p-4 md:p-6 border border-slate-800 shadow-xl mb-6 min-h-[300px] flex flex-col justify-center relative overflow-hidden">
-                    {renderVisual(lessonData.visualType)}
+                    <ErrorBoundary fallbackMessage="Error al cargar la visualización técnica">
+                        {renderVisual(lessonData.visualType)}
+                    </ErrorBoundary>
                 </div>
 
                 {/* Contenido Teórico y Conceptos */}

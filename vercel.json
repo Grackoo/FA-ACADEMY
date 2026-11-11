@@ -1,4 +1,12 @@
 {
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/academy",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

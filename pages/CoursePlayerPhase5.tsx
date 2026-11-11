@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { downloadInvestmentThesisTemplate } from '../utils/resources';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // --- DATOS FASE 5: ESTRATEGIAS ESPECIALIZADAS, VALUACIÓN Y OPCIONES ---
 
@@ -24,9 +25,9 @@ const courseData = [
                 content: "Aprende a monetizar mercados bajistas comprendiendo la asimetría del riesgo potencialmente infinito.",
                 details: "La Venta en Corto consiste en pedir prestadas acciones a tu casa de bolsa mediante un contrato de préstamo bursátil, venderlas en el mercado al precio actual y recomprarlas más tarde (cubrirse) a un precio menor para devolvérselas al prestamista, embolsándote la diferencia menos la tasa de préstamo (borrow fee). Sin embargo, su riesgo es asimétrico: mientras en una posición larga lo máximo que puedes perder es el 100% de tu dinero, en una venta en corto el precio puede subir indefinidamente (pérdida infinita). Un 'Short Squeeze' ocurre cuando una acción con alto interés en corto sube con violencia, obligando a los vendedores en corto a recomprar en estampida para frenar pérdidas, disparando el precio verticalmente (casos históricos: Volkswagen 2008 y GameStop 2021).",
                 visualType: "short_selling_tool",
-                videoUrls: ["OwMH1mmKVy0"],
-                videoTitle: "Mecánica Institucional de la Venta en Corto y Riesgo Infinito",
-                videoDuration: "18 min",
+                videoUrls: ["TauzdjHOGTE"],
+                videoTitle: "Mecánica Institucional de la Venta en Corto (Short Selling)",
+                videoDuration: "12 min",
                 speakerNotes: "Nunca mantengas una posición corta sin un Stop Loss automático estricto. En las posiciones largas el tiempo juega a tu favor; en las posiciones cortas el borrow fee y los dividendos que debes reembolsar juegan en tu contra.",
                 concepts: [
                     { term: "Préstamo Bursátil", def: "Contrato donde un tenedor institucional te presta títulos a cambio de una tasa de interés diaria (borrow fee)." },
@@ -406,39 +407,157 @@ const ShortSellingTool = () => (
 );
 
 // ── 2. VALUATION DCF & MULTIPLES TOOL ──────────────
-const ValuationDCFTool = () => (
-    <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4">
-        <div className="flex justify-between items-center mb-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Scale className="text-blue-400" size={18} />
-                Valuación Intrínseca: DCF vs Múltiplos Comparables
-            </h4>
-            <span className="text-xs bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded">Margen de Seguridad</span>
+const ValuationDCFTool = () => {
+    const [initialFCF, setInitialFCF] = useState(100);
+    const [growthRate, setGrowthRate] = useState(10);
+    const [wacc, setWacc] = useState(9.5);
+    const [terminalGrowth, setTerminalGrowth] = useState(2.5);
+    const [marketPrice, setMarketPrice] = useState(68);
+
+    const g = growthRate / 100;
+    const r = wacc / 100;
+    const tg = terminalGrowth / 100;
+
+    let pvSum = 0;
+    const fcfYears = [1, 2, 3, 4, 5].map(year => {
+        const fcf = initialFCF * Math.pow(1 + g, year);
+        const pv = fcf / Math.pow(1 + r, year);
+        pvSum += pv;
+        return { year, fcf, pv };
+    });
+
+    const finalFCF = fcfYears[4].fcf;
+    const terminalValue = (finalFCF * (1 + tg)) / Math.max(0.01, (r - tg));
+    const pvTerminalValue = terminalValue / Math.pow(1 + r, 5);
+    const enterpriseValue = pvSum + pvTerminalValue;
+    const intrinsicValuePerShare = enterpriseValue / 10;
+    const marginOfSafety = ((intrinsicValuePerShare - marketPrice) / intrinsicValuePerShare) * 100;
+
+    return (
+        <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-4 space-y-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 pb-3">
+                <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <Scale className="text-blue-400" size={18} />
+                        Simulador de Valuación DCF y Margen de Seguridad
+                    </h4>
+                    <p className="text-[11px] text-slate-400">Descuento de Flujos de Caja Libre (FCF) proyectados al WACC</p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
+                        marginOfSafety >= 25 
+                            ? 'bg-emerald-950/70 border-emerald-500/50 text-emerald-300' 
+                            : marginOfSafety > 0 
+                            ? 'bg-amber-950/70 border-amber-500/50 text-amber-300'
+                            : 'bg-rose-950/70 border-rose-500/50 text-rose-300'
+                    }`}>
+                        Margen: {marginOfSafety.toFixed(1)}% {marginOfSafety >= 25 ? '✓ Atractivo' : '⚠️ Ajustado'}
+                    </span>
+                </div>
+            </div>
+
+            {/* Controles interactivos */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+                <div>
+                    <label className="text-slate-400 block text-[10px] mb-1">Crecimiento FCF (Años 1-5)</label>
+                    <div className="flex items-center gap-1.5">
+                        <input 
+                            type="range" min="2" max="25" step="0.5" 
+                            value={growthRate} 
+                            onChange={(e) => setGrowthRate(parseFloat(e.target.value))} 
+                            className="w-full accent-blue-500" 
+                        />
+                        <span className="font-mono text-white text-xs w-10 text-right">{growthRate}%</span>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-slate-400 block text-[10px] mb-1">Tasa WACC (Descuento)</label>
+                    <div className="flex items-center gap-1.5">
+                        <input 
+                            type="range" min="6" max="16" step="0.5" 
+                            value={wacc} 
+                            onChange={(e) => setWacc(parseFloat(e.target.value))} 
+                            className="w-full accent-blue-500" 
+                        />
+                        <span className="font-mono text-white text-xs w-10 text-right">{wacc}%</span>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-slate-400 block text-[10px] mb-1">Crecimiento Terminal (g)</label>
+                    <div className="flex items-center gap-1.5">
+                        <input 
+                            type="range" min="1.5" max="4.5" step="0.2" 
+                            value={terminalGrowth} 
+                            onChange={(e) => setTerminalGrowth(parseFloat(e.target.value))} 
+                            className="w-full accent-blue-500" 
+                        />
+                        <span className="font-mono text-white text-xs w-10 text-right">{terminalGrowth}%</span>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-slate-400 block text-[10px] mb-1">Precio Mercado Actual</label>
+                    <div className="flex items-center gap-1.5">
+                        <input 
+                            type="range" min="30" max="120" step="1" 
+                            value={marketPrice} 
+                            onChange={(e) => setMarketPrice(parseFloat(e.target.value))} 
+                            className="w-full accent-blue-500" 
+                        />
+                        <span className="font-mono text-white text-xs w-12 text-right">${marketPrice}</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Resultados principales */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                    <p className="text-[10px] text-slate-400">Valor Intrínseco DCF</p>
+                    <p className="text-base font-extrabold text-emerald-400">${intrinsicValuePerShare.toFixed(2)} MXN</p>
+                </div>
+                <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                    <p className="text-[10px] text-slate-400">Precio en Bolsa (Mercado)</p>
+                    <p className="text-base font-extrabold text-white">${marketPrice.toFixed(2)} MXN</p>
+                </div>
+                <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                    <p className="text-[10px] text-slate-400">Suma PV (Años 1-5)</p>
+                    <p className="text-base font-bold text-blue-300">${(pvSum / 10).toFixed(2)} MXN</p>
+                </div>
+                <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
+                    <p className="text-[10px] text-slate-400">PV Valor Terminal</p>
+                    <p className="text-base font-bold text-purple-300">${(pvTerminalValue / 10).toFixed(2)} MXN</p>
+                </div>
+            </div>
+
+            {/* Tabla Value vs Growth */}
+            <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
+                <p className="font-bold text-slate-200 mb-2 flex items-center justify-between">
+                    <span>Múltiplos Comparables: Value (Berkshire) vs Growth (Nvidia)</span>
+                    <span className="text-[10px] font-normal text-slate-400">P/E · EV/EBITDA · PEG</span>
+                </p>
+                <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
+                    <div className="bg-slate-900 p-2 rounded border border-slate-800">
+                        <p className="text-slate-400 text-[10px]">Métrica</p>
+                        <p className="font-semibold text-slate-300 mt-1">P/E Ratio</p>
+                        <p className="font-semibold text-slate-300">EV/EBITDA</p>
+                        <p className="font-semibold text-slate-300">PEG Ratio</p>
+                    </div>
+                    <div className="bg-slate-900 p-2 rounded border border-blue-900/40">
+                        <p className="text-blue-400 font-bold text-[10px]">Berkshire (Value)</p>
+                        <p className="text-white mt-1">17.2x</p>
+                        <p className="text-white">12.5x</p>
+                        <p className="text-emerald-400 font-bold">1.1x (Defensivo)</p>
+                    </div>
+                    <div className="bg-slate-900 p-2 rounded border border-purple-900/40">
+                        <p className="text-purple-400 font-bold text-[10px]">Nvidia (Growth)</p>
+                        <p className="text-white mt-1">42.0x</p>
+                        <p className="text-white">34.8x</p>
+                        <p className="text-purple-300 font-bold">0.9x (Crecimiento &gt; 45%)</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs mb-3">
-            <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
-                <p className="text-[10px] text-slate-400">Valor Intrínseco DCF</p>
-                <p className="text-sm font-bold text-emerald-400">$88.50 MXN</p>
-            </div>
-            <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
-                <p className="text-[10px] text-slate-400">Precio Mercado Actual</p>
-                <p className="text-sm font-bold text-white">$68.20 MXN</p>
-            </div>
-            <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
-                <p className="text-[10px] text-slate-400">Margen de Seguridad</p>
-                <p className="text-sm font-bold text-emerald-400">+29.8%</p>
-            </div>
-            <div className="bg-slate-800 p-2.5 rounded-lg border border-slate-700">
-                <p className="text-[10px] text-slate-400">Múltiplo P/E vs Media</p>
-                <p className="text-sm font-bold text-amber-400">16.5x (vs 21.0x)</p>
-            </div>
-        </div>
-        <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-[11px] text-slate-300 space-y-1">
-            <p><strong>Fórmula DCF:</strong> $PV = \sum \frac{FCF_t}{(1 + WACC)^t} + \frac{TerminalValue}{(1 + WACC)^n}$</p>
-            <p className="text-slate-400">Comprar activos cuando el precio de mercado ofrece un descuento mínimo del 25% respecto a su valor presente neto garantiza protección de capital.</p>
-        </div>
-    </div>
-);
+    );
+};
 
 // ── 3. ALGO TRADING & BACKTESTING ──────────────────
 const AlgoTradingTool = () => (
@@ -865,7 +984,9 @@ export default function CoursePlayerPhase5() {
                 ))}
 
                 <div className="bg-slate-900/60 rounded-2xl p-4 md:p-6 border border-slate-800 shadow-xl mb-6 min-h-[300px] flex flex-col justify-center relative overflow-hidden">
-                    {renderVisual(lessonData.visualType)}
+                    <ErrorBoundary fallbackMessage="Error al cargar la herramienta interactiva de esta lección">
+                        {renderVisual(lessonData.visualType)}
+                    </ErrorBoundary>
                 </div>
 
                 <div className="space-y-6 mb-8 animate-fade-in">

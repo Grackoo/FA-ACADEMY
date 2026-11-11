@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, Link } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -14,6 +14,9 @@ import CoursePlayerPhase3 from './pages/CoursePlayerPhase3';
 import CoursePlayerPhase4 from './pages/CoursePlayerPhase4';
 import CoursePlayerPhase5 from './pages/CoursePlayerPhase5';
 import AdminDashboard from './pages/AdminDashboard';
+import Terminos from './pages/Terminos';
+import Privacidad from './pages/Privacidad';
+import NotFound from './pages/NotFound';
 
 import Tools from './pages/Tools';
 import Pricing from './pages/Pricing';
@@ -34,17 +37,17 @@ const Footer: React.FC = () => (
       <div>
         <h4 className="text-white font-bold mb-4">Plataforma</h4>
         <ul className="space-y-2 text-sm">
-          <li><a href="/#catalog" className="hover:text-primary-400 transition-colors">Academy</a></li>
-          <li><a href="/pricing" className="hover:text-primary-400 transition-colors">Precios</a></li>
-          <li><a href="/tools" className="hover:text-primary-400 transition-colors">Herramientas</a></li>
+          <li><Link to="/#catalog" className="hover:text-primary-400 transition-colors">Academy</Link></li>
+          <li><Link to="/pricing" className="hover:text-primary-400 transition-colors">Precios</Link></li>
+          <li><Link to="/tools" className="hover:text-primary-400 transition-colors">Herramientas</Link></li>
         </ul>
       </div>
       <div>
         <h4 className="text-white font-bold mb-4">Legal</h4>
         <ul className="space-y-2 text-sm">
-          <li><a href="#" className="hover:text-primary-400 transition-colors">Términos</a></li>
-          <li><a href="#" className="hover:text-primary-400 transition-colors">Privacidad</a></li>
-          <li><a href="#" className="hover:text-primary-400 transition-colors">Cookies</a></li>
+          <li><Link to="/terminos" className="hover:text-primary-400 transition-colors">Términos y Condiciones</Link></li>
+          <li><Link to="/privacidad" className="hover:text-primary-400 transition-colors">Aviso de Privacidad</Link></li>
+          <li><Link to="/privacidad" className="hover:text-primary-400 transition-colors">Política de Cookies</Link></li>
         </ul>
       </div>
       <div>
@@ -53,7 +56,7 @@ const Footer: React.FC = () => (
       </div>
     </div>
     <div className="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
-      © 2024 FA Academy. Todos los derechos reservados.
+      © 2026 FA Academy. Todos los derechos reservados.
     </div>
   </footer>
 );
@@ -84,9 +87,11 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/academy" element={<Home />} />
+              <Route path="/academy" element={<Navigate to="/" replace />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/terminos" element={<Terminos />} />
+              <Route path="/privacidad" element={<Privacidad />} />
               <Route path="/academy/:id" element={<CourseDetail />} />
 
               {/* Public Phases */}
@@ -117,7 +122,7 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               } />
 
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />

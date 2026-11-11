@@ -1,27 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Página Principal -->
+  <!-- Página Principal y Catálogo -->
   <url>
     <loc>https://fa-academy.vercel.app/</loc>
-    <lastmod>2026-03-20</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Herramientas Gratuitas -->
+
+  <!-- Fases y Cursos de Especialización -->
+  <url>
+    <loc>https://fa-academy.vercel.app/academy/fase-1</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://fa-academy.vercel.app/academy/fase-2</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://fa-academy.vercel.app/academy/fase-3</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://fa-academy.vercel.app/academy/fase-4</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://fa-academy.vercel.app/academy/fase-5</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Módulos de Acceso Público -->
+  <url>
+    <loc>https://fa-academy.vercel.app/course/phase/1</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fa-academy.vercel.app/course/phase/2</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Herramientas Gratuitas y Simuladores -->
   <url>
     <loc>https://fa-academy.vercel.app/tools</loc>
-    <lastmod>2026-03-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Precios -->
+  <!-- Membresías y Certificaciones -->
   <url>
     <loc>https://fa-academy.vercel.app/pricing</loc>
-    <lastmod>2026-03-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- Páginas Legales -->
+  <url>
+    <loc>https://fa-academy.vercel.app/terminos</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://fa-academy.vercel.app/privacidad</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>

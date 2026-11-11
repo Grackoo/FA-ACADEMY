@@ -9,8 +9,16 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, phase, requireAdmin = false }) => {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated, user, isLoading } = useAuth();
     const location = useLocation();
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-[#0B1120] flex items-center justify-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-500"></div>
+            </div>
+        );
+    }
 
     if (!isAuthenticated) {
         // Redirigir al login y guardar la ruta original

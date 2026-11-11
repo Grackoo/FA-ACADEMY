@@ -7,6 +7,7 @@ import {
   CheckCircle, ChevronRight, Book, Scale, Building2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // --- DATOS FA ACADEMY: MÓDULO 1 ---
 
@@ -36,7 +37,7 @@ const courseData = [
       {
         title: "Matemáticas: El Poder del Interés Compuesto",
         content: "El lenguaje del dinero. Protege tu capital del enemigo silencioso.",
-        details: "En 2026, Banxico mantiene la inflación cerca del 3%. Si tu inversión nominal da 9%, y la inflación es 4.5%, tu riqueza real crece mucho menos. Pero aquí entra la Octava Maravilla: el Interés Compuesto. No solo ganas sobre tu capital, sino que ganas intereses sobre los intereses ya ganados. Es el motor de la riqueza generacional.",
+        details: "En 2026, Banxico mantiene su objetivo de inflación en torno al 3.0% (+/- 1%). Como supuesto didáctico ilustrativo para entender el cálculo de la Tasa Real: si tu inversión nominal rinde 9.0% y enfrentaras una inflación hipotética del 4.5%, tu riqueza real no crece 9%, sino que se reduce por el efecto inflacionario. Aquí entra la Octava Maravilla: el Interés Compuesto. No solo ganas sobre tu capital, sino que ganas intereses sobre los intereses ya ganados. Es el motor de la riqueza generacional.",
         visualType: "financial_math",
         videoUrls: ["9QI0Q-eibUE"],
         speakerNotes: "Entender la 'Tasa Real' te salvará de inversiones engañosas. Un pagaré bancario del 5% cuando la inflación es del 6%, te está haciendo perder dinero silenciosamente.",
@@ -129,7 +130,7 @@ const courseData = [
 
 const quizQuestions = [
   { id: 1, question: "Según CONDUSEF, ¿qué define tu perfil de inversión?", options: ["Tu edad y tu signo zodiacal.", "La intersección entre tu capacidad financiera y tu estabilidad psicológica.", "Cuánto dinero quieres ganar en un mes.", "Tu nivel de estudios."], correct: 1 },
-  { id: 2, question: "Si inviertes a una tasa del 9% y la inflación es del 4.5%, ¿qué estás calculando si ajustas esa diferencia?", options: ["La Tasa Nominal.", "La Tasa Real.", "El Interés Compuesto.", "El CAT."], correct: 1 },
+  { id: 2, question: "En un ejercicio didáctico: si inviertes a una tasa nominal del 9.0% y la inflación hipotética es del 4.5%, ¿qué métrica estás determinando al descontar el impacto inflacionario?", options: ["La Tasa Nominal.", "La Tasa Real.", "El Interés Compuesto.", "El CAT."], correct: 1 },
   { id: 3, question: "¿Qué hace la 'Octava Maravilla' (El Interés Compuesto)?", options: ["Te cobra impuestos mensuales.", "Genera intereses solo sobre tu capital inicial.", "Genera intereses sobre los intereses ya ganados, creando una curva exponencial.", "Evita que la bolsa caiga."], correct: 2 },
   { id: 4, question: "¿Qué institución garantiza tus ahorros bancarios hasta por ~3.2 millones de pesos en México?", options: ["BANXICO", "CNBV", "IPAB", "BMV"], correct: 2 },
   { id: 5, question: "¿Qué debes hacer si una plataforma de inversión NO aparece en el SIPRES?", options: ["Invertir poco a poco.", "Evitarla completamente, es una estafa potencial.", "Pedirles su RFC.", "Confiar si tienen muchos seguidores en Instagram."], correct: 1 },
@@ -626,7 +627,9 @@ export default function AppFAAcademy() {
 
         <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><Layers size={120} className="text-slate-500" /></div>
-          {renderVisual(lessonData.visualType)}
+          <ErrorBoundary fallbackMessage="Error al cargar el módulo visual">
+            {renderVisual(lessonData.visualType)}
+          </ErrorBoundary>
         </div>
         
         <div className="space-y-6 mb-8 animate-fade-in" style={{animationDelay: '0.2s'}}>

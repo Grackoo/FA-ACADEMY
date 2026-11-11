@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MODULES, getIcon } from '../constants';
+import SEO from '../components/SEO';
 import { 
   ArrowLeft, BookOpen, BarChart3, Lock, PlayCircle, 
   Download, FileSpreadsheet, Printer, CheckCircle2, Award, 
@@ -250,20 +251,25 @@ const CourseDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 pb-20">
+      <SEO 
+        title={`Fase ${module.phase}: ${module.title} | FA Academy`}
+        description={module.description}
+        url={`https://fa-academy.vercel.app/academy/${module.id}`}
+      />
 
       {/* Module Header */}
       <div className={`${module.color} text-white pt-24 pb-12 shadow-2xl`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link to="/academy" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors">
+          <Link to="/#catalog" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors font-medium">
             <ArrowLeft size={16} className="mr-2" />
-            Volver a la Academia
+            Volver al Catálogo de Cursos
           </Link>
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
               {getIcon(module.icon, "w-10 h-10 text-white")}
             </div>
             <div>
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 mb-2 flex-wrap">
                 <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wide">Fase {module.phase}</span>
                 <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wide flex items-center gap-1">
                   <BarChart3 size={12} /> {module.level}
@@ -302,25 +308,32 @@ const CourseDetail: React.FC = () => {
                 </span>
               </div>
 
-              <div className="divide-y divide-slate-700">
+              <div className="divide-y divide-slate-700/70">
                 {module.topics.map((topic, index) => (
                   <Link 
                     to={`/course/phase/${module.phase}`} 
                     key={index} 
-                    className="p-6 hover:bg-slate-750 transition-colors group cursor-pointer block hover:bg-slate-700/50"
+                    className="p-5 sm:p-6 transition-all group cursor-pointer block hover:bg-slate-700/50 border-l-4 border-transparent hover:border-primary-500"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-sm font-bold flex-shrink-0 group-hover:bg-primary-900 group-hover:text-primary-400 transition-colors">
+                    <div className="flex items-start sm:items-center gap-4">
+                      <div className="w-9 h-9 rounded-xl bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold flex-shrink-0 group-hover:bg-primary-500 group-hover:text-white transition-all shadow-md">
                         {index + 1}
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-slate-200 mb-2 group-hover:text-primary-400 transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-primary-400">Lección {index + 1}</span>
+                        </div>
+                        <h4 className="font-bold text-slate-100 mb-1 group-hover:text-primary-300 transition-colors group-hover:underline text-base">
                           {topic.title}
                         </h4>
-                        <p className="text-sm text-slate-400 leading-relaxed">{topic.content}</p>
+                        <p className="text-sm text-slate-400 leading-relaxed line-clamp-2">{topic.content}</p>
                       </div>
-                      <div className="self-center">
-                        <PlayCircle size={24} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
+                      <div className="flex items-center gap-2 flex-shrink-0 self-center">
+                        <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-600/20 text-primary-300 border border-primary-500/30 text-xs font-semibold group-hover:bg-primary-600 group-hover:text-white transition-all shadow-sm">
+                          Iniciar Lección
+                          <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                        </span>
+                        <PlayCircle size={24} className="text-primary-400 sm:hidden" />
                       </div>
                     </div>
                   </Link>

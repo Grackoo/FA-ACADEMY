@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { downloadAssetAllocationTemplate, downloadFiscalDeclarationTemplate } from '../utils/resources';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // --- DATOS FASE 4: GESTIÓN DE RIESGO, PORTAFOLIO Y FISCALIDAD SAT 2026 ---
 
@@ -955,7 +956,9 @@ export default function CoursePlayerPhase4() {
         ))}
 
         <div className="bg-slate-900/60 rounded-2xl p-4 md:p-6 border border-slate-800 shadow-xl mb-6 min-h-[300px] flex flex-col justify-center relative overflow-hidden">
-          {renderVisual(lessonData.visualType)}
+          <ErrorBoundary fallbackMessage="Error al cargar la herramienta interactiva de portafolios">
+            {renderVisual(lessonData.visualType)}
+          </ErrorBoundary>
         </div>
 
         <div className="space-y-6 mb-8 animate-fade-in">

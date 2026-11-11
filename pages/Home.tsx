@@ -651,28 +651,61 @@ const Home: React.FC = () => {
             {MODULES.map((module) => (
               <Link to={`/academy/${module.id}`} key={module.id} className="group flex flex-col bg-slate-800 rounded-2xl border border-slate-700 shadow-lg overflow-hidden hover:shadow-2xl hover:border-primary-500/50 transition-all">
                 <div className="relative h-48 overflow-hidden">
-                  <img src={module.image} alt={module.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />
+                  <img 
+                    src={module.image} 
+                    alt={module.title} 
+                    onError={(e) => { 
+                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=800"; 
+                    }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" 
+                  />
                   <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-white border border-slate-700">
                     {module.level}
                   </div>
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex items-center justify-between mb-3 text-xs text-slate-400 font-medium">
-                    <div className="flex items-center gap-1">
-                      <Clock size={14} />
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="bg-primary-500/15 text-primary-400 font-bold text-xs px-2.5 py-0.5 rounded-full border border-primary-500/30 flex items-center gap-1">
+                      <BookOpen size={12} />
+                      {module.topics.length} Lecciones
+                    </span>
+                    <span className="text-xs text-slate-400 flex items-center gap-1">
+                      <Clock size={12} />
                       {module.duration}
-                    </div>
-                    <div className="flex items-center gap-1 text-amber-500">
-                      <Star size={14} fill="currentColor" />
+                    </span>
+                    <span className="text-xs text-amber-400 flex items-center gap-1 ml-auto">
+                      <Star size={12} fill="currentColor" />
                       {module.rating}
-                    </div>
+                    </span>
                   </div>
+
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">
                     {module.title}
                   </h3>
-                  <p className="text-slate-400 text-sm mb-6 flex-1">
+                  <p className="text-slate-400 text-sm mb-4 leading-relaxed">
                     {module.description}
                   </p>
+
+                  {/* Temario publicado por fase */}
+                  <div className="mt-auto mb-5 pt-3 border-t border-slate-700/60">
+                    <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                      <span>Temario ({module.topics.length} lecciones):</span>
+                    </p>
+                    <ul className="text-xs text-slate-300 space-y-1">
+                      {module.topics.slice(0, 3).map((topic, idx) => (
+                        <li key={idx} className="truncate flex items-center gap-1.5 text-slate-300">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary-400 shrink-0"></span>
+                          <span className="truncate">{topic.title}</span>
+                        </li>
+                      ))}
+                      {module.topics.length > 3 && (
+                        <li className="text-[11px] text-primary-400 font-medium pl-3">
+                          + {module.topics.length - 3} lecciones especializadas más...
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
                   <div className="w-full py-3 bg-slate-700 text-white text-center rounded-lg font-semibold text-sm group-hover:bg-primary-600 transition-colors">
                     Comenzar Módulo
                   </div>

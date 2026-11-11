@@ -21,27 +21,28 @@ const Navbar: React.FC = () => {
     visibleLinks.push({ name: 'Panel Admin', path: '/admin' });
   }
 
-  const handleNavClick = (path: string) => {
+  const handleNavClick = (path: string, e?: React.MouseEvent) => {
     setIsOpen(false);
     if (path.includes('#')) {
       const [route, hash] = path.split('#');
-      if (location.pathname !== route) {
-        navigate(path);
-        // Timeout to allow navigation before scrolling
+      const targetRoute = route || '/';
+      if (location.pathname === targetRoute) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
         setTimeout(() => {
           const element = document.getElementById(hash);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
           }
-        }, 100);
-      } else {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+        }, 150);
       }
     } else {
-      navigate(path);
+      if (location.pathname === path && !location.hash) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
@@ -76,17 +77,19 @@ const Navbar: React.FC = () => {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             {visibleLinks.map((link) => (
-              <button
+              <Link
                 key={link.name}
-                onClick={() => handleNavClick(link.path)}
+                to={link.path}
+                onClick={(e) => handleNavClick(link.path, e)}
                 className={`text-sm font-medium transition-all hover:scale-105 ${
-                  location.pathname === link.path.split('#')[0] && !link.path.includes('#')
+                  (location.pathname === link.path.split('#')[0] && !link.path.includes('#')) ||
+                  (link.path.includes('#') && location.hash === `#${link.path.split('#')[1]}`)
                     ? 'text-primary-400' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {link.name}
-              </button>
+              </Link>
             ))}
             
             {isAuthenticated ? (
@@ -135,13 +138,14 @@ const Navbar: React.FC = () => {
         <div className="md:hidden bg-slate-900 border-b border-slate-800">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {visibleLinks.map((link) => (
-              <button
+              <Link
                 key={link.name}
-                onClick={() => handleNavClick(link.path)}
+                to={link.path}
+                onClick={(e) => handleNavClick(link.path, e)}
                 className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800"
               >
                 {link.name}
-              </button>
+              </Link>
             ))}
             
             {isAuthenticated ? (

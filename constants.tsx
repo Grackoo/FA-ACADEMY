@@ -32,10 +32,10 @@ export const MODULES: Module[] = [
     level: 'Básico',
     duration: '4 Semanas',
     rating: 4.9,
-    description: 'Diagnostica tu salud financiera, erradica la deuda mala y comprende las matemáticas del interés compuesto y el sistema regulado en México.',
+    description: 'Diagnostica tu salud financiera, erradica la deuda tóxica y comprende las matemáticas del interés compuesto, la inflación de Banxico y el Sistema Financiero Mexicano (CNBV, SIPRES, CONDUSEF).',
     icon: 'Building2',
     color: 'bg-emerald-500',
-    image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800', 
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800', 
     topics: [
       {
         title: 'El Perfil del Inversionista 2026',
@@ -74,18 +74,18 @@ export const MODULES: Module[] = [
     level: 'Básico',
     duration: '6 Semanas',
     rating: 4.8,
-    description: 'Aprende a operar a través de casas de bolsa reguladas en México (GBM), diferenciar series accionarias y diversificar con ETFs y FIBRAS.',
+    description: 'Aprende a operar a través de casas de bolsa reguladas en México (GBM, Bursanet). Renta fija soberana (CETES, Bonos M, Udibonos), SOFIPOs exentas de impuestos, ETFs globales y FIBRAS inmobiliarias.',
     icon: 'Search',
     color: 'bg-blue-500',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'La Anatomía de una Acción',
-        content: 'Series accionarias (A, B, L), derechos patrimoniales y Certificados de Participación Ordinaria (CPOs) como CEMEXCPO.'
+        content: 'Series accionarias (A, B, L), derechos corporativos y Certificados de Participación Ordinaria (CPOs) como CEMEXCPO.'
       },
       {
-        title: 'Análisis Fundamental: Evaluando el Negocio',
-        content: 'Lectura de estados financieros: Margen EBITDA, Return on Equity (ROE) y Flujo de Caja Libre (Free Cash Flow).'
+        title: 'Renta Fija Soberana: CETES, Bonos M, Udibonos y SOFIPOs',
+        content: 'Blindaje contra la inflación, tasas soberanas libres de riesgo en México y exención fiscal de 5 UMAs anuales en SOFIPOs.'
       },
       {
         title: 'Caso Práctico 2026: CEMEX ($CEMEXCPO)',
@@ -102,6 +102,18 @@ export const MODULES: Module[] = [
       {
         title: 'Diferenciación de Mercados (BMV vs. SIC)',
         content: 'El Sistema Internacional de Cotizaciones: cómo comprar Wall Street desde México en pesos y con ventaja fiscal del Art. 129 LISR.'
+      },
+      {
+        title: 'Casas de Bolsa y Seguridad Inicial',
+        content: 'Selección de brókers regulados por la CNBV (GBM, Bursanet), contratos de intermediación bursátil y formato W-8BEN para dividendos.'
+      },
+      {
+        title: 'Tipos de Activos: ETFs y FIBRAS',
+        content: 'Estrategias de inversión indexada para principiantes frente al stock picking individual para mitigar el riesgo no sistemático.'
+      },
+      {
+        title: 'Análisis Fundamental: Evaluación de Negocios y Estados Financieros',
+        content: 'Lectura de las 3 piedras angulares: Estado de Resultados (EBITDA), Balance General (Deuda/Equity) y Flujo de Caja Libre (FCF).'
       }
     ]
   },
@@ -112,10 +124,10 @@ export const MODULES: Module[] = [
     level: 'Intermedio',
     duration: '5 Semanas',
     rating: 4.7,
-    description: 'Domina la lectura de gráficos, acción del precio (BOS/CHoCH), Fibonacci, gestión de riesgo con breakeven al 25% y simulador TradingView.',
+    description: 'Domina la lectura del rastro institucional: velas japonesas (OHLC), estructura de mercado (HH/LL, BOS, CHoCH), niveles áureos de Fibonacci, gestión de riesgo con breakeven al 25% y estación TradingView.',
     icon: 'CandlestickChart',
     color: 'bg-indigo-500',
-    image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'El Lenguaje de las Velas Japonesas',
@@ -170,10 +182,10 @@ export const MODULES: Module[] = [
     level: 'Avanzado',
     duration: '4 Semanas',
     rating: 5.0,
-    description: 'Aprende a construir carteras Core-Satellite, rebalancear anualmente, calcular ratios Sharpe/Sortino y optimizar tu Declaración Anual ante el SAT.',
+    description: 'Aprende a construir carteras profesionales Core-Satellite (70/30), dominar el rebalanceo anual disciplinado, calcular ratios Sharpe/Sortino y optimizar el Art. 129 de la LISR en tu Declaración Anual ante el SAT.',
     icon: 'ShieldAlert',
     color: 'bg-amber-500',
-    image: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'Caso de Estudio: Bimbo vs Flowers Foods (BMV / NYSE)',
@@ -216,10 +228,10 @@ export const MODULES: Module[] = [
     level: 'Experto',
     duration: '8 Semanas',
     rating: 4.9,
-    description: 'Venta en corto, valuación por múltiplos y DCF, trading algorítmico, opciones financieras con griegas completas y tesis de inversión profesional.',
+    description: 'Estrategias avanzadas para inversores sofisticados: venta en corto (short selling), valuación por múltiplos y DCF, trading cuantitativo algorítmico, opciones con griegas (Calls/Puts) y tesis de inversión profesional.',
     icon: 'Bot',
     color: 'bg-rose-500',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'Venta en Corto (Short Selling) y Short Squeeze',

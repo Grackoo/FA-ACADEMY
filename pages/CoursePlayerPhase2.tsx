@@ -8,6 +8,7 @@ import {
   Factory, Globe, Coins, UserCheck, ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // --- DATOS FA ACADEMY: MÓDULO 2 ---
 
@@ -38,16 +39,16 @@ const courseData = [
         ]
       },
       {
-        title: "Análisis Fundamental: Evaluando el Negocio",
-        content: "Buscando el Valor Intrínseco oculto bajo el precio.",
-        details: "El Análisis Fundamental se enfoca en los estados financieros para saber si el negocio es sano. Si el Valor Intrínseco (lo que realmente vale) es mayor al Precio de Mercado, la acción está 'barata'. Usamos métricas clave como el EBITDA (el corazón operativo), ROE (eficiencia del capital) y Free Cash Flow (efectivo real disponible).",
-        visualType: "fundamental_metrics",
-        
-        speakerNotes: "El precio es lo que pagas, el valor es lo que obtienes. Un P/E bajo no siempre significa que esté barata; a veces es una 'trampa de valor' porque el negocio se está hundiendo.",
+        title: "Renta Fija Soberana: CETES, Bonos M, Udibonos y SOFIPOs",
+        content: "La base de cualquier portafolio patrimonial: cómo proteger el poder adquisitivo con deuda gubernamental e instrumentos protegidos contra la inflación.",
+        details: "Antes de aventurarte en renta variable o acciones individuales, debes dominar la renta fija mexicana. CETES (Certificados de la Tesorería) son deuda directa de Banxico y el activo libre de riesgo por excelencia en México. Para plazos largos de 3 a 30 años existen los Bonos M (tasa fija) y los Udibonos (tasa fija real sobre el valor de la UDI, garantizando ganarle a la inflación). Además, las SOFIPOs reguladas ofrecen rendimientos competitivos y exención fiscal de ISR hasta por 5 UMAs anuales (~$198,000 MXN en 2026), protegidas por el fondo Prosofipo (25,000 UDIs).",
+        visualType: "fixed_income_tool",
+        speakerNotes: "Los CETES son para liquidez y fondo de emergencia (28 a 91 días). Los Udibonos son tu escudo generacional a 10-30 años. Nunca dejes tu dinero ocioso en el banco cuando CETES directo ofrece inversión sin intermediarios ni comisiones.",
         concepts: [
-          { term: "EBITDA", def: "Ganancias antes de intereses, impuestos, depreciaciones y amortizaciones. Muestra cuánto efectivo genera la operación pura." },
-          { term: "ROE", def: "Return on Equity. Mide qué tanta ganancia genera la empresa utilizando el dinero que pusieron los accionistas." },
-          { term: "Free Cash Flow", def: "Flujo de Caja Libre. El dinero que sobra después de pagar operaciones y mantener las fábricas. Si es negativo constantemente, cuidado." }
+          { term: "CETES", def: "Certificados de la Tesorería. Deuda gubernamental a descuento emitida por la Secretaría de Hacienda." },
+          { term: "Udibonos", def: "Bonos de Desarrollo indizados a la inflación (UDIs). Pagan cupones semestrales a tasa fija real." },
+          { term: "Bonos M", def: "Bonos de Desarrollo a tasa fija a plazos de hasta 30 años con pago de intereses cada 182 días." },
+          { term: "PROSOFIPO", def: "Fondo de protección al ahorro en SOFIPOs hasta por 25,000 UDIs (~$205,000 MXN) por cliente." }
         ]
       },
       {
@@ -134,9 +135,9 @@ const courseData = [
         ]
       },
       {
-        title: "Análisis Fundamental Básico",
-        content: "Aprendiendo a leer la etiqueta nutricional de una empresa.",
-        details: "Si compras una acción individual, estás comprando un negocio. Necesitas saber si el negocio es sano. Esto lo vemos en sus Estados Financieros: 1) Estado de Resultados (¿Hay ganancias?), 2) Balance General (¿Tiene más deudas que dinero en banco?), 3) Flujo de Efectivo (¿Realmente entra dinero a la caja o solo es contabilidad creativa?).",
+        title: "Análisis Fundamental: Evaluación de Negocios y Estados Financieros",
+        content: "Aprendiendo a leer la etiqueta nutricional de una empresa: Balance, Resultados y Flujo de Caja.",
+        details: "El Análisis Fundamental se enfoca en los estados financieros para saber si el negocio es sano. Si el Valor Intrínseco (lo que realmente vale) es mayor al Precio de Mercado, la acción está barata. Analizamos las 3 piedras angulares: 1) Estado de Resultados (Ventas, Margen EBITDA y Utilidad Neta), 2) Balance General (Activos, Pasivos y Ratio Deuda/Equity), y 3) Estado de Flujo de Efectivo (Free Cash Flow real disponible para recompras o dividendos).",
         visualType: "fundamental_basics",
         newsSnippet: {
             title: "El Peligro de 'Las Acciones Meme'",
@@ -145,8 +146,9 @@ const courseData = [
         },
         speakerNotes: "El negocio de una empresa es ganar dinero y sobrarle en caja. Punto. Si la empresa lleva 5 años perdiendo millones, no importa qué tan innovador suene su producto, es una inversión de muy alto riesgo.",
         concepts: [
-          { term: "Ingresos / Ventas", def: "Todo el dinero bruto que logró facturar la empresa por vender sus productos." },
-          { term: "Utilidad Neta", def: "Lo que realmente queda de ganancia limpia después de pagar empleados, impuestos y todo lo demás." },
+          { term: "EBITDA", def: "Ganancias antes de intereses, impuestos, depreciaciones y amortizaciones. Muestra cuánto efectivo genera la operación pura." },
+          { term: "ROE", def: "Return on Equity. Mide qué tanta ganancia genera la empresa utilizando el dinero que pusieron los accionistas." },
+          { term: "Free Cash Flow", def: "Flujo de Caja Libre. El dinero que sobra después de pagar operaciones y mantener las fábricas. Si es negativo constantemente, cuidado." },
           { term: "Deuda / Equity", def: "Ratio simple: cuánto de la empresa es dinero prestado del banco versus cuánto es dinero de los dueños. Si es muy alta, el negocio tiene riesgo." }
         ]
       }
@@ -159,7 +161,12 @@ const quizQuestions = [
   { id: 2, question: "¿Qué mide exactamente el Flujo de Caja Libre (Free Cash Flow)?", options: ["El total de ventas del año.", "El dinero en la caja registradora de las tiendas.", "El efectivo real que sobra después de mantener las operaciones y las fábricas.", "La deuda total."], correct: 2 },
   { id: 3, question: "En el Análisis Técnico, ¿qué nos indica un RSI por encima de 70?", options: ["Que la empresa va a quebrar.", "Que la acción está sobrecomprada y podría haber una corrección pronto.", "Que es el momento perfecto para comprar más.", "Que la acción no tiene liquidez."], correct: 1 },
   { id: 4, question: "En el contexto de 2025-2026, ¿por qué han brillado las FIBRAS Industriales?", options: ["Porque ya no se construyen casas.", "Por el impulso de las fábricas que se mudan a México para exportar a EE. UU. (Nearshoring).", "Porque pagan en dólares.", "Por la caída del Bitcoin."], correct: 1 },
-  { id: 5, question: "¿Cuál es la ventaja fiscal de comprar ETFs internacionales a través del SIC en México?", options: ["No pagas ningún impuesto.", "La tasa de ISR sobre la ganancia de capital (venta de acciones) es del 10% definitivo.", "Te devuelven el IVA.", "El gobierno te regala acciones."], correct: 1 },
+  { id: 5, question: "¿Cuál es la ventaja fiscal de comprar acciones y ETFs globales a través del SIC en México?", options: [
+    "No pagas ningún impuesto.",
+    "Tributar bajo el Art. 129 de la LISR con una tasa del 10% sobre la ganancia neta anual en la Declaración Anual (en lugar de acumular a la tabla progresiva de hasta el 35%).",
+    "Te devuelven el IVA al 100%.",
+    "El gobierno mexicano te regala acciones."
+  ], correct: 1 },
   { id: 6, question: "¿Qué permitió el Sistema Internacional de Cotizaciones (SIC) a los inversionistas mexicanos?", options: ["Poder abrir cuentas físicas en un banco de Nueva York.", "Comprar títulos de empresas extranjeras como Apple o Nvidia y ETFs globales operando desde México y en pesos.", "Pagar menos comisiones a Banxico.", "Solo comprar acciones mexicanas como Bimbo."], correct: 1 },
     { id: 7, question: "El paso más crítico al elegir una Casa de Bolsa como GBM o Bursanet es asegurar que:", options: ["Tengan la aplicación más bonita.", "Sus gráficos se vean geniales.", "Estén supervisadas y reguladas estrictamente por la CNBV.", "Ofrezcan invertir desde 50 pesos."], correct: 2 },
     { id: 8, question: "¿Por qué un ETF como 'VOO' o 'IVVPESO' es mucho más seguro para un principiante que comprar acciones de una sola empresa?", options: ["Porque no pagan comisiones nunca.", "Porque invierten por ley solo en Cetes.", "Porque con una sola compra diversificas tu dinero en las 500 empresas más grandes de EE.UU., diluyendo el riesgo.", "Porque garantizan un retorno del 50% anual."], correct: 2 },
@@ -199,6 +206,42 @@ const ActionAnatomy = () => (
             </p>
         </div>
     </div>
+);
+
+const FixedIncomeTool = () => (
+  <div className="mt-6 bg-slate-900 rounded-xl border border-slate-700 p-5 shadow-xl">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 border-b border-slate-800 pb-3">
+      <h4 className="text-sm font-bold text-teal-400 uppercase tracking-wider flex items-center gap-2">
+        <Landmark size={18} />
+        Instrumentos de Renta Fija Soberana en México (2026)
+      </h4>
+      <span className="text-xs bg-teal-500/20 text-teal-300 font-bold px-2.5 py-1 rounded-full border border-teal-500/30">
+        Riesgo Soberano & Escudos Fiscales
+      </span>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs mb-3">
+      <div className="bg-slate-800 p-3 rounded-lg border-l-4 border-emerald-500">
+        <p className="font-bold text-white text-sm">CETES (28-364d)</p>
+        <p className="text-emerald-400 font-bold mt-1 text-xs">Tasa Libre de Riesgo</p>
+        <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">Deuda directa de Banxico. Ideal para fondo de emergencia y liquidez inmediata.</p>
+      </div>
+      <div className="bg-slate-800 p-3 rounded-lg border-l-4 border-blue-500">
+        <p className="font-bold text-white text-sm">Udibonos (3-30 años)</p>
+        <p className="text-blue-400 font-bold mt-1 text-xs">Tasa Real + Inflación</p>
+        <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">Indizados a la UDI. Blindaje absoluto contra subidas de precios a largo plazo.</p>
+      </div>
+      <div className="bg-slate-800 p-3 rounded-lg border-l-4 border-amber-500">
+        <p className="font-bold text-white text-sm">Bonos M (3-30 años)</p>
+        <p className="text-amber-400 font-bold mt-1 text-xs">Cupón Fijo Semestral</p>
+        <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">Pagan intereses cada 182 días a tasa fija conocida desde el día de compra.</p>
+      </div>
+      <div className="bg-slate-800 p-3 rounded-lg border-l-4 border-purple-500">
+        <p className="font-bold text-white text-sm">SOFIPOs Reguladas</p>
+        <p className="text-purple-400 font-bold mt-1 text-xs">Exención 5 UMAs</p>
+        <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">Libre de ISR hasta ~$198,000 MXN. Respaldadas por PROSOFIPO (25,000 UDIs).</p>
+      </div>
+    </div>
+  </div>
 );
 
 const FundamentalMetrics = () => (
@@ -596,6 +639,7 @@ export default function AppFAAcademyModulo2() {
   const renderVisual = (type) => {
     switch(type) {
       case 'action_anatomy': return <ActionAnatomy />;
+      case 'fixed_income_tool': return <FixedIncomeTool />;
       case 'fundamental_metrics': return <FundamentalMetrics />;
       case 'cemex_case': return <CemexCase />;
       case 'technical_psychology': return <TechnicalPsychology />;
@@ -696,7 +740,9 @@ export default function AppFAAcademyModulo2() {
 
         <div className="bg-slate-900/50 rounded-2xl p-4 md:p-8 border border-slate-800 shadow-2xl mb-6 min-h-[320px] flex flex-col justify-center relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none"><LineChart size={120} className="text-slate-500" /></div>
-          {renderVisual(lessonData.visualType)}
+          <ErrorBoundary fallbackMessage="Error al cargar el módulo visual">
+            {renderVisual(lessonData.visualType)}
+          </ErrorBoundary>
         </div>
         
         <div className="space-y-6 mb-8 animate-fade-in" style={{animationDelay: '0.2s'}}>

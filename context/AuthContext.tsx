@@ -32,9 +32,31 @@ async function sha256(message: string): Promise<string> {
 }
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    // Inicialización síncrona desde localStorage para evitar deslogueo en recargas
+    const [user, setUser] = useState<User | null>(() => {
+        try {
+            const cachedUser = localStorage.getItem('fa_academy_user');
+            const cachedAuth = localStorage.getItem('fa_academy_auth');
+            if (cachedUser && cachedAuth === 'true') {
+                return JSON.parse(cachedUser);
+            }
+        } catch (e) {
+            console.error('Error restaurando usuario:', e);
+        }
+        return null;
+    });
+
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+        try {
+            const cachedUser = localStorage.getItem('fa_academy_user');
+            const cachedAuth = localStorage.getItem('fa_academy_auth');
+            return cachedAuth === 'true' && !!cachedUser;
+        } catch {
+            return false;
+        }
+    });
+
+    const [isLoading, setIsLoading] = useState(false);
     const isMock = config.isMockMode;
 
     // Inicializar base de datos de simulación si estamos en modo mock
@@ -62,7 +84,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                             email: 'alumno1@gmail.com',
                             password_hash: studentHash,
                             role: 'student',
-                            allowed_phases: ['1', '2', '3'],
+                            allowed_phases: ['1', '2', '3', '4', '5'],
                             super_link_token: 'SL_TEST1234',
                             token_expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
                             created_at: new Date().toISOString()
@@ -79,15 +101,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             };
             initMockDb();
         }
-
-        // Recuperar sesión persistida
-        const cachedUser = localStorage.getItem('fa_academy_user');
-        const cachedAuth = localStorage.getItem('fa_academy_auth');
-        if (cachedUser && cachedAuth === 'true') {
-            setUser(JSON.parse(cachedUser));
-            setIsAuthenticated(true);
-        }
-        setIsLoading(false);
     }, [isMock]);
 
     const login = async (username: string, pass: string): Promise<{ success: boolean; error?: string }> => {
