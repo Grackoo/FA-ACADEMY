@@ -4,10 +4,12 @@ import {
   Target, Send, Info, BookOpen, Calculator,
   ShieldCheck, Landmark, Brain, Quote, 
   AlertTriangle, Layers, UserCheck, Newspaper,
-  CheckCircle, ChevronRight, Book, Scale, Building2
+  CheckCircle, ChevronRight, Book, Scale, Building2,
+  PlayCircle, Clock
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import ErrorBoundary from '../components/ErrorBoundary';
+import SEO from '../components/SEO';
 
 // --- DATOS FA ACADEMY: MÓDULO 1 ---
 
@@ -23,6 +25,8 @@ const courseData = [
         details: "Según la AMIB, el mayor error del inversionista retail en México es saltarse este paso por 'FOMO' (miedo a quedarse fuera). Tu perfil evoluciona con la edad y tus objetivos. Para metas a corto plazo (ej. pago de impuestos SIATEC), usa deuda gubernamental. Para el retiro, la renta variable es vital. En 2025-2026, el IPC demostró que un perfil 'Agresivo' debe soportar caídas del 20% sin vender.",
         visualType: "investor_profile",
         videoUrls: ["QcvcUhi0jj8"],
+        videoTitle: "Clase Magistral: Determinación del Perfil del Inversionista y Tolerancia al Riesgo",
+        videoDuration: "18 min",
         quote: { 
             text: "Antes de invertir, debes realizar un diagnóstico de tu salud financiera. No puedes invertir dinero que vas a necesitar para pagar la renta el próximo mes. El perfil se define por la intersección entre tu capacidad financiera y tu estabilidad psicológica.", 
             author: "Guía de Educación Financiera, CONDUSEF" 
@@ -40,6 +44,8 @@ const courseData = [
         details: "En 2026, Banxico mantiene su objetivo de inflación en torno al 3.0% (+/- 1%). Como supuesto didáctico ilustrativo para entender el cálculo de la Tasa Real: si tu inversión nominal rinde 9.0% y enfrentaras una inflación hipotética del 4.5%, tu riqueza real no crece 9%, sino que se reduce por el efecto inflacionario. Aquí entra la Octava Maravilla: el Interés Compuesto. No solo ganas sobre tu capital, sino que ganas intereses sobre los intereses ya ganados. Es el motor de la riqueza generacional.",
         visualType: "financial_math",
         videoUrls: ["9QI0Q-eibUE"],
+        videoTitle: "Matemáticas Financieras: El Impacto de la Tasa Real y la Magia del Interés Compuesto",
+        videoDuration: "15 min",
         speakerNotes: "Entender la 'Tasa Real' te salvará de inversiones engañosas. Un pagaré bancario del 5% cuando la inflación es del 6%, te está haciendo perder dinero silenciosamente.",
         concepts: [
           { term: "Inflación (Banxico)", def: "El aumento de precios. Banxico tiene el mandato de mantenerla en un objetivo del 3% (+/- 1%)." },
@@ -555,6 +561,11 @@ export default function AppFAAcademy() {
   if (showQuiz) {
     return (
       <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans p-4 md:p-8 flex flex-col items-center">
+        <SEO 
+          title="Examen Final: Fase 1 - Fundamentos y Mentalidad | FA Academy"
+          description="Evaluación de acreditación oficial para la Fase 1 de FA Academy."
+          url="https://fa-academy.vercel.app/course/phase/1"
+        />
         <div className="max-w-2xl w-full animate-fade-in">
           <h1 className="text-3xl font-bold text-teal-400 mb-2 text-center">Examen FA Academy</h1>
           <p className="text-slate-400 text-center mb-8">Demuestra tu dominio del mercado local.</p>
@@ -591,6 +602,11 @@ export default function AppFAAcademy() {
 
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans flex flex-col">
+      <SEO 
+        title={`Fase 1: ${lessonData.title} | FA Academy`}
+        description={`Lección ${currentLesson + 1} de la Fase 1 de FA Academy: ${lessonData.content}`}
+        url="https://fa-academy.vercel.app/course/phase/1"
+      />
       <header className="bg-[#0f172a]/95 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -612,16 +628,29 @@ export default function AppFAAcademy() {
         </div>
         
         {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
-          <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+          <div key={i} className="mb-6">
+            <div className="mb-2 flex items-center justify-between text-xs text-slate-400 bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800">
+              <span className="font-bold text-white flex items-center gap-2">
+                <PlayCircle size={15} className="text-teal-400" />
+                {lessonData.videoTitle || lessonData.title}
+              </span>
+              {lessonData.videoDuration && (
+                <span className="bg-slate-800 px-2.5 py-1 rounded-md text-teal-400 font-semibold flex items-center gap-1">
+                  <Clock size={12} /> {lessonData.videoDuration}
+                </span>
+              )}
+            </div>
+            <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+                title={lessonData.videoTitle || "Clase Oficial FA Academy"}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         ))}
 

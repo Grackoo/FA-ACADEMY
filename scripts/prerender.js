@@ -271,6 +271,101 @@ const routes = [
     `
   },
   {
+    path: '/course/phase/1',
+    outPath: 'course/phase/1/index.html',
+    title: 'Fase 1: Fundamentos y Mentalidad Financiera | FA Academy',
+    description: 'Reproductor oficial del curso: Fundamentos y Mentalidad Financiera. 7 lecciones especializadas sobre tasa real Banxico, interés compuesto y Sistema Financiero Mexicano.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/1',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800">
+          FA Academy | Fase 1
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Fundamentos y Mentalidad Financiera</h1>
+        <p class="text-slate-400 text-base mb-8">7 lecciones completas con calculadoras interactivas, tasa real didáctica y examen de certificación oficial.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/course/phase/2',
+    outPath: 'course/phase/2/index.html',
+    title: 'Fase 2: El Ecosistema de Inversión | FA Academy',
+    description: 'Reproductor oficial del curso: El Ecosistema de Inversión. 9 lecciones sobre CETES, Bonos M, Udibonos, SOFIPOs exentas, ETFs, FIBRAS y análisis fundamental.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/2',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-950/60 px-3 py-1 rounded-full border border-blue-800">
+          FA Academy | Fase 2
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">El Ecosistema de Inversión</h1>
+        <p class="text-slate-400 text-base mb-8">9 lecciones completas sobre deuda soberana de México, acciones y análisis fundamental de negocios.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/course/phase/3',
+    outPath: 'course/phase/3/index.html',
+    title: 'Fase 3: Análisis Técnico y Gráficos | FA Academy',
+    description: 'Reproductor oficial del curso: Análisis Técnico y Gráficos. 11 lecciones sobre acción del precio, velas japonesas, BOS/CHoCH, Fibonacci y breakeven ratio 1:3.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/3',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-800">
+          FA Academy | Fase 3
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Análisis Técnico y Gráficos</h1>
+        <p class="text-slate-400 text-base mb-8">11 lecciones completas con retrocesos de Fibonacci, calculadora R:B y estación TradingView.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/course/phase/4',
+    outPath: 'course/phase/4/index.html',
+    title: 'Fase 4: Gestión de Riesgo y Portafolio | FA Academy',
+    description: 'Reproductor oficial del curso: Gestión de Riesgo y Portafolio. 8 lecciones sobre modelo Core-Satellite 70/30, rebalanceo anual, Sharpe/Sortino y fiscalidad LISR Art. 129.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/4',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-800">
+          FA Academy | Fase 4
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Gestión de Riesgo y Portafolio</h1>
+        <p class="text-slate-400 text-base mb-8">8 lecciones completas con calculadora de rebalanceo, plantilla descargable y régimen SAT.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/course/phase/5',
+    outPath: 'course/phase/5/index.html',
+    title: 'Fase 5: Estrategias Especializadas | FA Academy',
+    description: 'Reproductor oficial del curso: Estrategias Especializadas. 9 lecciones sobre venta en corto, valuación DCF, opciones con griegas, algoritmos y tesis final de inversión.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/5',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-rose-400 bg-rose-950/60 px-3 py-1 rounded-full border border-rose-800">
+          FA Academy | Fase 5
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Estrategias Especializadas</h1>
+        <p class="text-slate-400 text-base mb-8">9 lecciones completas sobre valuación por flujos descontados, contratos de opciones y proyecto final de tesis.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
     path: '/terminos',
     outPath: 'terminos/index.html',
     title: 'Términos y Condiciones | FA Academy',
@@ -349,7 +444,7 @@ routes.forEach(route => {
   html = html.replace(/<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/s, `<meta name="twitter:image" content="https://fa-academy.vercel.app/og-image.png" />`);
 
   // 5. Inyectar contenido prerenderizado dentro de <div id="root">
-  html = html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${route.content}</div>`);
+  html = html.replace('<div id="root"></div>', `<div id="root">${route.content}</div>`);
 
   const fullOutPath = path.join(distDir, route.outPath);
   fs.mkdirSync(path.dirname(fullOutPath), { recursive: true });

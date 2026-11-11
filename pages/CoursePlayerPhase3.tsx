@@ -5,11 +5,12 @@ import {
     Maximize2, Minimize2, Crosshair, Anchor, ShieldAlert,
     CandlestickChart, Zap, Layers, AlertCircle, Percent,
     Brain, Download, FileSpreadsheet, CheckCircle2, XCircle, HelpCircle,
-    RotateCcw, Sliders, Check
+    RotateCcw, Sliders, Check, PlayCircle, Clock
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { downloadTradingJournalTemplate } from '../utils/resources';
 import ErrorBoundary from '../components/ErrorBoundary';
+import SEO from '../components/SEO';
 
 // --- DATOS FASE 3: ANÁLISIS TÉCNICO Y GESTIÓN DE RIESGO PROFESIONAL ---
 
@@ -951,6 +952,11 @@ export default function CoursePlayerPhase3() {
     if (showQuiz) {
         return (
             <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans p-4 md:p-8 flex flex-col items-center">
+                <SEO 
+                    title="Examen Final: Fase 3 - Análisis Técnico & Riesgo | FA Academy"
+                    description="Evaluación de acreditación oficial para la Fase 3 de FA Academy."
+                    url="https://fa-academy.vercel.app/course/phase/3"
+                />
                 <div className="max-w-3xl w-full animate-fade-in">
                     <div className="text-center mb-8">
                         <span className="text-xs font-bold uppercase tracking-widest text-violet-400 bg-violet-950/60 px-3 py-1 rounded-full border border-violet-800">
@@ -1041,6 +1047,11 @@ export default function CoursePlayerPhase3() {
     // VISTA PRINCIPAL DEL REPRODUCTOR
     return (
         <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans flex flex-col">
+            <SEO 
+                title={`Fase 3: ${lessonData.title} | FA Academy`}
+                description={`Lección ${currentLesson + 1} de la Fase 3 de FA Academy: ${lessonData.content}`}
+                url="https://fa-academy.vercel.app/course/phase/3"
+            />
             {/* Header de navegación */}
             <header className="bg-[#0f172a]/95 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50">
                 <div className="max-w-5xl mx-auto flex justify-between items-center">
@@ -1092,16 +1103,29 @@ export default function CoursePlayerPhase3() {
 
                 {/* Reproductor de Video si existe */}
                 {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
-                    <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
-                        <iframe
-                            className="absolute top-0 left-0 w-full h-full"
-                            src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-                            title={lessonData.videoTitle || "Clase de Análisis Técnico"}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen
-                        ></iframe>
+                    <div key={i} className="mb-6">
+                        <div className="mb-2 flex items-center justify-between text-xs text-slate-400 bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800">
+                            <span className="font-bold text-white flex items-center gap-2">
+                                <PlayCircle size={15} className="text-violet-400" />
+                                {lessonData.videoTitle || lessonData.title}
+                            </span>
+                            {lessonData.videoDuration && (
+                                <span className="bg-slate-800 px-2.5 py-1 rounded-md text-violet-400 font-semibold flex items-center gap-1">
+                                    <Clock size={12} /> {lessonData.videoDuration}
+                                </span>
+                            )}
+                        </div>
+                        <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
+                            <iframe
+                                className="absolute top-0 left-0 w-full h-full"
+                                src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+                                title={lessonData.videoTitle || "Clase Oficial FA Academy"}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
                     </div>
                 ))}
 

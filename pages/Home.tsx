@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MODULES, getIcon } from '../constants';
-import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronLeft, ChevronRight, MessageCircle, Search, TrendingDown, Sprout, Rocket, CheckCircle2, AlertCircle, AlertTriangle, TrendingUp, Coins, Info } from 'lucide-react';
+import { Star, Clock, ArrowRight, ShieldCheck, CheckCircle, X, ChevronLeft, ChevronRight, MessageCircle, Search, TrendingDown, Sprout, Rocket, CheckCircle2, AlertCircle, AlertTriangle, TrendingUp, Coins, Info, BookOpen } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const TradingViewHeatmap: React.FC = () => {

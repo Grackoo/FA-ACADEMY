@@ -6,11 +6,12 @@ import {
     AlertTriangle, BarChart2, Layers, Zap, Crosshair,
     CheckCircle, ChevronRight, Book, RefreshCw, TrendingDown,
     Bot, FileSpreadsheet, Download, CheckCircle2, XCircle, HelpCircle,
-    Sliders, Scale, Award
+    Sliders, Scale, Award, PlayCircle, Clock
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { downloadInvestmentThesisTemplate } from '../utils/resources';
 import ErrorBoundary from '../components/ErrorBoundary';
+import SEO from '../components/SEO';
 
 // --- DATOS FASE 5: ESTRATEGIAS ESPECIALIZADAS, VALUACIÓN Y OPCIONES ---
 
@@ -831,6 +832,10 @@ export default function CoursePlayerPhase5() {
     if (showQuiz) {
         return (
             <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans p-4 md:p-8 flex flex-col items-center">
+                <SEO
+                    title="Examen Final: Fase 5 - Estrategias Especializadas | FA Academy"
+                    description="Examen de certificación de grado maestro de la Fase 5: venta en corto, valuación por DCF, algoritmos cuantitativos y opciones financieras."
+                />
                 <div className="max-w-3xl w-full animate-fade-in">
                     <div className="text-center mb-8">
                         <span className="text-xs font-bold uppercase tracking-widest text-rose-400 bg-rose-950/60 px-3 py-1 rounded-full border border-rose-800">
@@ -921,6 +926,10 @@ export default function CoursePlayerPhase5() {
     // VISTA PRINCIPAL DEL REPRODUCTOR
     return (
         <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans flex flex-col">
+            <SEO
+                title={`Fase 5: ${lessonData.title} | FA Academy`}
+                description={lessonData.content}
+            />
             <header className="bg-[#0f172a]/95 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50">
                 <div className="max-w-5xl mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-3">
@@ -970,16 +979,30 @@ export default function CoursePlayerPhase5() {
                 </div>
 
                 {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
-                    <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
-                        <iframe
-                            className="absolute top-0 left-0 w-full h-full"
-                            src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-                            title={lessonData.videoTitle || "Clase de Estrategias Especializadas"}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen
-                        ></iframe>
+                    <div key={i} className="mb-6">
+                        <div className="mb-2 flex items-center justify-between text-xs text-slate-400 bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800">
+                            <span className="font-bold text-white flex items-center gap-2">
+                                <PlayCircle size={15} className="text-rose-400" />
+                                {lessonData.videoTitle || lessonData.title}
+                            </span>
+                            {lessonData.videoDuration && (
+                                <span className="flex items-center gap-1 text-slate-400">
+                                    <Clock size={13} />
+                                    {lessonData.videoDuration}
+                                </span>
+                            )}
+                        </div>
+                        <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
+                            <iframe
+                                className="absolute top-0 left-0 w-full h-full"
+                                src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+                                title={lessonData.videoTitle || "Clase de Estrategias Especializadas"}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
                     </div>
                 ))}
 

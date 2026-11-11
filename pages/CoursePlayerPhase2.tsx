@@ -5,10 +5,12 @@ import {
   Building2, Landmark, Brain, Quote, 
   AlertTriangle, Layers, Newspaper, BarChart3,
   LineChart, CheckCircle, ChevronRight, Book, Scale,
-  Factory, Globe, Coins, UserCheck, ShieldCheck
+  Factory, Globe, Coins, UserCheck, ShieldCheck,
+  PlayCircle, Clock
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import ErrorBoundary from '../components/ErrorBoundary';
+import SEO from '../components/SEO';
 
 // --- DATOS FA ACADEMY: MÓDULO 2 ---
 
@@ -23,10 +25,9 @@ const courseData = [
         content: "No compras un 'ticker' en una pantalla; adquieres una parte del capital social.",
         details: "En México, es vital entender las 'Series' accionarias. La Serie A suele ser para mexicanos con pleno derecho a voto. La Serie B o L tiene voto limitado pero a veces derechos preferentes. Los CPOs (Certificados de Participación Ordinaria) agrupan varias acciones para hacerlas más fáciles de comprar y vender, como el famoso caso de CEMEXCPO.",
         visualType: "action_anatomy",
-        videoUrls: [
-          "4kDBgFzuE-c", // Ejemplo: si el link es youtube.com/watch?v=dQw4w9WgXcQ, pon "dQw4w9WgXcQ"
-          "kwVUlQIKJVs",
-        ],
+        videoUrls: ["kwVUlQIKJVs"],
+        videoTitle: "Anatomía de una Acción: Series Bursátiles (A, B, L) y Títulos CPO",
+        videoDuration: "14 min",
         quote: { 
             text: "El inversionista debe distinguir entre la ganancia de capital (subida de precio) y el dividendo (reparto de utilidades). No todas las empresas pagan dividendos; muchas reinvierten para crecer, lo cual no es necesariamente malo.", 
             author: "Nota Formativa, CNBV" 
@@ -99,6 +100,8 @@ const courseData = [
         details: "Antes, un mexicano solo podía comprar acciones de empresas locales como Cemex o Bimbo, porque las acciones de EE. UU. (como Apple o Tesla) cotizaban en Nueva York y necesitabas una cuenta en el extranjero. Hoy, el SIC trae casi todo Wall Street a México. Esto es un 'Aha! moment': puedes ser dueño de Nvidia o Pfizer pagando en pesos mexicanos, desde una app, de forma 100% legal y con una gran ventaja fiscal al momento de vender.",
         visualType: "market_diff_tab",
         videoUrls: ["ShzU8qRjTE"],
+        videoTitle: "Sistema Internacional de Cotizaciones (SIC): Comprando Wall Street desde México",
+        videoDuration: "16 min",
         quote: { 
             text: "El SIC no es una bolsa distinta, es la plataforma dentro de la Bolsa Mexicana de Valores que te permite acceder a empresas globales sin abrir cuentas extranjeras ni mandar dólares por transferencia.", 
             author: "Guía FA Academy" 
@@ -655,6 +658,11 @@ export default function AppFAAcademyModulo2() {
   if (showQuiz) {
     return (
       <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans p-4 md:p-8 flex flex-col items-center">
+        <SEO 
+          title="Examen Final: Fase 2 - El Ecosistema de Inversión | FA Academy"
+          description="Evaluación de acreditación oficial para la Fase 2 de FA Academy."
+          url="https://fa-academy.vercel.app/course/phase/2"
+        />
         <div className="max-w-2xl w-full animate-fade-in">
           <h1 className="text-3xl font-bold text-purple-400 mb-2 text-center">Evaluación FA Academy</h1>
           <p className="text-slate-400 text-center mb-8">Mercado de Capitales y Análisis de Negocios</p>
@@ -700,6 +708,11 @@ export default function AppFAAcademyModulo2() {
 
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans flex flex-col">
+      <SEO 
+        title={`Fase 2: ${lessonData.title} | FA Academy`}
+        description={`Lección ${currentLesson + 1} de la Fase 2 de FA Academy: ${lessonData.content}`}
+        url="https://fa-academy.vercel.app/course/phase/2"
+      />
       <header className="bg-[#0f172a]/95 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -725,16 +738,29 @@ export default function AppFAAcademyModulo2() {
         </div>
         
         {lessonData.videoUrls && lessonData.videoUrls.map((videoId: string, i: number) => (
-          <div key={i} className="mb-6 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+          <div key={i} className="mb-6">
+            <div className="mb-2 flex items-center justify-between text-xs text-slate-400 bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800">
+              <span className="font-bold text-white flex items-center gap-2">
+                <PlayCircle size={15} className="text-purple-400" />
+                {lessonData.videoTitle || lessonData.title}
+              </span>
+              {lessonData.videoDuration && (
+                <span className="bg-slate-800 px-2.5 py-1 rounded-md text-purple-400 font-semibold flex items-center gap-1">
+                  <Clock size={12} /> {lessonData.videoDuration}
+                </span>
+              )}
+            </div>
+            <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black relative w-full pt-[56.25%]">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+                title={lessonData.videoTitle || "Clase Oficial FA Academy"}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         ))}
 
