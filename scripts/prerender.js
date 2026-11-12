@@ -215,13 +215,13 @@ const routes = [
   {
     path: '/academy/fase-3',
     outPath: 'academy/fase-3/index.html',
-    title: 'Fase 3: Análisis Técnico y Gráficos (11 Lecciones) | FA Academy',
+    title: 'Fase 3: Análisis Técnico y Gráficos (12 Lecciones) | FA Academy',
     description: 'Domina la lectura de gráficos, acción del precio (BOS/CHoCH), Fibonacci, gestión de riesgo con breakeven al 25% y simulador TradingView.',
     canonical: 'https://fa-academy.vercel.app/academy/fase-3',
     content: `
       <div class="min-h-screen bg-slate-950 text-slate-100 py-16 px-4 max-w-5xl mx-auto">
         <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Fase 3 · Intermedio</span>
-        <h1 class="text-4xl font-extrabold text-white mt-2 mb-4">Análisis Técnico y Gráficos (11 Lecciones)</h1>
+        <h1 class="text-4xl font-extrabold text-white mt-2 mb-4">Análisis Técnico y Gráficos (12 Lecciones)</h1>
         <p class="text-slate-400 text-base mb-8">Estructura de mercado, retrocesos de Fibonacci, volumen institucional y esperanza matemática.</p>
         <div class="space-y-4">
           <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">1. El Lenguaje de las Velas Japonesas</h2><p class="text-slate-400 text-xs">Anatomía OHLC, patrones de rechazo y Marubozu.</p></div>
@@ -235,6 +235,7 @@ const routes = [
           <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">9. Uso de Temporalidades: El Marco Manda (Multi-Timeframe)</h2><p class="text-slate-400 text-xs">Análisis Top-Down y 4 fases de Stan Weinstein.</p></div>
           <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">10. Trading Journal y Backtesting Cuantitativo</h2><p class="text-slate-400 text-xs">Diario de operaciones y descarga de plantilla para Excel.</p></div>
           <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">11. Estación de Trabajo TradingView y Psicología</h2><p class="text-slate-400 text-xs">Simulador interactivo, Stop Loss y superación del FOMO.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">12. Proyecto Final: Tesis de Análisis Técnico con Rúbrica Institucional</h2><p class="text-slate-400 text-xs">Elaboración guiada de un memorándum de trade técnico con análisis multitemporal, ratio R:B y plan de gestión de riesgo.</p></div>
         </div>
       </div>
     `
@@ -405,8 +406,8 @@ const routes = [
   {
     path: '/course/phase/3',
     outPath: 'course/phase/3/index.html',
-    title: 'Fase 3: Análisis Técnico y Gráficos | FA Academy',
-    description: 'Reproductor oficial del curso: Análisis Técnico y Gráficos. 11 lecciones sobre acción del precio, velas japonesas, BOS/CHoCH, Fibonacci y breakeven ratio 1:3.',
+    title: 'Fase 3: Análisis Técnico y Gráficos (12 Lecciones) | FA Academy',
+    description: 'Reproductor oficial del curso: Análisis Técnico y Gráficos. 12 lecciones sobre acción del precio, velas japonesas, BOS/CHoCH, Fibonacci y breakeven ratio 1:3.',
     canonical: 'https://fa-academy.vercel.app/course/phase/3',
     content: `
       <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
@@ -414,7 +415,7 @@ const routes = [
           FA Academy | Fase 3
         </span>
         <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Análisis Técnico y Gráficos</h1>
-        <p class="text-slate-400 text-base mb-8">11 lecciones completas con retrocesos de Fibonacci, calculadora R:B y estación TradingView.</p>
+        <p class="text-slate-400 text-base mb-8">12 lecciones completas con retrocesos de Fibonacci, calculadora R:B y estación TradingView.</p>
         <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
           <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
         </div>

@@ -62,6 +62,41 @@ const CHART_DATA_PAYOFF_OPTIONS = [
   { precio: '$180', spot: +20, put: -5, portafolioProtegido: +15 },
 ];
 
+const CHART_DATA_PRICE_ACTION = [
+  { nivel: 'HL0', precio: 100 },
+  { nivel: 'HH1', precio: 116 },
+  { nivel: 'HL1', precio: 109 },
+  { nivel: 'BOS 1', precio: 126 },
+  { nivel: 'HL2', precio: 119 },
+  { nivel: 'BOS 2', precio: 138 },
+];
+
+const CHART_DATA_DEBT_SNOWBALL = [
+  { mes: 'Mes 0', metodoAcelerado: 60000, pagoMinimo: 60000 },
+  { mes: 'Mes 3', metodoAcelerado: 48000, pagoMinimo: 57500 },
+  { mes: 'Mes 6', metodoAcelerado: 34000, pagoMinimo: 54800 },
+  { mes: 'Mes 9', metodoAcelerado: 21000, pagoMinimo: 51900 },
+  { mes: 'Mes 12', metodoAcelerado: 9000, pagoMinimo: 48800 },
+  { mes: 'Mes 15', metodoAcelerado: 0, pagoMinimo: 45500 },
+];
+
+const CHART_DATA_FIBRAS_DISTRIBUTION = [
+  { vehiculo: 'Depto Tradicional', capRateBruto: 5.2, capRateNeto: 3.6 },
+  { vehiculo: 'FMTY14 (Industrial)', capRateBruto: 9.1, capRateNeto: 8.4 },
+  { vehiculo: 'FUNO11 (Comercial)', capRateBruto: 9.8, capRateNeto: 8.9 },
+  { vehiculo: 'PL14 (Logística)', capRateBruto: 8.2, capRateNeto: 7.7 },
+];
+
+const CHART_DATA_YIELD_CURVE = [
+  { plazo: '1M', mbonosBanxico: 11.00, treasuriesFed: 5.25 },
+  { plazo: '6M', mbonosBanxico: 10.75, treasuriesFed: 5.10 },
+  { plazo: '1A', mbonosBanxico: 10.25, treasuriesFed: 4.80 },
+  { plazo: '3A', mbonosBanxico: 9.75, treasuriesFed: 4.30 },
+  { plazo: '5A', mbonosBanxico: 9.50, treasuriesFed: 4.15 },
+  { plazo: '10A', mbonosBanxico: 9.40, treasuriesFed: 4.25 },
+  { plazo: '30A', mbonosBanxico: 9.60, treasuriesFed: 4.45 },
+];
+
 const CourseDetail: React.FC = () => {
   const { id } = useParams();
   const module = MODULES.find(m => m.id === id);
@@ -179,6 +214,29 @@ const CourseDetail: React.FC = () => {
       );
     }
 
+    if (module.phase === 3) {
+      return (
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">Acción del Precio: Estructura Tendencial y Rupturas BOS</h4>
+            <span className="text-xs bg-indigo-500/20 text-indigo-400 font-bold px-2 py-1 rounded">Price Action & BOS</span>
+          </div>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={CHART_DATA_PRICE_ACTION}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="nivel" tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" domain={['auto', 'auto']} />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
+                <Line type="linear" dataKey="precio" stroke="#818cf8" strokeWidth={3} dot={{ r: 5, fill: '#818cf8' }} name="Precio / Nivel Estructural ($)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">Identificación institucional de Higher Highs (HH), Higher Lows (HL) y confirmación de rupturas BOS.</p>
+        </div>
+      );
+    }
+
     if (module.phase === 4) {
       return (
         <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
@@ -226,27 +284,79 @@ const CourseDetail: React.FC = () => {
       );
     }
 
-    // Default chart (Technical)
-    return (
-      <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h4 className="font-bold text-slate-200">Estructura de Mercado y Ruptura de Tendencia (BOS)</h4>
-          <span className="text-xs bg-indigo-500/20 text-indigo-400 font-bold px-2 py-1 rounded">Price Action</span>
+    if (module.phase === 6) {
+      return (
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">Estrategia de Desendeudamiento: Método Acelerado vs. Pago Mínimo</h4>
+            <span className="text-xs bg-emerald-500/20 text-emerald-400 font-bold px-2 py-1 rounded">Control Financiero</span>
+          </div>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={CHART_DATA_DEBT_SNOWBALL}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="mes" tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
+                <Line type="monotone" dataKey="metodoAcelerado" stroke="#10b981" strokeWidth={3} dot={{ r: 5 }} name="Método Bola de Nieve / Avalancha ($)" />
+                <Line type="monotone" dataKey="pagoMinimo" stroke="#f43f5e" strokeWidth={2} strokeDasharray="4 4" name="Pago Mínimo Tradicional ($)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">Simulación de amortización pasiva: erradicación acelerada de pasivos para liberar flujo neto mensual a inversión.</p>
         </div>
-        <div className="h-64 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={CHART_DATA_GROWTH}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="name" tick={{ fill: '#94a3b8' }} stroke="#475569" />
-              <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" />
-              <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
-              <Line type="step" dataKey="value" stroke="#818cf8" strokeWidth={3} dot={{ r: 5 }} name="Precio / Estructura" />
-            </LineChart>
-          </ResponsiveContainer>
+      );
+    }
+
+    if (module.phase === 7) {
+      return (
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">Rendimiento por Distribución (Cap Rate): FIBRAS vs. Inmueble Residencial</h4>
+            <span className="text-xs bg-amber-500/20 text-amber-400 font-bold px-2 py-1 rounded">Flujo Pasivo & FIBRAS</span>
+          </div>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={CHART_DATA_FIBRAS_DISTRIBUTION}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
+                <XAxis dataKey="vehiculo" tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
+                <Bar dataKey="capRateBruto" fill="#64748b" name="Cap Rate Bruto (%)" />
+                <Bar dataKey="capRateNeto" fill="#f59e0b" name="Cap Rate Neto Real (%)" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">Comparativa real de flujo de rentas: diversificación institucional en naves industriales sin gastos notariales ni morosidad.</p>
         </div>
-        <p className="text-xs text-slate-500 mt-2 text-center">Identificación de Máximos Más Altos (HH) y confirmación con volumen institucional.</p>
-      </div>
-    );
+      );
+    }
+
+    if (module.phase === 8) {
+      return (
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-200">Estructura Temporal de Tasas de Interés (Curva de Rendimientos Banxico vs. Fed)</h4>
+            <span className="text-xs bg-cyan-500/20 text-cyan-400 font-bold px-2 py-1 rounded">Macro & Tasas</span>
+          </div>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={CHART_DATA_YIELD_CURVE}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="plazo" tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <YAxis tick={{ fill: '#94a3b8' }} stroke="#475569" />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: 'white' }} />
+                <Line type="monotone" dataKey="mbonosBanxico" stroke="#06b6d4" strokeWidth={3} dot={{ r: 5 }} name="Curva Soberana México (Mbonos %)" />
+                <Line type="monotone" dataKey="treasuriesFed" stroke="#818cf8" strokeWidth={2} strokeDasharray="3 3" dot={{ r: 4 }} name="US Treasuries (Fed %)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">Análisis de inversión de curva e impacto del diferencial de tasas (Carry Trade) en la paridad peso/dólar.</p>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (

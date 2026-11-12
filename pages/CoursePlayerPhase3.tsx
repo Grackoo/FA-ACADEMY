@@ -4,7 +4,7 @@ import {
   ArrowRight, ArrowLeft, TrendingUp, TrendingDown, Activity,
   Target, Send, Info, BookOpen, BarChart2,
   Maximize2, Minimize2, Crosshair, Anchor, ShieldAlert,
-  CandlestickChart, Zap, Layers, AlertCircle, Percent,
+  CandlestickChart, Zap, Layers, AlertCircle, AlertTriangle, Percent,
   Brain, Download, FileSpreadsheet, CheckCircle2, XCircle, HelpCircle,
   RotateCcw, Sliders, Check, PlayCircle, Clock, ExternalLink, FileText,
   LineChart, PieChart, ShieldCheck, Landmark
@@ -1546,7 +1546,7 @@ export default function CoursePlayerPhase3() {
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans flex flex-col">
       <SEO 
-        title={`Fase 3: ${lessonData.title} | FA Academy`}
+        title={`Fase 3: ${lessonData.title} (12 Lecciones) | FA Academy`}
         description={`Lección ${currentLesson + 1} de la Fase 3 de FA Academy: ${lessonData.content}`}
         url="https://fa-academy.vercel.app/course/phase/3"
       />

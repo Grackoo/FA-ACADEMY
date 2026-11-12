@@ -5,7 +5,7 @@ import {
   Target, Send, Info, BookOpen, Calculator,
   Building2, Landmark, Brain, Quote, 
   AlertTriangle, Layers, Newspaper, BarChart3,
-  LineChart, CheckCircle, ChevronRight, Book, Scale,
+  LineChart, PieChart, CheckCircle, ChevronRight, Book, Scale,
   Factory, Globe, Coins, UserCheck, ShieldCheck,
   PlayCircle, Clock, ExternalLink, FileText, CheckCircle2, XCircle, HelpCircle
 } from 'lucide-react';
@@ -272,7 +272,7 @@ const courseData = [
         ]
       },
       {
-        title: "El Principio de Diversificación: Correlación y Reducción del Riesgo No Sistemático",
+        title: "El Ecosistema de Diversificación",
         content: "El único 'almuerzo gratis' en finanzas: cómo la correlación imperfecta reduce la volatilidad total de tu portafolio.",
         details: "Harry Markowitz demostró matemáticamente en su Teoría Moderna de Portafolios (premio Nobel de Economía) que combinar activos con coeficientes de correlación inferiores a 1.0 reduce la desviación estándar (volatilidad) total del portafolio sin penalizar necesariamente el rendimiento esperado en la misma proporción. Es vital distinguir entre: 1) Riesgo No Sistemático (específico o diversificable): el riesgo inherente a una sola compañía (ej. escándalo contable, fallo en un producto, huelga); este riesgo se neutraliza distribuyendo el capital en un número suficiente de emisoras y sectores. 2) Riesgo Sistemático (no diversificable o de mercado): shocks macroeconómicos que afectan a todos los activos (ej. subida generalizada de tasas de interés de bancos centrales, recesiones globales o crisis geopolíticas); este riesgo solo se gestiona mediante asignación estratégica entre diferentes clases de activos (acciones, bonos gubernamentales, metales y liquidez).",
         visualType: "diversification_eco",
