@@ -100,29 +100,37 @@ const routes = [
   {
     path: '/tools',
     outPath: 'tools/index.html',
-    title: 'Simuladores Financieros y Calculadoras de Inversión | FA Academy',
-    description: 'Herramientas interactivas gratuitas de inversión: calculadora de interés compuesto, tasa real con inflación de Banxico, amortización de deudas y perfil AMIB.',
+    title: '15 Calculadoras Financieras y Simuladores Bursátiles | FA Academy',
+    description: 'Laboratorio financiero con 15 herramientas interactivas: DCF, Graham, tasa real Banxico, regla del 4% FIRE, hipoteca comprar vs rentar, ISR bolsa e interés compuesto.',
     canonical: 'https://fa-academy.vercel.app/tools',
     content: `
       <div class="min-h-screen bg-slate-950 text-slate-100 py-16 px-4 max-w-6xl mx-auto">
-        <h1 class="text-4xl font-extrabold text-white text-center mb-4">Herramientas y Simuladores Bursátiles</h1>
-        <p class="text-slate-400 text-center mb-12 max-w-2xl mx-auto">Calculadoras financieras para proyectar rendimientos reales, amortizar pasivos y auditar el riesgo de tu portafolio.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-            <h2 class="text-xl font-bold text-white mb-2">Calculadora de Interés Compuesto</h2>
-            <p class="text-slate-400 text-sm">Proyecta la multiplicación exponencial de tu patrimonio con aportaciones mensuales y reinversión de utilidades.</p>
+        <h1 class="text-4xl font-extrabold text-white text-center mb-4">Laboratorio Financiero: 15 Herramientas y Simuladores</h1>
+        <p class="text-slate-400 text-center mb-12 max-w-2xl mx-auto">Calculadoras institucionales de valuación DCF, método Graham, costo de esperar, fondo de emergencia, dividendos FIBRAS, hipoteca y retiro Afore/PPR.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <h2 class="text-lg font-bold text-white mb-1.5">Valuación DCF</h2>
+            <p class="text-slate-400 text-xs">Flujo de caja libre descontado a valor presente para estimar el valor intrínseco por acción.</p>
           </div>
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-            <h2 class="text-xl font-bold text-white mb-2">Calculadora de Tasa Real (Banxico)</h2>
-            <p class="text-slate-400 text-sm">Descuenta la inflación oficial a tus pagarés y CETES para conocer tu ganancia neta de poder de compra.</p>
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <h2 class="text-lg font-bold text-white mb-1.5">Método Graham</h2>
+            <p class="text-slate-400 text-xs">Valuación por utilidad por acción, crecimiento y tasa libre de riesgo de CETES.</p>
           </div>
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-            <h2 class="text-xl font-bold text-white mb-2">Diagnóstico de Deuda y CAT</h2>
-            <p class="text-slate-400 text-sm">Evalúa el impacto financiero de tarjetas de crédito y créditos personales antes de comenzar a invertir en bolsa.</p>
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <h2 class="text-lg font-bold text-white mb-1.5">Tasa Real Banxico</h2>
+            <p class="text-slate-400 text-xs">Ecuación de Fisher para descontar la inflación oficial del INPC a rendimientos bursátiles.</p>
           </div>
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-            <h2 class="text-xl font-bold text-white mb-2">Test de Perfil del Inversionista</h2>
-            <p class="text-slate-400 text-sm">Descubre tu horizonte temporal y tolerancia psicológica al riesgo con criterios alineados a la AMIB.</p>
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <h2 class="text-lg font-bold text-white mb-1.5">Calculadora Hipotecaria</h2>
+            <p class="text-slate-400 text-xs">Comprar vs. Rentar e invertir la diferencia a 10 años con plusvalía y costo de oportunidad.</p>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <h2 class="text-lg font-bold text-white mb-1.5">Ingreso por Dividendos</h2>
+            <p class="text-slate-400 text-xs">Proyección de rentas pasivas con FIBRAS, crecimiento anual de dividendo y efecto DRIP.</p>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+            <h2 class="text-lg font-bold text-white mb-1.5">Simulador Regla del 4%</h2>
+            <p class="text-slate-400 text-xs">Cálculo de capital para el retiro FIRE basado en el Trinity Study y tasa de retiro seguro.</p>
           </div>
         </div>
       </div>
