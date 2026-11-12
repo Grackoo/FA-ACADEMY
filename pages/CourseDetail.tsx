@@ -311,7 +311,7 @@ const CourseDetail: React.FC = () => {
               <div className="divide-y divide-slate-700/70">
                 {module.topics.map((topic, index) => (
                   <Link 
-                    to={`/course/phase/${module.phase}`} 
+                    to={`/course/phase/${module.phase}?lesson=${index + 1}`} 
                     key={index} 
                     className="p-5 sm:p-6 transition-all group cursor-pointer block hover:bg-slate-700/50 border-l-4 border-transparent hover:border-primary-500"
                   >

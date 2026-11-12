@@ -32,18 +32,18 @@ const routes = [
             Invierte como los profesionales. <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-emerald-400">Protege y multiplica tu capital.</span>
           </h1>
           <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            Plataforma educativa con 44 lecciones especializadas a lo largo de 5 fases, calculadoras fiscales SAT, simuladores de trading y proyectos integradores.
+            Plataforma educativa con 73 lecciones especializadas a lo largo de 8 fases, calculadoras fiscales SAT, simuladores de trading y proyectos integradores.
           </p>
           <div class="flex flex-wrap justify-center gap-4">
-            <a href="/#catalog" class="px-8 py-4 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl shadow-lg">Explorar 44 Lecciones</a>
+            <a href="/#catalog" class="px-8 py-4 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl shadow-lg">Explorar 73 Lecciones</a>
             <a href="/pricing" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl border border-slate-700">Ver Planes</a>
           </div>
         </header>
 
         <section id="catalog" class="py-16 max-w-7xl mx-auto px-4">
-          <h2 class="text-3xl font-bold text-white mb-2 text-center">Catálogo Oficial de Cursos (44 Lecciones)</h2>
-          <p class="text-slate-400 text-center mb-12">Desde fundamentos y renta fija hasta análisis técnico, derivados y trading cuantitativo.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h2 class="text-3xl font-bold text-white mb-2 text-center">Catálogo Oficial de Cursos (73 Lecciones)</h2>
+          <p class="text-slate-400 text-center mb-12">Desde finanzas personales y renta fija hasta análisis técnico, dividendos, FIBRAS y macroeconomía global.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
               <span class="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded">Fase 1 · Básico</span>
               <h3 class="text-xl font-bold text-white mt-3 mb-2">Fundamentos y Mentalidad Financiera (7 Lecciones)</h3>
@@ -58,13 +58,13 @@ const routes = [
             </article>
             <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
               <span class="text-xs font-bold text-indigo-400 bg-indigo-950/60 px-2.5 py-1 rounded">Fase 3 · Intermedio</span>
-              <h3 class="text-xl font-bold text-white mt-3 mb-2">Análisis Técnico y Gráficos (11 Lecciones)</h3>
+              <h3 class="text-xl font-bold text-white mt-3 mb-2">Análisis Técnico y Gráficos (12 Lecciones)</h3>
               <p class="text-slate-400 text-sm mb-4">Acción del precio (BOS/CHoCH), velas japonesas OHLC, retrocesos de Fibonacci al 61.8% y gestión R:B con breakeven al 25%.</p>
               <a href="/academy/fase-3" class="text-primary-400 font-bold text-sm">Ver Temario Completo →</a>
             </article>
             <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
               <span class="text-xs font-bold text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded">Fase 4 · Avanzado</span>
-              <h3 class="text-xl font-bold text-white mt-3 mb-2">Gestión de Riesgo y Portafolio (8 Lecciones)</h3>
+              <h3 class="text-xl font-bold text-white mt-3 mb-2">Gestión de Riesgo y Portafolio (9 Lecciones)</h3>
               <p class="text-slate-400 text-sm mb-4">Arquitectura Core-Satellite 70/30, rebalanceo anual, Sharpe y Sortino, reporte BMV Bimbo y fiscalidad SAT (Art. 129 LISR).</p>
               <a href="/academy/fase-4" class="text-primary-400 font-bold text-sm">Ver Temario Completo →</a>
             </article>
@@ -73,6 +73,24 @@ const routes = [
               <h3 class="text-xl font-bold text-white mt-3 mb-2">Estrategias Especializadas (9 Lecciones)</h3>
               <p class="text-slate-400 text-sm mb-4">Venta en corto, valuación por múltiplos y DCF/WACC, trading algorítmico, opciones con griegas completas y tesis final.</p>
               <a href="/academy/fase-5" class="text-primary-400 font-bold text-sm">Ver Temario Completo →</a>
+            </article>
+            <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+              <span class="text-xs font-bold text-teal-400 bg-teal-950/60 px-2.5 py-1 rounded">Fase 6 · Básico</span>
+              <h3 class="text-xl font-bold text-white mt-3 mb-2">Finanzas Personales Operativas (9 Lecciones)</h3>
+              <p class="text-slate-400 text-sm mb-4">Presupuesto 50/30/20, fondo de emergencia blindado, seguros SGMM/vida, hipoteca vs renta y deducciones SAT Art. 151.</p>
+              <a href="/academy/fase-6" class="text-primary-400 font-bold text-sm">Ver Temario Completo →</a>
+            </article>
+            <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+              <span class="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded">Fase 7 · Avanzado</span>
+              <h3 class="text-xl font-bold text-white mt-3 mb-2">Ingreso, Dividendos y Bienes Raíces (9 Lecciones)</h3>
+              <p class="text-slate-400 text-sm mb-4">Valuación de FIBRAS (FFO/AFFO/NAV), Dividend Aristocrats, escaleras de flujo mensual y coberturas alternativas.</p>
+              <a href="/academy/fase-7" class="text-primary-400 font-bold text-sm">Ver Temario Completo →</a>
+            </article>
+            <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+              <span class="text-xs font-bold text-purple-400 bg-purple-950/60 px-2.5 py-1 rounded">Fase 8 · Experto</span>
+              <h3 class="text-xl font-bold text-white mt-3 mb-2">Macroeconomía Aplicada y Mercados Globales (9 Lecciones)</h3>
+              <p class="text-slate-400 text-sm mb-4">Minutas de Banxico, Fed, spread USD/MXN, indicadores adelantados IMEF/PMI, rotación sectorial y memorándum institucional.</p>
+              <a href="/academy/fase-8" class="text-primary-400 font-bold text-sm">Ver Temario Completo →</a>
             </article>
           </div>
         </section>
@@ -271,6 +289,82 @@ const routes = [
     `
   },
   {
+    path: '/academy/fase-6',
+    outPath: 'academy/fase-6/index.html',
+    title: 'Fase 6: Finanzas Personales Operativas (9 Lecciones) | FA Academy',
+    description: 'Presupuesto 50/30/20, fondo de emergencia blindado, arquitectura de seguros (SGMM/vida), comprar vs rentar casa, deducciones fiscales SAT (Art. 151) y roadmap patrimonial.',
+    canonical: 'https://fa-academy.vercel.app/academy/fase-6',
+    content: `
+      <div class="min-h-screen bg-slate-950 text-slate-100 py-16 px-4 max-w-5xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-widest text-teal-400">Fase 6 · Básico</span>
+        <h1 class="text-4xl font-extrabold text-white mt-2 mb-4">Finanzas Personales Operativas (9 Lecciones)</h1>
+        <p class="text-slate-400 text-base mb-8">La base inquebrantable de todo inversor: presupuesto 50/30/20, fondo de emergencia blindado, seguros SGMM/vida, hipoteca vs renta y deducciones SAT Art. 151.</p>
+        <div class="space-y-4">
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">1. Presupuesto 50/30/20 y Eliminación de Fugas Financieras</h2><p class="text-slate-400 text-xs">Estructuración matemática del flujo mensual y automatización.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">2. Fondo de Emergencia ("Colchón de Paz") y Vehículos de Liquidez Segura</h2><p class="text-slate-400 text-xs">3 a 6 meses de gastos fijos protegidos por IPAB y Prosofipo.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">3. Arquitectura de Seguros: Gastos Médicos Mayores (SGMM), Vida y Daños</h2><p class="text-slate-400 text-xs">Deducible, coaseguro y transferencia del riesgo catastrófico.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">4. Estrategia Hipotecaria: Comprar vs Rentar e Infonavit vs Crédito Bancario</h2><p class="text-slate-400 text-xs">Costo de oportunidad, CAT hipotecario y amortización anticipada.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">5. Optimización Fiscal Personal: Deducciones Personales del SAT (Art. 151 LISR)</h2><p class="text-slate-400 text-xs">Gastos médicos, colegiaturas, intereses reales hipotecarios y PPR.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">6. Blindaje Patrimonial y Protección Sucesoria: Testamentos y Albaceazgo</h2><p class="text-slate-400 text-xs">Beneficiarios bursátiles y testamento público abierto.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">7. Finanzas en Pareja y Familia: El Modelo de las Tres Bolsas</h2><p class="text-slate-400 text-xs">Bolsa conjunta e independencia individual coordinada.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">8. Roadmap Financiero a 1, 5 y 10 Años: Metas SMART Cuantificadas</h2><p class="text-slate-400 text-xs">Plazos fijos, tasas requeridas y planes de contingencia.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">9. Proyecto Integrador: Plan Maestro de Finanzas Personales con Rúbrica</h2><p class="text-slate-400 text-xs">Auditoría completa y entrega con rúbrica estandarizada.</p></div>
+        </div>
+        <div class="mt-8 text-center"><a href="/course/phase/6" class="px-8 py-4 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl inline-block">Iniciar Lección 1 Gratis</a></div>
+      </div>
+    `
+  },
+  {
+    path: '/academy/fase-7',
+    outPath: 'academy/fase-7/index.html',
+    title: 'Fase 7: Ingreso, Dividendos y Bienes Raíces (9 Lecciones) | FA Academy',
+    description: 'Valuación de FIBRAS (FFO/AFFO/NAV), Dividend Aristocrats, escaleras de flujo mensual, régimen fiscal de reembolsos y coberturas alternativas.',
+    canonical: 'https://fa-academy.vercel.app/academy/fase-7',
+    content: `
+      <div class="min-h-screen bg-slate-950 text-slate-100 py-16 px-4 max-w-5xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Fase 7 · Avanzado</span>
+        <h1 class="text-4xl font-extrabold text-white mt-2 mb-4">Ingreso, Dividendos y Bienes Raíces (9 Lecciones)</h1>
+        <p class="text-slate-400 text-base mb-8">Construye una máquina de flujo de efectivo pasivo predecible: matemáticas del dividendo, valuación de FIBRAS, bienes raíces bursátiles vs físicos y coberturas.</p>
+        <div class="space-y-4">
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">1. Matemáticas del Dividendo: Dividend Yield, Payout Ratio y Efecto DRIP</h2><p class="text-slate-400 text-xs">Detección de trampas de rendimiento y aceleración por reinversión.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">2. Valuación de FIBRAS Inmobiliarias: FFO, AFFO, NAV y Mandato del 95%</h2><p class="text-slate-400 text-xs">Ladrillos bursátiles bajo Art. 187/188 LISR y descuento sobre NAV.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">3. Bienes Raíces Físicos vs Bursátiles: Retorno Bruto vs Neto y Cash-on-Cash</h2><p class="text-slate-400 text-xs">Mantenimiento, predial y vacancia frente a la liquidez de un CBFI.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">4. Construcción de una Escalera de Flujos Mensuales (Monthly Cash Flow Ladder)</h2><p class="text-slate-400 text-xs">Ingeniería de cobro pasivo semanal y mensual.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">5. Régimen Fiscal de Dividendos y FIBRAS: Reembolso de Capital vs Resultado Fiscal</h2><p class="text-slate-400 text-xs">Distribuciones exentas por reembolso frente a retención del 30%.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">6. Gestión de Riesgos Inmobiliarios: Apalancamiento (LTV), Vacancia y Tasas</h2><p class="text-slate-400 text-xs">Métricas normativas LTV al 50% y plazos WALT.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">7. Proyecto de Ingreso Pasivo: Cartera de $100,000 MXN en Flujos Sostenibles</h2><p class="text-slate-400 text-xs">Portafolio real diversificado en naves industriales y comerciales.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">8. Auditoría Financiera de un CBFI y Detección de Trampas de Rendimiento</h2><p class="text-slate-400 text-xs">Comisiones de administración interna vs externa.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">9. Coberturas Alternativas: Oro, Petróleo y Criptoactivos Regulados (Cold Wallets y SAT)</h2><p class="text-slate-400 text-xs">Autocustodia y obligaciones fiscales en criptomonedas.</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/academy/fase-8',
+    outPath: 'academy/fase-8/index.html',
+    title: 'Fase 8: Macroeconomía Aplicada y Mercados Globales (9 Lecciones) | FA Academy',
+    description: 'Minutas de Banxico, Fed, spread USD/MXN, indicadores adelantados IMEF/PMI, rotación sectorial, megatendencias e informe macro institucional.',
+    canonical: 'https://fa-academy.vercel.app/academy/fase-8',
+    content: `
+      <div class="min-h-screen bg-slate-950 text-slate-100 py-16 px-4 max-w-5xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-widest text-purple-400">Fase 8 · Experto</span>
+        <h1 class="text-4xl font-extrabold text-white mt-2 mb-4">Macroeconomía Aplicada y Mercados Globales (9 Lecciones)</h1>
+        <p class="text-slate-400 text-base mb-8">Domina el tablero macroeconómico global: política monetaria de Banxico y la Fed, dinámica cambiaria USD/MXN, indicadores adelantados, reloj sectorial y megatendencias.</p>
+        <div class="space-y-4">
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">1. Banxico: Lectura de Minutas de Política Monetaria y Expectativas de Inflación</h2><p class="text-slate-400 text-xs">Mandato Art. 28, postura restrictiva vs neutral y encuesta SIE.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">2. El Tipo de Cambio USD/MXN y el Efecto de Inflación Importada</h2><p class="text-slate-400 text-xs">Spread Banxico-Fed, carry trade y efecto pass-through a precios.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">3. La Reserva Federal (Fed), Tasas Globales y Rendimientos de los Bonos del Tesoro (Treasuries)</h2><p class="text-slate-400 text-xs">El bono a 10 años como gravedad de los mercados y Dot Plot de la Fed.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">4. Indicadores Adelantados: IMEF Manufacturero, PMI y Curva de Rendimientos Invertida</h2><p class="text-slate-400 text-xs">El umbral de los 50 puntos y spread de la curva 10Y-2Y.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">5. Ciclos de Rotación Sectorial en BMV y Wall Street (Defensivos vs Cíclicos vs Tecnológicos)</h2><p class="text-slate-400 text-xs">Las cuatro estaciones del reloj sectorial de inversión.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">6. Megatendencias Globales: Relocalización (Nearshoring en México) e Inteligencia Artificial</h2><p class="text-slate-400 text-xs">Absorción fabril fronteriza y capas de monetización en IA.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">7. Macroeconomía sin Pronósticos: Matriz de 3 Escenarios (Base, Optimista y Recesivo)</h2><p class="text-slate-400 text-xs">Pruebas de estrés y asignación probabilística institucional.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">8. Anatomía de las Grandes Crisis Históricas: Dot-Com (2000), Subprime (2008), Pandemia (2020) e Inflación (2022)</h2><p class="text-slate-400 text-xs">Lecciones forenses de drawdowns y recuperaciones bursátiles.</p></div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800"><h2 class="text-base font-bold text-white">9. Proyecto Final: Informe Macroeconómico Mensual de Inversión con Rúbrica Institucional</h2><p class="text-slate-400 text-xs">Elaboración y entrega del memorándum táctico de inversiones.</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
     path: '/course/phase/1',
     outPath: 'course/phase/1/index.html',
     title: 'Fase 1: Fundamentos y Mentalidad Financiera | FA Academy',
@@ -359,6 +453,63 @@ const routes = [
         </span>
         <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Estrategias Especializadas</h1>
         <p class="text-slate-400 text-base mb-8">9 lecciones completas sobre valuación por flujos descontados, contratos de opciones y proyecto final de tesis.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/course/phase/6',
+    outPath: 'course/phase/6/index.html',
+    title: 'Fase 6: Finanzas Personales Operativas | FA Academy',
+    description: 'Reproductor oficial del curso: Finanzas Personales Operativas. 9 lecciones sobre presupuesto 50/30/20, fondo de emergencia, seguros, hipotecas y deducciones SAT.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/6',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-teal-400 bg-teal-950/60 px-3 py-1 rounded-full border border-teal-800">
+          FA Academy | Fase 6
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Finanzas Personales Operativas</h1>
+        <p class="text-slate-400 text-base mb-8">9 lecciones completas con presupuesto 50/30/20, dimensionamiento de colchón de paz y proyecto integrador.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/course/phase/7',
+    outPath: 'course/phase/7/index.html',
+    title: 'Fase 7: Ingreso, Dividendos y Bienes Raíces | FA Academy',
+    description: 'Reproductor oficial del curso: Ingreso, Dividendos y Bienes Raíces. 9 lecciones sobre matemáticas del dividendo, valuación de FIBRAS (FFO/AFFO/NAV), flujo mensual y coberturas.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/7',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800">
+          FA Academy | Fase 7
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Ingreso, Dividendos y Bienes Raíces</h1>
+        <p class="text-slate-400 text-base mb-8">9 lecciones completas con valuación de FIBRAS, efecto DRIP, escaleras de cobro y coberturas alternativas.</p>
+        <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
+          <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
+        </div>
+      </div>
+    `
+  },
+  {
+    path: '/course/phase/8',
+    outPath: 'course/phase/8/index.html',
+    title: 'Fase 8: Macroeconomía Aplicada y Mercados Globales | FA Academy',
+    description: 'Reproductor oficial del curso: Macroeconomía Aplicada y Mercados Globales. 9 lecciones sobre Banxico, Fed, spread USD/MXN, curva de rendimientos y memorándum institucional.',
+    canonical: 'https://fa-academy.vercel.app/course/phase/8',
+    content: `
+      <div class="min-h-screen bg-[#0B1120] text-slate-200 py-12 px-4 max-w-5xl mx-auto font-sans">
+        <span class="text-xs font-bold uppercase tracking-widest text-purple-400 bg-purple-950/60 px-3 py-1 rounded-full border border-purple-800">
+          FA Academy | Fase 8
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-3">Macroeconomía Aplicada y Mercados Globales</h1>
+        <p class="text-slate-400 text-base mb-8">9 lecciones completas sobre política monetaria, indicadores adelantados IMEF/PMI, rotación sectorial y proyecto final.</p>
         <div class="p-6 bg-slate-900/80 rounded-2xl border border-slate-800">
           <p class="text-sm text-slate-300">Cargando reproductor de lecciones interactivas...</p>
         </div>

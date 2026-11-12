@@ -13,6 +13,9 @@ import CoursePlayerPhase2 from './pages/CoursePlayerPhase2';
 import CoursePlayerPhase3 from './pages/CoursePlayerPhase3';
 import CoursePlayerPhase4 from './pages/CoursePlayerPhase4';
 import CoursePlayerPhase5 from './pages/CoursePlayerPhase5';
+import CoursePlayerPhase6 from './pages/CoursePlayerPhase6';
+import CoursePlayerPhase7 from './pages/CoursePlayerPhase7';
+import CoursePlayerPhase8 from './pages/CoursePlayerPhase8';
 import AdminDashboard from './pages/AdminDashboard';
 import Terminos from './pages/Terminos';
 import Privacidad from './pages/Privacidad';
@@ -94,11 +97,12 @@ const App: React.FC = () => {
               <Route path="/privacidad" element={<Privacidad />} />
               <Route path="/academy/:id" element={<CourseDetail />} />
 
-              {/* Public Phases */}
+              {/* Public Phases (Plan Básico Gratuito: 1, 2, 6) */}
               <Route path="/course/phase/1" element={<CoursePlayerPhase1 />} />
               <Route path="/course/phase/2" element={<CoursePlayerPhase2 />} />
+              <Route path="/course/phase/6" element={<CoursePlayerPhase6 />} />
 
-              {/* Protected Phases */}
+              {/* Protected Phases (Trader: 3, 4 | Master: 5, 7, 8) */}
               <Route path="/course/phase/3" element={
                 <ProtectedRoute phase={3}>
                   <CoursePlayerPhase3 />
@@ -112,6 +116,16 @@ const App: React.FC = () => {
               <Route path="/course/phase/5" element={
                 <ProtectedRoute phase={5}>
                   <CoursePlayerPhase5 />
+                </ProtectedRoute>
+              } />
+              <Route path="/course/phase/7" element={
+                <ProtectedRoute phase={7}>
+                  <CoursePlayerPhase7 />
+                </ProtectedRoute>
+              } />
+              <Route path="/course/phase/8" element={
+                <ProtectedRoute phase={8}>
+                  <CoursePlayerPhase8 />
                 </ProtectedRoute>
               } />
 

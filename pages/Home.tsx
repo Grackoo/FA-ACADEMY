@@ -618,10 +618,7 @@ const Home: React.FC = () => {
           </div>
 
           <div className="relative">
-            {/* Connecting Line (Desktop) */}
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-slate-800 -translate-y-1/2 z-0"></div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
               {MODULES.map((module) => (
                 <div key={module.id} className="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700 hover:border-primary-500/50 transition-all relative group hover:-translate-y-1">
                   <div className={`w-12 h-12 ${module.color} rounded-xl text-white flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
@@ -647,7 +644,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {MODULES.map((module) => (
               <Link to={`/academy/${module.id}`} key={module.id} className="group flex flex-col bg-slate-800 rounded-2xl border border-slate-700 shadow-lg overflow-hidden hover:shadow-2xl hover:border-primary-500/50 transition-all">
                 <div className="relative h-48 overflow-hidden">

@@ -73,7 +73,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                             email: 'admin@fa-academy.com',
                             password_hash: adminHash,
                             role: 'admin',
-                            allowed_phases: ['1', '2', '3', '4', '5'],
+                            allowed_phases: ['1', '2', '3', '4', '5', '6', '7', '8'],
                             super_link_token: '',
                             token_expires: '',
                             created_at: new Date().toISOString()
@@ -84,7 +84,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                             email: 'alumno1@gmail.com',
                             password_hash: studentHash,
                             role: 'student',
-                            allowed_phases: ['1', '2', '3', '4', '5'],
+                            allowed_phases: ['1', '2', '3', '4', '5', '6', '7', '8'],
                             super_link_token: 'SL_TEST1234',
                             token_expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
                             created_at: new Date().toISOString()

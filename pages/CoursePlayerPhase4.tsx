@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
   ArrowRight, ArrowLeft, TrendingUp, Activity, 
   Target, Send, Info, BookOpen, PieChart,  
@@ -9,20 +10,20 @@ import {
   Calculator, UserCheck, Newspaper, ShieldAlert,
   Zap, Search, BarChart2, Globe, Building2,
   Download, FileSpreadsheet, CheckCircle2, XCircle, HelpCircle,
-  Percent, Award, PlayCircle, Clock
+  Percent, Award, PlayCircle, Clock, ExternalLink
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { downloadAssetAllocationTemplate, downloadFiscalDeclarationTemplate } from '../utils/resources';
 import ErrorBoundary from '../components/ErrorBoundary';
 import SEO from '../components/SEO';
 
-// --- DATOS FASE 4: GESTIÓN DE RIESGO, PORTAFOLIO Y FISCALIDAD SAT 2026 ---
+// --- DATOS FASE 4: GESTIÓN DE RIESGO, PORTAFOLIO Y FISCALIDAD SAT 2026 (9 LECCIONES) ---
 
 const courseData = [
   {
     id: 1,
     title: "Módulo 4: Gestión de Riesgo, Portafolio y Fiscalidad",
-    description: "El Arte del Asset Allocation, Core-Satellite, Control de Drawdown y el SAT como tu socio silencioso.",
+    description: "El Arte del Asset Allocation, Core-Satellite, Control de Drawdown, Fiscalidad SAT 2026 y Money Management.",
     lessons: [
       {
         title: "Caso de Estudio: Bimbo vs Flowers Foods (BMV / NYSE)",
@@ -32,6 +33,7 @@ const courseData = [
         videoUrls: ["e5YgKlsio_w"],
         videoTitle: "Análisis Fundamental de BIMBOA y Reportes Financieros BMV",
         videoDuration: "19 min",
+        disclaimer: "Educación, no asesoría financiera. El desempeño histórico no garantiza rendimientos futuros.",
         speakerNotes: "Pregunta siempre: ¿La caída proviene de un deterioro permanente del negocio o de una compresión temporal de múltiplos por factores macroeconómicos? Si el negocio mantiene su foso económico y flujo de caja, el pánico es tu mejor aliado.",
         concepts: [
           { term: "Reporte 4T BMV", def: "Informe financiero auditado del cuarto trimestre y cierre anual presentado ante la CNBV y el público inversionista." },
@@ -39,17 +41,52 @@ const courseData = [
           { term: "Razón Deuda Neta / EBITDA (2.4x)", def: "Años de flujo requeridos para cubrir pasivos; Bimbo mantiene rango conservador grado de inversión." },
           { term: "Costo de Materias Primas", def: "Fluctuación en insumos agrícolas (trigo, maíz, aceites) que impacta transitoriamente el costo de ventas." }
         ],
-        miniQuiz: {
-          question: "En el reporte 4T23 de Grupo Bimbo, ¿cuál fue la razón principal de la corrección de $82.50 a $67.80 MXN pese a mantener un margen EBITDA del 13.9%?",
-          options: [
-            "Que la empresa se declaró en bancarrota fraudulenta.",
-            "Factores temporales: volatilidad en el costo del trigo e impacto cambiario del superpeso en ventas de Norteamérica, sin daño estructural al negocio.",
-            "Que suspendieron el reparto de pan en todo México.",
-            "Un error tipográfico de la Bolsa Mexicana de Valores."
-          ],
-          correct: 1,
-          explanation: "Los estados financieros mostraron que el foso económico y el flujo de Bimbo seguían intactos; la presión fue transitoria por materias primas y conversión cambiaria."
-        }
+        realExample: {
+          asset: "Grupo Bimbo S.A.B. de C.V. (BMV: BIMBOA)",
+          date: "Reporte auditado 4T23 presentado el 19 de febrero de 2024",
+          source: "Bolsa Mexicana de Valores (BMV) / Reportes Financieros Bimbo",
+          url: "https://www.bmv.com.mx/",
+          caseDescription: "Ventas netas de $399,879 MDP y EBITDA de $54,942 MDP. Pese a la caída en bolsa a $67.80 MXN por el superpeso, su posición competitiva global en 34 países demostró que el valor intrínseco del negocio superaba con creces la cotización bursátil momentánea."
+        },
+        deliverableExercise: {
+          title: "Auditoría de Margen Operativo y Deuda en una Emisora",
+          description: "Descarga el reporte trimestral más reciente de una empresa de la BMV o SIC (ej. Walmart de México WALMEX o Bimbo) y calcula su margen EBITDA y su razón Deuda Neta / EBITDA. Define si la cotización actual representa una compresión de múltiplos o deterioro real."
+        },
+        quizzes: [
+          {
+            question: "En el reporte 4T23 de Grupo Bimbo, ¿cuál fue la razón principal de la corrección de $82.50 a $67.80 MXN pese a mantener un margen EBITDA del 13.9%?",
+            options: [
+              "Que la empresa se declaró en bancarrota fraudulenta.",
+              "Factores temporales: volatilidad en el costo del trigo e impacto cambiario del superpeso en ventas de Norteamérica, sin daño estructural al negocio.",
+              "Que suspendieron el reparto de pan en todo México.",
+              "Un error tipográfico de la Bolsa Mexicana de Valores."
+            ],
+            correct: 1,
+            explanation: "Los estados financieros mostraron que el foso económico y el flujo de Bimbo seguían intactos; la presión fue transitoria por materias primas y conversión cambiaria."
+          },
+          {
+            question: "¿Qué indica una razón Deuda Neta / EBITDA de 2.4x en una corporación industrial multinacional como Bimbo?",
+            options: [
+              "Que la empresa quebrará en menos de tres meses.",
+              "Un nivel de apalancamiento prudente y conservador con grado de inversión, que permite cubrir la deuda neta en 2.4 años de flujo operativo.",
+              "Que no tiene obligaciones financieras con ningún banco.",
+              "Que el 100% de sus ventas se destinan a pagar intereses."
+            ],
+            correct: 1,
+            explanation: "En finanzas corporativas, una razón Deuda Neta / EBITDA por debajo de 3.0x suele calificar como grado de inversión sólido según las agencias calificadoras (Fitch, S&P, Moody's)."
+          },
+          {
+            question: "¿Por qué el inversor con enfoque fundamental compara BIMBOA (BMV) contra Flowers Foods FLO (NYSE)?",
+            options: [
+              "Para verificar múltiplos relativos (P/E, margen EBITDA) entre pares de la misma industria en distintas geografías y detectar subvaluaciones.",
+              "Porque es obligatorio por la Ley del Mercado de Valores.",
+              "Para comprar ambas empresas en la misma orden de mercado.",
+              "Porque Flowers Foods es dueña de Bimbo."
+            ],
+            correct: 0,
+            explanation: "El análisis de empresas comparables (Comps) permite evaluar la eficiencia de gestión de costos, fosos de mercado y valuación relativa entre líderes del mismo sector."
+          }
+        ]
       },
       {
         title: "Asset Allocation y la Frontera Eficiente",
@@ -58,6 +95,7 @@ const courseData = [
         visualType: "asset_allocation_master",
         source: "Estudio: Brinson, Hood & Beebower — Determinants of Portfolio Performance",
         quote: { text: "La diversificación es la única comida gratis en las finanzas.", author: "Harry Markowitz (Premio Nobel de Economía)" },
+        disclaimer: "Educación, no asesoría financiera. La diversificación aminora el riesgo no sistemático pero no elimina el riesgo general de mercado.",
         speakerNotes: "El estudio de Brinson demostró que los gestores que pasan semanas intentando adivinar el momento exacto de compra aportan menos del 5% de la varianza del rendimiento frente a quienes eligen una asignación de activos estratégica.",
         concepts: [
           { term: "Estudio Brinson (1986/1991)", def: "Investigación que probó que más del 90% de la variabilidad temporal de los retornos depende del Asset Allocation." },
@@ -65,23 +103,59 @@ const courseData = [
           { term: "Correlación Negativa", def: "Comportamiento donde dos activos se compensan entre sí (ej. bonos subiendo cuando las acciones corrigen)." },
           { term: "Varianza de Portafolio", def: "Medida del riesgo conjunto de los activos, amortiguada gracias a la covarianza entre clases." }
         ],
-        miniQuiz: {
-          question: "¿Qué demostró exactamente el estudio seminal de Brinson, Hood y Beebower sobre el rendimiento de las inversiones?",
-          options: [
-            "Que el 90% de tus ganancias provienen de comprar opciones especulativas.",
-            "Que más del 90% de la variabilidad de los retornos a lo largo del tiempo se explica por la Asignación de Activos (Asset Allocation).",
-            "Que el análisis técnico intradía siempre bate al mercado.",
-            "Que no se deben comprar bonos gubernamentales nunca."
-          ],
-          correct: 1,
-          explanation: "Brinson, Hood y Beebower concluyeron que la política de asignación entre clases de activos explica más del 90% de la variación del rendimiento temporal de una cartera."
-        }
+        realExample: {
+          asset: "Portafolio Institucional Multi-Activo (Estudio Brinson et al.)",
+          date: "Revisión histórica de 82 grandes fondos de pensiones estadounidenses (1977-1987 y actualización 1991)",
+          source: "Financial Analysts Journal / CFA Institute",
+          url: "https://www.cfainstitute.org/en/research/financial-analysts-journal",
+          caseDescription: "La política de inversión estratégica (Asset Allocation) explicó el 93.6% de la variación de rendimientos trimestrales. La selección de acciones particulares aportó apenas el 4.6% y el market timing el 1.8%."
+        },
+        deliverableExercise: {
+          title: "Diseño de Política de Asignación Estratégica (IPS)",
+          description: "Escribe tu propia declaración de política de inversión: define tu porcentaje objetivo en renta variable global, renta fija gubernamental y bienes raíces (ej. 60/30/10) justificando tu horizonte temporal en años."
+        },
+        quizzes: [
+          {
+            question: "¿Qué demostró exactamente el estudio seminal de Brinson, Hood y Beebower sobre el rendimiento de las inversiones?",
+            options: [
+              "Que el 90% de tus ganancias provienen de comprar opciones especulativas.",
+              "Que más del 90% de la variabilidad de los retornos a lo largo del tiempo se explica por la Asignación de Activos (Asset Allocation).",
+              "Que el análisis técnico intradía siempre bate al mercado.",
+              "Que no se deben comprar bonos gubernamentales nunca."
+            ],
+            correct: 1,
+            explanation: "Brinson, Hood y Beebower concluyeron que la política de asignación entre clases de activos explica más del 90% de la variación del rendimiento temporal de una cartera."
+          },
+          {
+            question: "En la teoría moderna de portafolios de Harry Markowitz, ¿qué define a la 'Frontera Eficiente'?",
+            options: [
+              "El conjunto de carteras que ofrecen el máximo rendimiento esperado para cada nivel determinado de riesgo o volatilidad.",
+              "Las acciones que cotizan únicamente en la Bolsa de Nueva York.",
+              "El límite legal de títulos que un extranjero puede comprar en México.",
+              "Una línea que separa las empresas rentables de las que tienen deudas."
+            ],
+            correct: 0,
+            explanation: "La frontera eficiente representa el límite matemático donde no es posible obtener mayor rendimiento esperado sin asumir mayor volatilidad."
+          },
+          {
+            question: "Si combinas en tu portafolio dos activos con coeficiente de correlación de -0.40, ¿qué ocurre con el riesgo total del portafolio?",
+            options: [
+              "El riesgo total se multiplica por dos.",
+              "La volatilidad total del portafolio disminuye por efecto de compensación mutua sin reducir necesariamente el retorno esperado.",
+              "La cartera queda bloqueada por la CNBV.",
+              "El SAT cobra el doble de impuestos."
+            ],
+            correct: 1,
+            explanation: "La correlación negativa o baja entre clases de activos reduce la varianza de la cartera gracias al efecto de covarianza, que es la base matemática de la diversificación."
+          }
+        ]
       },
       {
         title: "Modelo Core-Satellite con Portafolio Real",
         content: "Estructura tu capital con arquitectura institucional: 70% Núcleo de bajo costo y 30% Satélites de alta convicción.",
         details: "El modelo Core-Satellite combina la eficiencia pasiva con la búsqueda de alfa activo. El Núcleo (Core, 70% del portafolio) se asigna a vehículos indexados globales de muy bajo costo y renta fija soberana para asegurar el interés compuesto: ej. 40% en renta variable global indexada (VOO / IVVPESO), 20% en deuda soberana en pesos (Cetes / Mbonos) y 10% en bienes raíces (FIBRAS). Los Satélites (30% restante) buscan rendimientos asimétricos: 15% en empresas individuales de alta convicción (Bimbo, Google), 10% en temáticas de expansión (nearshoring/semiconductores) y 5% en reservas tácticas u oro.",
         visualType: "core_satellite_visual",
+        disclaimer: "Educación, no asesoría financiera. Las ponderaciones del modelo deben ajustarse a la capacidad real de absorción de pérdidas del alumno.",
         speakerNotes: "El Núcleo protege tu futuro financiero pase lo que pase en el mercado. Los Satélites te permiten explotar oportunidades sin poner en riesgo tu patrimonio principal.",
         concepts: [
           { term: "Núcleo (Core 70%)", def: "Base indexada diversificada de bajo costo que captura el crecimiento económico mundial sin riesgo de selección individual." },
@@ -89,23 +163,59 @@ const courseData = [
           { term: "Generación de Alfa (α)", def: "Rendimiento adicional generado por encima del índice de referencia gracias a la selección táctica de satélites." },
           { term: "Beta del Portafolio (β)", def: "Sensibilidad del núcleo respecto a los movimientos globales del mercado general." }
         ],
-        miniQuiz: {
-          question: "En una estrategia Core-Satellite estructurada al 70/30, ¿cuál es el objetivo primordial del Núcleo (Core)?",
-          options: [
-            "Hacer Day Trading apalancado todas las mañanas.",
-            "Proveer una base indexada y de renta fija sólida, de bajo costo y diversificada, que garantice la captura del mercado.",
-            "Comprar únicamente criptomonedas recién creadas.",
-            "Pagar la comisión del asesor sin importar el rendimiento."
-          ],
-          correct: 1,
-          explanation: "El Núcleo actúa como el ancla de estabilidad patrimonial mediante índices globales y renta fija, evitando errores de concentración individual."
-        }
+        realExample: {
+          asset: "Portafolio Mexicano Core-Satellite 2026",
+          date: "Cierre de mercado 2026-11-07",
+          source: "TradingView / Banco de México / BMV",
+          url: "https://www.banxico.org.mx/",
+          caseDescription: "Estructura con Núcleo: 40% IVVPESO (S&P 500 cubierto), 20% CETES 28D (tasa 10.20%), 10% FIBRA Monterrey (FMTY14 yield mensual). Satélites: 15% BIMBOA + FEMSAUBD, 10% ETF Semiconductores (SMH), 5% Oro físico/IAU. Rendimiento con volatilidad 40% menor al S&P 500 puro."
+        },
+        deliverableExercise: {
+          title: "Matriz de Asignación Core-Satellite para tu Capital",
+          description: "Llena la plantilla con los tickers reales de tu elección para el 70% Núcleo (mínimo 2 activos indexados/renta fija) y para el 30% Satélite (máximo 4 activos tácticos), indicando el objetivo de cada uno."
+        },
+        quizzes: [
+          {
+            question: "En una estrategia Core-Satellite estructurada al 70/30, ¿cuál es el objetivo primordial del Núcleo (Core)?",
+            options: [
+              "Hacer Day Trading apalancado todas las mañanas.",
+              "Proveer una base indexada y de renta fija sólida, de bajo costo y diversificada, que garantice la captura del mercado.",
+              "Comprar únicamente criptomonedas recién creadas.",
+              "Pagar la comisión del asesor sin importar el rendimiento."
+            ],
+            correct: 1,
+            explanation: "El Núcleo actúa como el ancla de estabilidad patrimonial mediante índices globales y renta fija, evitando errores de concentración individual."
+          },
+          {
+            question: "¿Qué porcentaje máximo se recomienda asignar a las posiciones tácticas individuales (Satélites) para evitar poner en jaque el patrimonio?",
+            options: [
+              "Entre el 20% y el 30% del portafolio total, limitando cada acción individual al 5%-10%.",
+              "El 100% en una sola acción que sea tendencia en redes sociales.",
+              "El 0%, está prohibido invertir fuera de Cetes.",
+              "El 80% en instrumentos derivados."
+            ],
+            correct: 0,
+            explanation: "Limitar los satélites al 20%-30% garantiza que incluso si una empresa quiebra por completo, el daño sobre el portafolio total sea marginal y absorbible."
+          },
+          {
+            question: "¿Qué papel cumple el vehículo indexado IVVPESO en el Núcleo de un inversionista con gastos en pesos mexicanos?",
+            options: [
+              "Otorga exposición al índice S&P 500 cotizando en pesos en la BMV con cobertura cambiaria peso-dólar.",
+              "Es un pagaré bancario emitido por el gobierno de EE.UU.",
+              "Es una acción individual de una empresa mexicana de software.",
+              "Es un fondo de deuda que solo invierte en Cetes."
+            ],
+            correct: 0,
+            explanation: "IVVPESO es el ETF de iShares que replica el S&P 500 con cobertura cambiaria a pesos (hedged), aislando el rendimiento bursátil de las fluctuaciones USD/MXN."
+          }
+        ]
       },
       {
         title: "Rebalanceo Práctico Anual de Cartera",
         content: "La disciplina matemática que te obliga a comprar barato y vender caro de forma sistemática y sin emoción.",
         details: "A medida que los mercados se mueven, las ponderaciones originales de tu portafolio se distorsionan. Si tus acciones suben con fuerza, pueden pasar de representar el 40% al 55% de tu capital, incrementando tu riesgo inadvertidamente. El Rebalanceo es el proceso periódico (anual o ante desviaciones mayores al 5%) de vender una fracción de lo que ha subido (tomando ganancias en máximos) para reinvertirlo en las clases rezagadas que cotizan a precios de descuento.",
         visualType: "rebalancing_calculator",
+        disclaimer: "Educación, no asesoría financiera. Al rebalancear vendiendo activos se deben considerar los costos de corretaje y el impacto fiscal del 10% LISR.",
         speakerNotes: "El rebalanceo es psicológicamente contraintuitivo porque te exige vender el activo estrella del año para comprar el activo que peor se comportó. Pero esa es exactamente la definición de comprar barato.",
         concepts: [
           { term: "Rebalanceo por Calendario", def: "Revisión en fecha fija (ej. cada diciembre o abril) para restituir los porcentajes objetivo de la política de inversión." },
@@ -113,23 +223,59 @@ const courseData = [
           { term: "Rebalanceo por Flujo de Caja", def: "Inyectar nuevo ahorro mensual directamente a los activos rezagados para rebalancear sin necesidad de vender ni pagar comisiones." },
           { term: "Deriva de Cartera (Drift)", def: "Desviación progresiva de los pesos de la cartera provocada por el rendimiento dispar entre activos." }
         ],
-        miniQuiz: {
-          question: "¿Por qué el rebalanceo sistemático de portafolio elimina el sesgo emocional del inversionista?",
-          options: [
-            "Porque te obliga mecánicamente a recortar los activos sobreponderados que cotizan caros y añadir a los rezagados infravalorados.",
-            "Porque cancela la cuenta bancaria si no compras acciones.",
-            "Porque garantiza rendimientos diarios superiores al 10%.",
-            "Porque se realiza a través de un robot que no cobra comisiones."
-          ],
-          correct: 0,
-          explanation: "El rebalanceo sustituye el juicio emocional por una regla matemática estricta: reasignar capital desde los activos que se encarecieron hacia los que ofrecen mejor valoración."
-        }
+        realExample: {
+          asset: "Cartera 60/40 en el Mercado Mexicano (Renta Variable / CETES)",
+          date: "Periodo Anual 2024-2025",
+          source: "Bolsa Mexicana de Valores / CetesDirecto",
+          url: "https://www.cetesdirecto.com/",
+          caseDescription: "Un portafolio inicial de $100,000 MXN (60% acciones / 40% Cetes) termina el año en $118,000 MXN con las acciones pesando 68.6% y Cetes 31.4%. El inversionista disciplinado vende $6,000 de acciones para comprar Cetes, capturando utilidades en máximos y restableciendo la meta 60/40."
+        },
+        deliverableExercise: {
+          title: "Cálculo de Órdenes de Rebalanceo en Plantilla Excel",
+          description: "Descarga la plantilla de rebalanceo de FA Academy, ingresa las ponderaciones actuales de tus cuentas de inversión y calcula las órdenes exactas de compra o venta requeridas para volver a tus bandas de tolerancia."
+        },
+        quizzes: [
+          {
+            question: "¿Por qué el rebalanceo sistemático de portafolio elimina el sesgo emocional del inversionista?",
+            options: [
+              "Porque te obliga mecánicamente a recortar los activos sobreponderados que cotizan caros y añadir a los rezagados infravalorados.",
+              "Porque cancela la cuenta bancaria si no compras acciones.",
+              "Porque garantiza rendimientos diarios superiores al 10%.",
+              "Porque se realiza a través de un robot que no cobra comisiones."
+            ],
+            correct: 0,
+            explanation: "El rebalanceo sustituye el juicio emocional por una regla matemática estricta: reasignar capital desde los activos que se encarecieron hacia los que ofrecen mejor valoración."
+          },
+          {
+            question: "En lugar de vender activos y generar comisiones bursátiles o hechos imponibles ante el SAT, ¿cuál es el método más eficiente de rebalanceo?",
+            options: [
+              "Pedir un préstamo bancario caro.",
+              "Rebalancear con flujos de nuevo ahorro mensual, dirigiendo las aportaciones a los activos rezagados.",
+              "Dejar de invertir para siempre.",
+              "Vender todo y esperar a que el mercado caiga a cero."
+            ],
+            correct: 1,
+            explanation: "El rebalanceo con aportaciones periódicas de ahorro permite restaurar las ponderaciones meta comprando los activos rezagados sin vender ni pagar corretaje o ISR."
+          },
+          {
+            question: "Si fijaste una banda de tolerancia de ±5% y tu ponderación objetivo de acciones es 50%, ¿cuándo se dispara una orden de rebalanceo?",
+            options: [
+              "Cuando las acciones lleguen a 51%.",
+              "Únicamente cuando el peso de las acciones caiga por debajo de 45% o suba por encima de 55%.",
+              "Cada vez que cambie el presidente de México.",
+              "Todos los días a las 8:30 am."
+            ],
+            correct: 1,
+            explanation: "Las bandas de tolerancia evitan el exceso de operaciones (overtrading); solo se actúa cuando la deriva de la cartera excede el umbral pactado (±5 puntos porcentuales)."
+          }
+        ]
       },
       {
         title: "Métricas de Riesgo: Volatilidad, Beta, Sharpe y Sortino",
         content: "Aprende a medir con precisión matemática si el rendimiento de tu cartera justifica el riesgo asumido.",
         details: "El retorno por sí solo no dice nada: ganar 15% con volatilidad del 40% es inferior a ganar 13% con volatilidad del 8%. La Volatilidad anualizada (desviación estándar $\\sigma$) mide la dispersión del precio. La Beta ($\\beta$) mide la sensibilidad respecto al mercado (Beta > 1 es más volátil que el índice). El Ratio de Sharpe ($S = \\frac{R_p - R_f}{\\sigma_p}$) calcula el exceso de retorno obtenido por unidad de riesgo total. El Ratio de Sortino perfecciona a Sharpe al penalizar únicamente la volatilidad bajista perjudicial (downside deviation), ignorando la volatilidad alcista favorable.",
         visualType: "risk_metrics_tool",
+        disclaimer: "Educación, no asesoría financiera. Los ratios cuantitativos se calculan sobre datos históricos y no garantizan estabilidad futura.",
         speakerNotes: "Un Ratio de Sharpe superior a 1.0 se considera bueno; por encima de 1.5 es excelente. Siempre compara estrategias descontando la tasa libre de riesgo local (Cetes a 28 días).",
         concepts: [
           { term: "Volatilidad Anualizada (σ)", def: "Desviación estándar de los retornos diarios multiplicada por la raíz de 252 días hábiles bursátiles." },
@@ -137,23 +283,59 @@ const courseData = [
           { term: "Ratio de Sharpe", def: "Rendimiento del portafolio menos la tasa libre de riesgo dividido entre la volatilidad total: (Rp - Rf) / σ." },
           { term: "Ratio de Sortino", def: "Retorno en exceso dividido únicamente entre la desviación estándar de los retornos negativos: no castiga las ganancias inesperadas." }
         ],
-        miniQuiz: {
-          question: "¿Cuál es la diferencia analítica fundamental entre el Ratio de Sharpe y el Ratio de Sortino?",
-          options: [
-            "Sharpe se calcula en pesos y Sortino en dólares estadounidenses.",
-            "Sharpe penaliza la volatilidad total (tanto subidas como bajadas), mientras que Sortino solo penaliza la volatilidad a la baja (downside risk).",
-            "Sortino no toma en cuenta la tasa libre de riesgo.",
-            "Sharpe solo sirve para fondos de inversión europeos."
-          ],
-          correct: 1,
-          explanation: "Sortino aísla la volatilidad negativa perjudicial, reconociendo que los inversores temen a las pérdidas, no a los saltos alcistas repentinos."
-        }
+        realExample: {
+          asset: "Cemex ($CEMEXCPO) vs IPC BMV vs CETES 28D",
+          date: "Cierre anual 2026-11-07",
+          source: "TradingView / Banco de México",
+          url: "https://es.tradingview.com/symbols/BMV-CEMEXCPO/",
+          caseDescription: "Cemex con retorno del 16.5% y volatilidad anualizada del 24.2% frente a CETES 28D al 10.20%. Ratio de Sharpe de Cemex: (16.5% - 10.2%) / 24.2% = 0.26. En contraste, un portafolio diversificado Core-Satellite con retorno del 15.0% y volatilidad de 9.5% ofrece un Sharpe de 0.51, demostrando superioridad por unidad de riesgo."
+        },
+        deliverableExercise: {
+          title: "Cálculo del Ratio de Sharpe de tu Estrategia",
+          description: "Calcula el Ratio de Sharpe de tu portafolio personal: toma tu rendimiento anual proyectado, resta la tasa actual de CETES 28D (10.20%) y divide entre la volatilidad anualizada estimada. Evalúa si tu exceso de retorno compensa el riesgo."
+        },
+        quizzes: [
+          {
+            question: "¿Cuál es la diferencia analítica fundamental entre el Ratio de Sharpe y el Ratio de Sortino?",
+            options: [
+              "Sharpe se calcula en pesos y Sortino en dólares estadounidenses.",
+              "Sharpe penaliza la volatilidad total (tanto subidas como bajadas), mientras que Sortino solo penaliza la volatilidad a la baja (downside risk).",
+              "Sortino no toma en cuenta la tasa libre de riesgo.",
+              "Sharpe solo sirve para fondos de inversión europeos."
+            ],
+            correct: 1,
+            explanation: "Sortino aísla la volatilidad negativa perjudicial, reconociendo que los inversores temen a las pérdidas, no a los saltos alcistas repentinos."
+          },
+          {
+            question: "Si una acción mexicana tiene una Beta (β) de 1.4 respecto al índice S&P/BMV IPC, ¿qué se espera que ocurra si el índice cae un 10%?",
+            options: [
+              "Que la acción suba un 14%.",
+              "Que la acción caiga aproximadamente un 14% (es 40% más volátil que el mercado general).",
+              "Que el precio no sufra ninguna alteración.",
+              "Que la empresa pague un dividendo del 1.4%."
+            ],
+            correct: 1,
+            explanation: "Una Beta superior a 1.0 amplifica sistemáticamente las variaciones del mercado: ante una caída de 10% en el índice, el activo tiende a corregir 1.4 × 10% = 14%."
+          },
+          {
+            question: "En la fórmula del Ratio de Sharpe: (Rp - Rf) / σ, ¿qué representa el término 'Rf'?",
+            options: [
+              "El rendimiento libre de riesgo (Risk-Free Rate), representado en México por la tasa de CETES a 28 días.",
+              "El cobro de comisiones del intermediario bursátil.",
+              "La tasa de inflación reportada por el INEGI.",
+              "El dividendo trimestral pagado por Bimbo."
+            ],
+            correct: 0,
+            explanation: "Rf es la tasa libre de riesgo soberana del país; solo el rendimiento que supera a Rf califica como prima de riesgo real ganada por invertir en bolsa."
+          }
+        ]
       },
       {
         title: "Marco Fiscal en México: Art. 129 LISR y Dividendos",
         content: "Maximiza tu rendimiento real DESPUÉS de impuestos: conoce las reglas oficiales del SAT para bolsa y FIBRAS.",
         details: "En México, la Ley del Impuesto Sobre la Renta (LISR) otorga un régimen altamente favorable para el mercado bursátil regulado. De acuerdo con el Artículo 129 de la LISR, las personas físicas tributan a una tasa preferencial del 10% sobre la ganancia neta anual obtenida por la enajenación de acciones en BMV, BIVA o vía el SIC. Es crucial entender que NO es una retención definitiva mensual del bróker: el intermediario bursátil emite una constancia anual y el impuesto se calcula y paga en la Declaración Anual en abril. En dividendos (Art. 140), la empresa retiene un 10% definitivo y el dividendo bruto acumulable permite acreditar el ISR corporativo. En FIBRAS, las distribuciones por 'Reembolso de Capital' son 100% libres de impuestos.",
         visualType: "fiscal_rules",
+        disclaimer: "Educación, no asesoría fiscal personalizada. Consulta a un Contador Público certificado para tu situación tributaria particular ante el SAT.",
         speakerNotes: "Nunca utilices el término 'impuesto cedular' para la bolsa en México: los impuestos cedulares son gravámenes estatales específicos. La ganancia en bolsa es de competencia federal bajo el Art. 129 LISR.",
         concepts: [
           { term: "Art. 129 LISR (Tasa 10%)", def: "Régimen fiscal federal preferencial para enajenación de acciones en bolsa, liquidado en la Declaración Anual." },
@@ -161,23 +343,59 @@ const courseData = [
           { term: "Dividendos (Art. 140 LISR)", def: "Retención definitiva del 10% más acumulación a ingresos ordinarios con derecho al acreditamiento del ISR pagado por la emisora." },
           { term: "FIBRAS: Reembolso de Capital", def: "Distribución fiscalmente exenta de impuestos que disminuye el costo promedio de adquisición del certificado." }
         ],
-        miniQuiz: {
-          question: "Respecto al Artículo 129 de la LISR en México para ganancias de capital en bolsa (BMV / SIC), ¿cuál afirmación es correcta ante el SAT?",
-          options: [
-            "El bróker retiene un 10% mensual definitivo y no se vuelve a reportar nada al SAT.",
-            "El contribuyente calcula y paga el 10% sobre la ganancia neta en su Declaración Anual en abril, con base en la constancia emitida por el bróker.",
-            "Pagas el 35% de ISR como si fuera sueldo ordinario.",
-            "Es un impuesto estatal denominado comúnmente impuesto cedular."
-          ],
-          correct: 1,
-          explanation: "El Art. 129 LISR establece que la persona física declara la ganancia de capital anual en su Declaración Anual y aplica la tasa preferencial del 10% sobre la utilidad real neta."
-        }
+        realExample: {
+          asset: "Constancia Fiscal Anual emitida por Casa de Bolsa Mexicana (GBM / Bursanet)",
+          date: "Ejercicio Fiscal SAT 2025/2026",
+          source: "Servicio de Administración Tributaria (SAT) / Art. 129 LISR",
+          url: "https://www.sat.gob.mx/",
+          caseDescription: "Inversionista obtiene $50,000 MXN en ganancias de capital vendiendo acciones del SIC y $15,000 en pérdidas en otros títulos. Base gravable neta en la constancia: $35,000 MXN. En su Declaración Anual de abril, ingresa al renglón de Enajenación de Acciones en Bolsa y liquida el 10% ($3,500 MXN de ISR)."
+        },
+        deliverableExercise: {
+          title: "Simulación de Liquidación Fiscal de Portafolio en Constancia",
+          description: "Utilizando la plantilla de cálculo fiscal SAT de FA Academy, ingresa 3 compras y 3 ventas hipotéticas en BMV/SIC, determina la ganancia neta consolidada y calcula el 10% de ISR a pagar en la Declaración Anual."
+        },
+        quizzes: [
+          {
+            question: "Respecto al Artículo 129 de la LISR en México para ganancias de capital en bolsa (BMV / SIC), ¿cuál afirmación es correcta ante el SAT?",
+            options: [
+              "El bróker retiene un 10% mensual definitivo y no se vuelve a reportar nada al SAT.",
+              "El contribuyente calcula y paga el 10% sobre la ganancia neta en su Declaración Anual en abril, con base en la constancia emitida por el bróker.",
+              "Pagas el 35% de ISR como si fuera sueldo ordinario.",
+              "Es un impuesto estatal denominado comúnmente impuesto cedular."
+            ],
+            correct: 1,
+            explanation: "El Art. 129 LISR establece que la persona física declara la ganancia de capital anual en su Declaración Anual y aplica la tasa preferencial del 10% sobre la utilidad real neta."
+          },
+          {
+            question: "¿Por qué las distribuciones de FIBRAS inmobiliarias catalogadas como 'Reembolso de Capital' son tan atractivas fiscalmente?",
+            options: [
+              "Porque no pagan ISR en el momento de recibirlas (son 100% libres de impuestos), disminuyendo el costo fiscal de los certificados.",
+              "Porque el SAT devuelve dinero en efectivo automáticamente.",
+              "Porque duplican el valor de las rentas cada mes.",
+              "Porque no exigen tener RFC activo."
+            ],
+            correct: 0,
+            explanation: "El Reembolso de Capital devuelve patrimonio contable de la FIBRA sin generar hecho imponible inmediato para el inversionista."
+          },
+          {
+            question: "En el régimen de dividendos de personas físicas (Art. 140 LISR), ¿qué derecho tiene el inversionista respecto al ISR corporativo pagado por la empresa emisora?",
+            options: [
+              "Ninguno, pierde todo el impuesto pagado.",
+              "El derecho de acreditar contra su impuesto personal el ISR que la empresa ya liquidó al 30% a nivel corporativo.",
+              "El derecho a no presentar declaración anual.",
+              "El derecho a solicitar la devolución en dólares."
+            ],
+            correct: 1,
+            explanation: "El mecanismo de dividendo acumulable con factor de piramidación permite acreditar el ISR corporativo pagado por la emisora para evitar la doble tributación económica."
+          }
+        ]
       },
       {
         title: "Declaración Anual ante el SAT, Pérdidas y PPR",
         content: "El escudo fiscal definitivo: compensación de pérdidas a 10 años y deducción del Plan Personal de Retiro (Art. 151).",
-        details: "Si sufriste pérdidas en bolsa durante el ejercicio fiscal, el Artículo 129 Fracción VI de la LISR te permite un beneficio clave: amortizar esa pérdida fiscal contra las ganancias bursátiles de los siguientes diez ejercicios fiscales consecutivos, impidiendo que pagues impuestos hasta absorber el saldo negativo. Por su parte, el Plan Personal de Retiro (PPR bajo el Art. 151 Fracción V de la LISR) te permite deducir hasta el 10% de tus ingresos anuales acumulables con un tope de 5 UMAs anuales (~$200,000 MXN en 2026), generando cuantiosos saldos a favor en tu declaración anual de abril.",
+        details: "Si sufriste pérdidas en bolsa durante el ejercicio fiscal, el Artículo 129 Fracción VI de la LISR te permite un beneficio clave: amortizar esa pérdida fiscal contra las ganancias bursátiles de los siguientes diez ejercicios fiscales consecutivos, impidiendo que pagues impuestos hasta absorber el saldo negativo. Por su parte, el Plan Personal de Retiro (PPR bajo el Art. 151 Fracción V de la LISR) te permite deducir hasta el 10% de tus ingresos anuales acumulables con un tope de 5 UMAs anuales (~$206,000 MXN en 2026), generando cuantiosos saldos a favor en tu declaración anual de abril.",
         visualType: "sat_operations",
+        disclaimer: "Educación, no asesoría fiscal. Las deducciones personales están sujetas a los topes fijados en el Código Fiscal de la Federación y la LISR.",
         speakerNotes: "Al combinar la compensación de pérdidas bursátiles con tu deducción personal de PPR, puedes convertir tu declaración anual ante el SAT en una fuente líquida de devolución de saldo a favor.",
         concepts: [
           { term: "Amortización de Pérdidas (10 Años)", def: "Derecho a descontar pérdidas netas en acciones contra ganancias bursátiles en los siguientes 10 años fiscales." },
@@ -185,24 +403,60 @@ const courseData = [
           { term: "Saldo a Favor SAT", def: "Devolución en efectivo de impuestos retenidos en exceso gracias a la aplicación de deducciones personales." },
           { term: "Discrepancia Fiscal", def: "Situación donde los gastos o inversiones declaradas superan los ingresos comprobables ante la autoridad." }
         ],
-        miniQuiz: {
-          question: "Si tuviste una pérdida fiscal de $30,000 MXN vendiendo acciones en bolsa en un año, ¿qué beneficio te concede la LISR?",
-          options: [
-            "Ninguno, el dinero se pierde por completo.",
-            "Puedes compensar esa pérdida contra ganancias de capital futuras en bolsa durante los siguientes 10 ejercicios fiscales.",
-            "El SAT te reembolsa los $30,000 MXN en efectivo al día siguiente.",
-            "Debes pagar una multa del 10% por perder dinero."
-          ],
-          correct: 1,
-          explanation: "El Art. 129 Fracc. VI LISR permite amortizar pérdidas netas por enajenación de acciones contra ganancias del mismo régimen en los siguientes 10 años fiscales."
-        }
+        realExample: {
+          asset: "Plan Personal de Retiro (PPR) no discrecional bajo Art. 151 LISR",
+          date: "Declaración Anual SAT Personas Físicas 2026",
+          source: "SAT / Ley del Impuesto Sobre la Renta Art. 151 Fracc. V",
+          url: "https://www.sat.gob.mx/declaracion/54334/declaracion-anual-de-personas-fisicas",
+          caseDescription: "Contribuyente con ingresos brutos de $600,000 MXN anuales aporta $60,000 MXN a su PPR (10% de su ingreso, sin exceder 5 UMAs). Con una tasa marginal del 30%, genera una deducción personal que detona una devolución de saldo a favor de $18,000 MXN en su cuenta CLABE en abril."
+        },
+        deliverableExercise: {
+          title: "Auditoría de Deducciones Personales y Cálculo de Devolución PPR",
+          description: "Estima tu ingreso bruto anual, calcula tu tope de deducción del 10% (comparado contra 5 UMAs = ~$206,000 MXN) y determina el monto exacto de devolución en efectivo que recibirías del SAT según tu tasa marginal de ISR."
+        },
+        quizzes: [
+          {
+            question: "Si tuviste una pérdida fiscal de $30,000 MXN vendiendo acciones en bolsa en un año, ¿qué beneficio te concede la LISR?",
+            options: [
+              "Ninguno, el dinero se pierde por completo.",
+              "Puedes compensar esa pérdida contra ganancias de capital futuras en bolsa durante los siguientes 10 ejercicios fiscales.",
+              "El SAT te reembolsa los $30,000 MXN en efectivo al día siguiente.",
+              "Debes pagar una multa del 10% por perder dinero."
+            ],
+            correct: 1,
+            explanation: "El Art. 129 Fracc. VI LISR permite amortizar pérdidas netas por enajenación de acciones contra ganancias del mismo régimen en los siguientes 10 años fiscales."
+          },
+          {
+            question: "¿Cuál es el límite legal de deducción anual para aportaciones a un PPR según el Artículo 151 Fracción V de la LISR en México?",
+            options: [
+              "Hasta el 10% de los ingresos acumulables del contribuyente, sin que exceda el equivalente a 5 UMAs anuales.",
+              "El 100% de todo el dinero que ganes en el año sin límite.",
+              "Máximo $10,000 pesos mexicanos sin importar el ingreso.",
+              "Solo se puede deducir si compras acciones de empresas extranjeras."
+            ],
+            correct: 0,
+            explanation: "La ley topa la deducción al menor entre el 10% de los ingresos acumulables o el valor de 5 UMAs elevadas al año (~$206,000 MXN en 2026)."
+          },
+          {
+            question: "¿Qué documento oficial debes solicitar a tu bróker en febrero para presentar tu declaración bursátil ante el SAT?",
+            options: [
+              "La Constancia de Percepciones y Retenciones por Enajenación de Acciones en Bolsa.",
+              "Un recibo de luz de las oficinas del bróker.",
+              "Una carta de recomendación de tu asesor.",
+              "El estado de cuenta de tu tarjeta de crédito."
+            ],
+            correct: 0,
+            explanation: "La constancia fiscal oficial consolida el costo promedio de adquisición actualizado por inflación, las enajenaciones y la ganancia o pérdida fiscal neta anual."
+          }
+        ]
       },
       {
-        title: "Ética, Transparencia y Deber Fiduciario",
+        title: "Ética Profesional y Deber Fiduciario",
         content: "La integridad y el alineamiento de intereses son el activo de mayor duración en el mundo de las inversiones.",
         details: "El Deber Fiduciario (Fiduciary Duty) es la máxima obligación legal, profesional y moral de colocar los intereses del patrimonio familiar y de los clientes por encima de cualquier comisión, intermediación o incentivo propio. En el mercado bursátil moderno, la revelación oportuna de Conflictos de Interés y la transparencia total en costos de transacción y comisiones de corretaje constituyen la línea divisoria entre el verdadero gestor patrimonial y el vendedor de productos financieros.",
         visualType: "ethics_and_closing",
         quote: { text: "Se necesitan 20 años para construir una reputación financiera y solo cinco minutos para destruirla.", author: "Warren Buffett" },
+        disclaimer: "Educación, no asesoría financiera. La gestión patrimonial exige independencia analítica y rechazo a productos con comisiones opacas.",
         speakerNotes: "Tu reputación como inversionista y asesor es tu activo más valioso. Si una operación no supera el test ético del deber fiduciario, no se ejecuta.",
         concepts: [
           { term: "Deber Fiduciario (Fiduciary Duty)", def: "Obligación legal y ética de administrar el capital con el máximo grado de lealtad, prudencia y cuidado hacia el beneficiario." },
@@ -210,23 +464,129 @@ const courseData = [
           { term: "Transparencia Total (TER)", def: "Total Expense Ratio: cómputo exhaustivo de todas las comisiones implícitas y explícitas de un fondo o ETF." },
           { term: "Independencia Asesora", def: "Capacidad de elegir los mejores instrumentos globales sin compromisos de colocación con ninguna institución." }
         ],
-        miniQuiz: {
-          question: "¿En qué consiste el principio del Deber Fiduciario (Fiduciary Duty) en la gestión de capitales?",
-          options: [
-            "En priorizar la comisión del banco por encima de la rentabilidad del cliente.",
-            "En la obligación estricta de anteponer siempre el mejor interés del inversionista y su patrimonio sobre cualquier incentivo propio.",
-            "En delegar la declaración anual a un tercero sin supervisar.",
-            "En prometer rendimientos garantizados sin riesgo."
-          ],
-          correct: 1,
-          explanation: "El estándar fiduciario es el nivel más alto de responsabilidad ética: exige actuar con total lealtad y cuidado exclusivo en favor del dueño del capital."
-        }
+        realExample: {
+          asset: "Auditoría de Comisiones Ocultas en Fondos de Inversión Tradicionales en México",
+          date: "Reporte de Comisiones CONDUSEF / CNBV 2025-2026",
+          source: "CONDUSEF / CNBV",
+          url: "https://www.gob.mx/condusef",
+          caseDescription: "Fondos de renta variable bancarios en México con comisiones de administración del 2.5% al 3.5% anual frente a ETFs globales indexados con comisiones del 0.03% (VOO). A lo largo de 30 años, esa diferencia de comisiones drena más del 40% del patrimonio final del inversionista."
+        },
+        deliverableExercise: {
+          title: "Auditoría de Costos Totales (TER) de tus Inversiones Actuales",
+          description: "Revisa los prospectos de información al público inversionista de los fondos o activos que tienes contratados. Suma la comisión por administración, custodia y corretaje, y calcula el costo anual compuesto en pesos que pagas por mantenerlos."
+        },
+        quizzes: [
+          {
+            question: "¿En qué consiste el principio del Deber Fiduciario (Fiduciary Duty) en la gestión de capitales?",
+            options: [
+              "En priorizar la comisión del banco por encima de la rentabilidad del cliente.",
+              "En la obligación estricta de anteponer siempre el mejor interés del inversionista y su patrimonio sobre cualquier incentivo propio.",
+              "En delegar la declaración anual a un tercero sin supervisar.",
+              "En prometer rendimientos garantizados sin riesgo."
+            ],
+            correct: 1,
+            explanation: "El estándar fiduciario es el nivel más alto de responsabilidad ética: exige actuar con total lealtad y cuidado exclusivo en favor del dueño del capital."
+          },
+          {
+            question: "¿Qué impacto tiene a largo plazo pagar una comisión de administración (TER) del 2.5% anual en un fondo frente a un ETF del 0.03%?",
+            options: [
+              "Ninguno, las comisiones no afectan el interés compuesto.",
+              "Una erosión que supera el 40% del capital acumulado final al cabo de 25 o 30 años de inversión constante.",
+              "Que el SAT premia al fondo con menores impuestos.",
+              "Que el fondo rinde el doble por pagar comisiones altas."
+            ],
+            correct: 1,
+            explanation: "Las comisiones altas restan rentabilidad año tras año; debido al interés compuesto inverso, un 2.5% anual de comisión termina devorando más de una tercera parte de la riqueza final acumulable."
+          },
+          {
+            question: "¿Cómo se define un Conflicto de Interés en el asesoramiento financiero?",
+            options: [
+              "Cuando el asesor recomienda un instrumento financiero no porque sea el mejor para el cliente, sino porque le paga una comisión o bono mayor a él o a su banco.",
+              "Cuando dos inversionistas compran la misma acción.",
+              "Cuando una empresa cotiza simultáneamente en la BMV y en el SIC.",
+              "Cuando una orden de compra tarda más de 5 segundos en ejecutarse."
+            ],
+            correct: 0,
+            explanation: "El conflicto de interés surge cuando los incentivos económicos del intermediario divergen o chocan con el objetivo patrimonial del inversionista."
+          }
+        ]
+      },
+      {
+        title: "Money Management: Gestión Monetaria del Portafolio",
+        content: "El arte matemático del dimensionamiento de posiciones: nunca arriesgues más del 1% del capital total en una sola idea de inversión.",
+        details: "Money Management es el conjunto de reglas cuantitativas que definen el tamaño exacto de cada posición y blindan tu cartera contra el riesgo de ruina. La Regla del 1% (o máximo 2% en cuentas pequeñas) establece que la pérdida en caso de tocar Stop Loss jamás debe superar el 1% del patrimonio total. La fórmula matemática es: Títulos = (Capital Total × Riesgo %) / (Precio Entrada - Precio Stop Loss). Para evitar la concentración catastrófica, se fijan límites estrictos por escrito: ninguna acción individual debe superar el 10% del portafolio total y ningún sector de la economía (ej. financiero, retail o minero) debe superar el 25%. El drawdown mide la caída desde el pico patrimonial; debido a la asimetría del porcentaje, una pérdida del 50% exige una ganancia del 100% únicamente para empatar.",
+        visualType: "money_management_tool",
+        disclaimer: "Educación, no asesoría financiera. Toda inversión en renta variable conlleva riesgo de fluctuación y pérdida de capital.",
+        speakerNotes: "Los inversores aficionados se concentran exclusivamente en qué comprar; los operadores institucionales sobreviven porque calculan el tamaño de la posición antes de presionar el botón de compra.",
+        concepts: [
+          { term: "Regla del 1% de Riesgo", def: "Pérdida máxima permitida en una sola operación calculada como el 1% del valor total de la cuenta." },
+          { term: "Fórmula de Tamaño de Posición", def: "Títulos = (Capital × Riesgo %) / (Entrada - Stop Loss); adapta el número de acciones a la volatilidad del activo." },
+          { term: "Asimetría del Drawdown", def: "Propiedad matemática donde las pérdidas exigen ganancias exponencialmente mayores para recuperar el capital (ej. -33% exige +50%, -50% exige +100%)." },
+          { term: "Límites de Concentración", def: "Topes máximos fijados por escrito: máximo 10% en una acción individual y 25% en un mismo sector económico." }
+        ],
+        realExample: {
+          asset: "Fomento Económico Mexicano ($FEMSAUBD.MX)",
+          date: "Cierre de mercado 2026-11-07",
+          source: "TradingView / Bolsa Mexicana de Valores (BMV)",
+          url: "https://es.tradingview.com/symbols/BMV-FEMSAUBD/",
+          caseDescription: "Inversionista con capital de $100,000 MXN aplica la Regla del 1% ($1,000 MXN de riesgo máximo). Precio de entrada en $198.50 MXN con Stop Loss en $188.50 MXN (riesgo de $10.00 MXN por título). Tamaño de posición: 100 títulos (inversión total $19,850 MXN, 19.85% de la cuenta). Si salta el Stop Loss, la pérdida monetaria real es de exactamente $1,000 MXN (1.00% del portafolio)."
+        },
+        deliverableExercise: {
+          title: "Hoja de Reglas de Money Management Personal",
+          description: "Calcula el tamaño de posición para un activo de tu elección y define por escrito tus límites de riesgo: capital disponible, riesgo por operación (1%), stop loss técnico, pérdida máxima en pesos y exposición máxima por sector."
+        },
+        quizzes: [
+          {
+            question: "Si tu portafolio total es de $200,000 MXN y aplicas la regla estricta del 1% de riesgo por operación, ¿cuánto dinero estás dispuesto a perder como máximo si salta tu Stop Loss?",
+            options: [
+              "$20,000 MXN.",
+              "$2,000 MXN.",
+              "$200 MXN.",
+              "Todo el dinero invertido en la empresa."
+            ],
+            correct: 1,
+            explanation: "$200,000 MXN × 1% = $2,000 MXN. Ese es el límite absoluto de riesgo tolerado en esa posición individual."
+          },
+          {
+            question: "Deseas comprar acciones de Walmex ($WALMEX.MX) a $65.00 MXN con Stop Loss en $60.00 MXN. Si tu riesgo máximo permitido es de $1,500 MXN, ¿cuántos títulos debes comprar según la fórmula de Money Management?",
+            options: [
+              "300 títulos ($1,500 / $5 de riesgo por acción = 300 títulos, total invertido $19,500 MXN).",
+              "1,500 títulos.",
+              "100 títulos.",
+              "65 títulos."
+            ],
+            correct: 0,
+            explanation: "Riesgo por acción: $65 - $60 = $5 MXN. Títulos: $1,500 / $5 = 300 títulos. Si el precio cae a $60, vendes 300 títulos y pierdes exactamente $1,500 MXN."
+          },
+          {
+            question: "Si un portafolio experimenta un Drawdown severo del -50%, ¿qué rendimiento porcentual requiere generar a partir de ese punto para recuperar su máximo histórico?",
+            options: [
+              "+50% de ganancia.",
+              "+100% de ganancia (duplicar el capital restante).",
+              "+25% de ganancia.",
+              "+75% de ganancia."
+            ],
+            correct: 1,
+            explanation: "Fórmula de recuperación: D / (1 - D) = 0.50 / (1 - 0.50) = 1.00 (+100%). Si $100,000 caen a $50,000, necesitas ganar $50,000 sobre los $50,000 restantes (+100%) para volver a $100,000."
+          },
+          {
+            question: "¿Por qué tener 4 acciones distintas pero del mismo sector bancario (ej. Banorte, BBVA, Santander, Inbursa) NO ofrece una diversificación real del riesgo?",
+            options: [
+              "Porque los bancos no cotizan en la BMV.",
+              "Porque comparten una correlación cercana a +1.0 ante shocks regulatorios o variaciones en la tasa de Banxico, sufriendo caídas simultáneas.",
+              "Porque pagan dividendos en efectivo.",
+              "Porque el bróker prohíbe comprar más de un banco."
+            ],
+            correct: 1,
+            explanation: "Activos del mismo sector tienen factores de riesgo sistemático idénticos; si Banxico recorta tasas o se deteriora la morosidad crediticia, todos los bancos caen al unísono."
+          }
+        ]
       }
     ]
   }
 ];
 
-// --- BANCO DE PREGUNTAS DEL EXAMEN DE CERTIFICACIÓN DE FASE 4 ---
+// --- BANCO DE PREGUNTAS DEL EXAMEN DE CERTIFICACIÓN DE FASE 4 (10 PREGUNTAS) ---
 const quizQuestions = [
   { 
     id: 1, 
@@ -318,25 +678,25 @@ const quizQuestions = [
   },
   { 
     id: 9, 
-    question: "¿Cuál es el beneficio fiscal de realizar aportaciones a un Plan Personal de Retiro (PPR) bajo el Artículo 151 Fracción V de la LISR?", 
+    question: "¿En qué consiste el principio del Deber Fiduciario (Fiduciary Duty) en la gestión de capitales?", 
     options: [
-      "Deducir hasta el 10% de los ingresos acumulables del año (tope 5 UMAs anuales), generando una devolución de saldo a favor en abril.", 
-      "Retirar el dinero en cualquier momento sin pagar ningún tipo de impuesto.", 
-      "Comprar acciones de Wall Street sin pasar por la casa de bolsa.", 
-      "Pagar menos IVA al comprar mercancías en el supermercado."
+      "En priorizar la comisión del banco por encima de la rentabilidad del cliente.", 
+      "En la obligación estricta de anteponer siempre el mejor interés del inversionista y su patrimonio sobre cualquier incentivo propio.", 
+      "En delegar la declaración anual a un tercero sin supervisar.", 
+      "En prometer rendimientos garantizados sin riesgo."
     ], 
-    correct: 0 
+    correct: 1 
   },
   { 
     id: 10, 
-    question: "¿En qué consiste el Deber Fiduciario (Fiduciary Duty) en la asesoría y gestión patrimonial?", 
+    question: "En Money Management (Lección 4.9), si tu capital total es de $100,000 MXN, aplicas la regla del 1% de riesgo y compras una acción a $200 MXN con Stop Loss en $180 MXN, ¿cuántos títulos debes comprar exactamente?", 
     options: [
-      "En vender únicamente los productos financieros que paguen la comisión más elevada.", 
-      "En la obligación legal y moral absoluta de anteponer el interés del cliente y su patrimonio por encima de cualquier beneficio propio.", 
-      "En garantizar retornos positivos todos los meses sin riesgo.", 
-      "En mantener el dinero guardado en cuentas corrientes de banco comercial."
+      "50 títulos (inversión de $10,000 MXN, arriesgando exactamente $1,000 MXN en el Stop Loss).", 
+      "500 títulos arriesgando todo el capital de la cuenta.", 
+      "10 títulos porque el precio de la acción es $200 MXN.", 
+      "No se puede calcular sin conocer las ventas netas de la empresa."
     ], 
-    correct: 1 
+    correct: 0 
   }
 ];
 
@@ -680,7 +1040,7 @@ const SatOperations = () => (
       <div className="bg-slate-800/80 p-3 rounded-lg border border-slate-700 space-y-1.5">
         <p className="font-bold text-blue-400">🎯 Deducción del PPR (Art. 151 Fracc. V LISR)</p>
         <p className="text-slate-300 text-[11px] leading-relaxed">
-          Puedes deducir aportaciones al retiro de hasta el <strong>10% de tus ingresos anuales</strong> o 5 UMAs anuales (~$200,000 MXN), generando una devolución de saldo a favor líquida en tu cuenta bancaria.
+          Puedes deducir aportaciones al retiro de hasta el <strong>10% de tus ingresos anuales</strong> o 5 UMAs anuales (~$206,000 MXN en 2026), generando una devolución de saldo a favor líquida en tu cuenta bancaria.
         </p>
         <div className="bg-slate-950 p-2 rounded text-[10px] font-mono text-blue-300">
           Con tasa marginal de 30%, una aportación de $50,000 devuelve $15,000 MXN en efectivo.
@@ -703,25 +1063,198 @@ const EthicsAndClosing = () => (
   </div>
 );
 
+// ── 9. MONEY MANAGEMENT TOOL ──────────────────────
+const MoneyManagementTool = () => {
+  const [capital, setCapital] = useState<number>(100000);
+  const [riskPct, setRiskPct] = useState<number>(1.0);
+  const [entryPrice, setEntryPrice] = useState<number>(198.50);
+  const [stopLoss, setStopLoss] = useState<number>(188.50);
+  const [takeProfit, setTakeProfit] = useState<number>(228.50);
+
+  const riskAmount = (capital * riskPct) / 100;
+  const riskPerShare = Math.max(0.01, entryPrice - stopLoss);
+  const shares = Math.max(0, Math.floor(riskAmount / riskPerShare));
+  const totalInvestment = shares * entryPrice;
+  const allocationPct = capital > 0 ? (totalInvestment / capital) * 100 : 0;
+  const rewardPerShare = Math.max(0, takeProfit - entryPrice);
+  const totalProfit = shares * rewardPerShare;
+  const rrRatio = riskPerShare > 0 ? (rewardPerShare / riskPerShare) : 0;
+
+  // Drawdown simulator
+  const [simDrawdown, setSimDrawdown] = useState<number>(25);
+  const recoveryPct = simDrawdown < 100 ? (simDrawdown / (100 - simDrawdown)) * 100 : 0;
+
+  return (
+    <div className="mt-4 bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-5">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 pb-3">
+        <div>
+          <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Scale size={16} className="text-amber-400" />
+            Estación de Trabajo: Money Management & Dimensionamiento
+          </h4>
+          <p className="text-[11px] text-slate-400">Calcula el tamaño de posición exacto bajo la Regla del 1% y simula la asimetría del drawdown.</p>
+        </div>
+        <span className="text-xs bg-amber-500/20 text-amber-300 font-bold px-2.5 py-1 rounded-full border border-amber-500/30">
+          Regla Institucional
+        </span>
+      </div>
+
+      {/* Simulator Inputs & Position Output */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Left: Inputs */}
+        <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80 space-y-3">
+          <p className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Parámetros de la Operación</p>
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <label className="text-slate-400 block mb-1">Capital Total (MXN)</label>
+              <input 
+                type="number" 
+                value={capital} 
+                onChange={(e) => setCapital(Number(e.target.value))} 
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono"
+              />
+            </div>
+            <div>
+              <label className="text-slate-400 block mb-1">Riesgo por Operación (%)</label>
+              <select 
+                value={riskPct} 
+                onChange={(e) => setRiskPct(Number(e.target.value))}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono"
+              >
+                <option value={0.5}>0.5% (Ultraconservador)</option>
+                <option value={1.0}>1.0% (Estándar Institucional)</option>
+                <option value={1.5}>1.5% (Moderado)</option>
+                <option value={2.0}>2.0% (Máximo Tolerado)</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-slate-400 block mb-1">Precio Entrada (MXN)</label>
+              <input 
+                type="number" 
+                step="0.5" 
+                value={entryPrice} 
+                onChange={(e) => setEntryPrice(Number(e.target.value))} 
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono"
+              />
+            </div>
+            <div>
+              <label className="text-slate-400 block mb-1">Precio Stop Loss (MXN)</label>
+              <input 
+                type="number" 
+                step="0.5" 
+                value={stopLoss} 
+                onChange={(e) => setStopLoss(Number(e.target.value))} 
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="text-slate-400 block mb-1">Take Profit Objetivo (MXN)</label>
+              <input 
+                type="number" 
+                step="0.5" 
+                value={takeProfit} 
+                onChange={(e) => setTakeProfit(Number(e.target.value))} 
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Results */}
+        <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80 flex flex-col justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">Orden Calculada Automáticamente</p>
+            <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+                <span className="text-[10px] text-slate-400 block">Títulos a Comprar</span>
+                <span className="text-lg font-extrabold text-amber-400">{shares.toLocaleString()} acc.</span>
+              </div>
+              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+                <span className="text-[10px] text-slate-400 block">Inversión Total</span>
+                <span className="text-lg font-extrabold text-white">${totalInvestment.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN</span>
+              </div>
+              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+                <span className="text-[10px] text-slate-400 block">Pérdida Máxima (Stop)</span>
+                <span className="text-sm font-bold text-rose-400">-${riskAmount.toLocaleString('es-MX')} MXN ({riskPct}%)</span>
+              </div>
+              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+                <span className="text-[10px] text-slate-400 block">Ratio R:B Calculado</span>
+                <span className="text-sm font-bold text-emerald-400">1:{rrRatio.toFixed(2)}</span>
+              </div>
+            </div>
+            <div className="p-2.5 bg-slate-900/90 rounded-lg border border-slate-700 text-[11px] text-slate-300 space-y-1">
+              <p>• Ponderación en Cartera: <strong className={allocationPct > 25 ? 'text-rose-400' : 'text-amber-300'}>{allocationPct.toFixed(1)}% del capital</strong> {allocationPct > 20 ? '(⚠️ Precaución: Excede límite sugerido del 15%)' : '(✓ Seguro)'}</p>
+              <p>• Ganancia Potencial si toca Target: <strong className="text-emerald-400">+${totalProfit.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Drawdown Asymmetry Visualizer */}
+      <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700/60">
+        <div className="flex justify-between items-center mb-2">
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+            <TrendingDown size={14} className="text-rose-400" />
+            La Ley Inflexible de la Asimetría del Drawdown
+          </p>
+          <span className="text-xs text-rose-400 font-mono font-bold">Caída: -{simDrawdown}%</span>
+        </div>
+        <input 
+          type="range" 
+          min="5" 
+          max="80" 
+          step="5" 
+          value={simDrawdown} 
+          onChange={(e) => setSimDrawdown(Number(e.target.value))}
+          className="w-full accent-rose-500 mb-3 cursor-pointer"
+        />
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+          <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
+            <span className="text-[10px] text-slate-500 block">Pérdida</span>
+            <span className="font-bold text-rose-400">-{simDrawdown}%</span>
+          </div>
+          <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
+            <span className="text-[10px] text-slate-500 block">Capital Restante</span>
+            <span className="font-bold text-slate-200">{(100 - simDrawdown)}%</span>
+          </div>
+          <div className="bg-slate-900 p-2 rounded-lg border border-emerald-500/40 col-span-2">
+            <span className="text-[10px] text-slate-400 block">Ganancia Requerida para Empatar [D / (1-D)]</span>
+            <span className="font-black text-emerald-400 text-sm">+{recoveryPct.toFixed(1)}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // --- COMPONENTE PRINCIPAL COURSE PLAYER FASE 4 ---
 
 export default function CoursePlayerPhase4() {
   const { user, updateProgress, submitTestResult } = useAuth();
+  const [searchParams] = useSearchParams();
   const [currentLesson, setCurrentLesson] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [score, setScore] = useState(0);
 
-  // Mini-quiz interactivo por lección
-  const [lessonQuizAnswer, setLessonQuizAnswer] = useState<number | null>(null);
-  const [showLessonFeedback, setShowLessonFeedback] = useState(false);
+  // Mini-quiz interactivo por lección con soporte multi-pregunta
+  const [quizState, setQuizState] = useState<Record<string, { answer: number; shown: boolean }>>({});
 
   const moduleData = courseData[0];
   const lessonData = moduleData.lessons[currentLesson];
 
-  // Cargar progreso guardado al iniciar
+  // Deep linking ?lesson=X o recuperación de progreso
   useEffect(() => {
+    const lessonParam = searchParams.get('lesson');
+    if (lessonParam !== null) {
+      const parsed = parseInt(lessonParam, 10);
+      if (!isNaN(parsed)) {
+        const target = parsed > 0 && parsed <= moduleData.lessons.length ? parsed - 1 : parsed >= 0 && parsed < moduleData.lessons.length ? parsed : 0;
+        setCurrentLesson(target);
+        return;
+      }
+    }
     try {
       const saved = localStorage.getItem('fa_phase_4_progress');
       if (saved) {
@@ -733,7 +1266,7 @@ export default function CoursePlayerPhase4() {
     } catch {
       // fallback
     }
-  }, [moduleData.lessons.length]);
+  }, [searchParams, moduleData.lessons.length]);
 
   // Actualizar progreso persistente
   useEffect(() => {
@@ -746,8 +1279,6 @@ export default function CoursePlayerPhase4() {
     if (user) {
       updateProgress(4, currentLesson, moduleData.lessons.length);
     }
-    setLessonQuizAnswer(null);
-    setShowLessonFeedback(false);
   }, [currentLesson, user, moduleData.lessons.length]);
 
   const handleNext = () => {
@@ -780,9 +1311,9 @@ export default function CoursePlayerPhase4() {
 
   const generateWhatsAppLink = () => {
     const phoneNumber = "527711960057";
-    let message = `📊 *Certificación Aprobada - Fase 4 (Portafolios y Fiscalidad SAT)* 📊%0A%0A`;
+    let message = `📊 *Certificación Aprobada - Fase 4 (Portafolios, SAT y Money Management)* 📊%0A%0A`;
     message += `Calificación Oficial: *${score}/${quizQuestions.length}* ⭐️%0A`;
-    message += `Aprobado en Modelo Core-Satellite, Rebalanceo y Declaración Anual Art. 129 LISR. Solicitud de diploma oficial.`;
+    message += `Aprobado en Modelo Core-Satellite, Rebalanceo, Declaración Anual Art. 129 LISR y Money Management. Solicitud de diploma oficial.`;
     return `https://wa.me/${phoneNumber}?text=${message}`;
   };
 
@@ -796,6 +1327,7 @@ export default function CoursePlayerPhase4() {
       case 'fiscal_rules': return <FiscalRules />;
       case 'sat_operations': return <SatOperations />;
       case 'ethics_and_closing': return <EthicsAndClosing />;
+      case 'money_management_tool': return <MoneyManagementTool />;
       default: return null;
     }
   };
@@ -818,7 +1350,7 @@ export default function CoursePlayerPhase4() {
               Certificación Fase 4: Portafolio, Riesgo & Fiscalidad
             </h1>
             <p className="text-sm text-slate-400">
-              10 preguntas de validación sobre el caso Bimbo, Asset Allocation, Core-Satellite, Rebalanceo y LISR ante el SAT.
+              10 preguntas rigurosas sobre Frontera Eficiente, Core-Satellite, Rebalanceo, Art. 129 LISR y Money Management.
             </p>
           </div>
 
@@ -869,8 +1401,8 @@ export default function CoursePlayerPhase4() {
                 </div>
                 <p className="text-sm text-slate-300 leading-relaxed">
                   {score >= 7 
-                    ? '¡Felicidades! Has demostrado dominio riguroso de la frontera eficiente, el modelo Core-Satellite y el régimen fiscal del Art. 129 ante el SAT.' 
-                    : 'Te sugerimos repasar la amortización de pérdidas a 10 años y el rebalanceo de portafolio antes de solicitar tu certificado.'}
+                    ? '¡Felicidades! Has demostrado dominio riguroso de la frontera eficiente, el modelo Core-Satellite, el régimen fiscal del Art. 129 ante el SAT y el Money Management.' 
+                    : 'Te sugerimos repasar la amortización de pérdidas a 10 años, el rebalanceo y el cálculo de tamaño de posición antes de solicitar tu certificado.'}
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -896,19 +1428,21 @@ export default function CoursePlayerPhase4() {
     );
   }
 
+  const activeQuizzes = (lessonData as any).quizzes || ((lessonData as any).miniQuiz ? [(lessonData as any).miniQuiz] : []);
+
   // VISTA PRINCIPAL DEL REPRODUCTOR
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-200 font-sans flex flex-col">
       <SEO 
         title={`Fase 4: ${lessonData.title} | FA Academy`}
-        description={`Lección ${currentLesson + 1} de la Fase 4 de FA Academy: ${lessonData.content}`}
-        url="https://fa-academy.vercel.app/course/phase/4"
+        description={lessonData.content}
+        url={`https://fa-academy.vercel.app/course/phase/4?lesson=${currentLesson + 1}`}
       />
       <header className="bg-[#0f172a]/95 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50">
         <div className="max-w-5xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="bg-amber-500/10 p-2 rounded-xl border border-amber-500/20">
-              <Shield className="text-amber-400" size={22} />
+              <ShieldAlert className="text-amber-400" size={22} />
             </div>
             <div>
               <span className="font-extrabold text-white tracking-wider text-sm md:text-base block">
@@ -960,8 +1494,9 @@ export default function CoursePlayerPhase4() {
                 {lessonData.videoTitle || lessonData.title}
               </span>
               {lessonData.videoDuration && (
-                <span className="bg-slate-800 px-2.5 py-1 rounded-md text-amber-400 font-semibold flex items-center gap-1">
-                  <Clock size={12} /> {lessonData.videoDuration}
+                <span className="flex items-center gap-1 text-slate-400">
+                  <Clock size={13} />
+                  {lessonData.videoDuration}
                 </span>
               )}
             </div>
@@ -986,6 +1521,12 @@ export default function CoursePlayerPhase4() {
         </div>
 
         <div className="space-y-6 mb-8 animate-fade-in">
+          {/* Disclaimer visible obligatorio */}
+          <div className="bg-slate-900/50 p-3.5 rounded-xl border border-slate-800 text-[11px] text-slate-400 italic flex items-center gap-2.5">
+            <AlertTriangle size={15} className="text-amber-400 shrink-0" />
+            <span>{(lessonData as any).disclaimer || "Educación, no asesoría financiera. Ninguna estrategia se presenta como infalible o segura."}</span>
+          </div>
+
           <div className="bg-gradient-to-r from-slate-800 to-slate-850 p-6 rounded-2xl border-l-4 border-amber-500 shadow-lg">
             <p className="text-base md:text-lg text-amber-100 font-medium leading-relaxed">
               {lessonData.content}
@@ -1007,6 +1548,48 @@ export default function CoursePlayerPhase4() {
             )}
           </div>
 
+          {/* Caso Real Fechado de Mercado */}
+          {(lessonData as any).realExample && (
+            <div className="bg-slate-900/70 p-5 rounded-2xl border border-amber-500/30">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <Landmark size={15} /> Caso Real Fechado de Mercado
+                </span>
+                <span className="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700">
+                  {(lessonData as any).realExample.date}
+                </span>
+              </div>
+              <p className="text-sm font-bold text-white mb-1.5">{(lessonData as any).realExample.asset}</p>
+              <p className="text-xs text-slate-300 leading-relaxed mb-3">{(lessonData as any).realExample.caseDescription}</p>
+              <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                <span>Fuente:</span>
+                <a 
+                  href={(lessonData as any).realExample.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-amber-400 hover:underline inline-flex items-center gap-1 font-medium"
+                >
+                  {(lessonData as any).realExample.source} <ExternalLink size={11} />
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Ejercicio con Entregable Práctico */}
+          {(lessonData as any).deliverableExercise && (
+            <div className="bg-slate-900/70 p-5 rounded-2xl border border-slate-800">
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                <FileText size={15} /> Ejercicio con Entregable Práctico
+              </span>
+              <h4 className="text-sm font-bold text-white mb-1">{(lessonData as any).deliverableExercise.title}</h4>
+              <p className="text-xs text-slate-300 leading-relaxed mb-3">{(lessonData as any).deliverableExercise.description}</p>
+              <textarea 
+                placeholder="Escribe aquí tus cálculos, conclusiones o plan de acción para tu propio portafolio..."
+                className="w-full bg-slate-950/80 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 outline-none focus:ring-1 focus:ring-amber-500 min-h-[70px]"
+              />
+            </div>
+          )}
+
           {lessonData.concepts && (
             <div className="bg-slate-900/60 rounded-2xl border border-slate-800 p-5">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
@@ -1024,59 +1607,78 @@ export default function CoursePlayerPhase4() {
             </div>
           )}
 
-          {lessonData.miniQuiz && (
-            <div className="bg-gradient-to-br from-slate-900 to-slate-850 p-6 rounded-2xl border border-amber-500/30 shadow-lg">
-              <div className="flex items-center gap-2 mb-3">
-                <HelpCircle size={18} className="text-amber-400" />
-                <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
-                  Mini-Quiz de Comprobación
-                </span>
-              </div>
-              <p className="text-sm font-semibold text-white mb-4">
-                {lessonData.miniQuiz.question}
-              </p>
-              <div className="space-y-2 mb-4">
-                {lessonData.miniQuiz.options.map((opt, i) => {
-                  const isSelected = lessonQuizAnswer === i;
-                  const isCorrect = i === lessonData.miniQuiz!.correct;
-                  let btnStyle = 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-750';
-                  
-                  if (showLessonFeedback) {
-                    if (isCorrect) {
-                      btnStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-200 font-bold';
-                    } else if (isSelected) {
-                      btnStyle = 'bg-rose-950/80 border-rose-500 text-rose-200 font-bold';
-                    }
-                  } else if (isSelected) {
-                    btnStyle = 'bg-amber-500 border-amber-300 text-slate-950 font-bold';
-                  }
-
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        setLessonQuizAnswer(i);
-                        setShowLessonFeedback(true);
-                      }}
-                      className={`w-full text-left p-3.5 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between ${btnStyle}`}
-                    >
-                      <span>{opt}</span>
-                      {showLessonFeedback && isCorrect && <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />}
-                      {showLessonFeedback && isSelected && !isCorrect && <XCircle size={16} className="text-rose-400 shrink-0" />}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {showLessonFeedback && (
-                <div className={`p-3.5 rounded-xl text-xs leading-relaxed border animate-fade-in ${
-                  lessonQuizAnswer === lessonData.miniQuiz.correct 
-                    ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300' 
-                    : 'bg-rose-950/40 border-rose-500/40 text-rose-300'
-                }`}>
-                  <strong>{lessonQuizAnswer === lessonData.miniQuiz.correct ? '¡Correcto!' : 'Explicación didáctica:'}</strong> {lessonData.miniQuiz.explanation}
+          {/* Quiz interactivo por lección con retroalimentación inmediata */}
+          {activeQuizzes.length > 0 && (
+            <div className="bg-gradient-to-br from-slate-900 to-slate-850 p-6 rounded-2xl border border-amber-500/30 shadow-lg space-y-6">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div className="flex items-center gap-2">
+                  <HelpCircle size={18} className="text-amber-400" />
+                  <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
+                    Quiz de Comprobación ({activeQuizzes.length} preguntas)
+                  </span>
                 </div>
-              )}
+                <span className="text-[11px] text-slate-400">Retroalimentación inmediata</span>
+              </div>
+
+              {activeQuizzes.map((q: any, qIdx: number) => {
+                const key = `${currentLesson}_${qIdx}`;
+                const userState = quizState[key];
+                const isAnswered = !!userState?.shown;
+                const selectedOpt = userState?.answer;
+                const isCorrect = selectedOpt === q.correct;
+
+                return (
+                  <div key={qIdx} className="space-y-3 pb-4 border-b border-slate-800/60 last:border-b-0 last:pb-0">
+                    <p className="text-sm font-semibold text-white flex items-start gap-2">
+                      <span className="text-xs bg-slate-800 text-amber-400 px-2 py-0.5 rounded font-bold">{qIdx + 1}</span>
+                      {q.question}
+                    </p>
+                    <div className="space-y-2">
+                      {q.options.map((opt: string, optIdx: number) => {
+                        const isThisSelected = selectedOpt === optIdx;
+                        let btnStyle = 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-750';
+
+                        if (isAnswered) {
+                          if (optIdx === q.correct) {
+                            btnStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-200 font-bold';
+                          } else if (isThisSelected) {
+                            btnStyle = 'bg-rose-950/80 border-rose-500 text-rose-200 font-bold';
+                          }
+                        } else if (isThisSelected) {
+                          btnStyle = 'bg-amber-500 border-amber-300 text-slate-950 font-bold';
+                        }
+
+                        return (
+                          <button
+                            key={optIdx}
+                            onClick={() => {
+                              setQuizState(prev => ({
+                                ...prev,
+                                [key]: { answer: optIdx, shown: true }
+                              }));
+                            }}
+                            className={`w-full text-left p-3 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between ${btnStyle}`}
+                          >
+                            <span>{opt}</span>
+                            {isAnswered && optIdx === q.correct && <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />}
+                            {isAnswered && isThisSelected && !isCorrect && <XCircle size={16} className="text-rose-400 shrink-0" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {isAnswered && (
+                      <div className={`p-3 rounded-xl text-xs leading-relaxed border animate-fade-in ${
+                        isCorrect 
+                          ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300' 
+                          : 'bg-rose-950/40 border-rose-500/40 text-rose-300'
+                      }`}>
+                        <strong>{isCorrect ? '¡Correcto!' : 'Explicación didáctica:'}</strong> {q.explanation}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

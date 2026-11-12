@@ -10,7 +10,9 @@ import {
   BrainCircuit,
   PieChart,
   Landmark,
-  LineChart
+  LineChart,
+  Globe,
+  Coins
 } from 'lucide-react';
 
 export const MARKET_DATA: MarketItem[] = [
@@ -127,7 +129,7 @@ export const MODULES: Module[] = [
     description: 'Domina la lectura del rastro institucional: velas japonesas (OHLC), estructura de mercado (HH/LL, BOS, CHoCH), niveles áureos de Fibonacci, gestión de riesgo con breakeven al 25% y estación TradingView.',
     icon: 'CandlestickChart',
     color: 'bg-indigo-500',
-    image: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'El Lenguaje de las Velas Japonesas',
@@ -172,6 +174,10 @@ export const MODULES: Module[] = [
       {
         title: 'Estación de Trabajo TradingView y Psicología',
         content: 'Práctica en simulador interactivo, calibración de Stop Loss y superación del FOMO y el Revenge Trading.'
+      },
+      {
+        title: 'Proyecto Final: Tesis de Análisis Técnico con Rúbrica Institucional',
+        content: 'Elaboración guiada de un memorándum de trade técnico con análisis multitemporal, ratio R:B y plan de gestión de riesgo.'
       }
     ]
   },
@@ -218,6 +224,10 @@ export const MODULES: Module[] = [
       {
         title: 'Ética Profesional y Deber Fiduciario',
         content: 'Prevención de conflictos de interés, transparencia en comisiones y administración patrimonial responsable a largo plazo.'
+      },
+      {
+        title: 'Money Management: Gestión Monetaria del Portafolio',
+        content: 'Regla del 1% de riesgo, cálculo exacto de tamaño de posición, límites de concentración por activo/sector, asimetría del drawdown y reglas de salida por escrito.'
       }
     ]
   },
@@ -231,7 +241,7 @@ export const MODULES: Module[] = [
     description: 'Estrategias avanzadas para inversores sofisticados: venta en corto (short selling), valuación por múltiplos y DCF, trading cuantitativo algorítmico, opciones con griegas (Calls/Puts) y tesis de inversión profesional.',
     icon: 'Bot',
     color: 'bg-rose-500',
-    image: 'https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
     topics: [
       {
         title: 'Venta en Corto (Short Selling) y Short Squeeze',
@@ -270,6 +280,156 @@ export const MODULES: Module[] = [
         content: 'Elaboración guiada de una tesis fundamental con valuación, catalizadores de crecimiento, mapa de riesgos y plan de salida.'
       }
     ]
+  },
+  {
+    id: 'fase-6',
+    phase: 6,
+    title: 'Finanzas Personales Operativas',
+    level: 'Básico',
+    duration: '4 Semanas',
+    rating: 4.9,
+    description: 'La base inquebrantable de todo inversor: presupuesto 50/30/20, fondo de emergencia blindado, arquitectura de seguros (SGMM/vida), comprar vs rentar casa, deducciones fiscales SAT (Art. 151) y roadmap patrimonial.',
+    icon: 'PieChart',
+    color: 'bg-teal-500',
+    image: 'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&q=80&w=800',
+    topics: [
+      {
+        title: 'Presupuesto 50/30/20 y Eliminación de Fugas Financieras',
+        content: 'Estructuración matemática del flujo de efectivo mensual, auditoría de gastos hormiga y automatización de transferencias hacia inversión.'
+      },
+      {
+        title: 'Fondo de Emergencia ("Colchón de Paz") y Vehículos de Liquidez Segura',
+        content: 'Dimensionamiento de 3 a 6 meses de gastos fijos resguardados en instrumentos de disponibilidad diaria protegidos por IPAB y Prosofipo.'
+      },
+      {
+        title: 'Arquitectura de Seguros: Gastos Médicos Mayores (SGMM), Vida y Daños',
+        content: 'Transferencia del riesgo catastrófico: deducible, coaseguro, suma asegurada y cómo evitar la quiebra patrimonial por imprevistos médicos.'
+      },
+      {
+        title: 'Estrategia Hipotecaria: Comprar vs Rentar e Infonavit vs Crédito Bancario',
+        content: 'Análisis cuantitativo de costo de oportunidad, CAT hipotecario, amortización de capital anticipada y mito de que "rentar es tirar dinero".'
+      },
+      {
+        title: 'Optimización Fiscal Personal: Deducciones Personales del SAT (Art. 151 LISR)',
+        content: 'Gastos médicos, colegiaturas, intereses reales hipotecarios y aportaciones complementarias para generar saldos a favor en la Declaración Anual.'
+      },
+      {
+        title: 'Blindaje Patrimonial y Protección Sucesoria: Testamentos y Albaceazgo',
+        content: 'Designación de beneficiarios en cuentas de intermediación bursátil, testamento público abierto y prevención de juicios intestamentarios.'
+      },
+      {
+        title: 'Finanzas en Pareja y Familia: El Modelo de las Tres Bolsas',
+        content: 'Estructura operativa de gastos compartidos (Bolsa Conjunta) con independencia individual (Bolsas Personales) y metas de patrimonio común.'
+      },
+      {
+        title: 'Roadmap Financiero a 1, 5 y 10 Años: Metas SMART Cuantificadas',
+        content: 'Formulación matemática de hitos de capital con plazos fijos, tasas requeridas y planes de contingencia ante caídas de ingresos.'
+      },
+      {
+        title: 'Proyecto Integrador: Plan Maestro de Finanzas Personales con Rúbrica',
+        content: 'Diseño integral de tu política financiera individual con presupuesto auditado, pólizas de seguros, fondo de reserva y plantilla descargable.'
+      }
+    ]
+  },
+  {
+    id: 'fase-7',
+    phase: 7,
+    title: 'Ingreso, Dividendos y Bienes Raíces',
+    level: 'Avanzado',
+    duration: '6 Semanas',
+    rating: 4.9,
+    description: 'Construye una máquina de flujo de efectivo pasivo: matemáticas del dividendo, valuación de FIBRAS (FFO/AFFO/NAV), bienes raíces bursátiles vs físicos, escaleras de cobro mensual, fiscalidad y coberturas (oro/petróleo/criptoactivos).',
+    icon: 'Landmark',
+    color: 'bg-emerald-600',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800',
+    topics: [
+      {
+        title: 'Matemáticas del Dividendo: Dividend Yield, Payout Ratio y Efecto DRIP',
+        content: 'Detección de trampas de rendimiento (Yield Traps), sostenibilidad sobre Free Cash Flow y aceleración por reinversión automática.'
+      },
+      {
+        title: 'Valuación de FIBRAS Inmobiliarias: FFO, AFFO, NAV y Mandato del 95%',
+        content: 'Ladrillos bursátiles bajo Art. 187/188 LISR, cálculo de fondos operativos, valor neto de los activos y descuento sobre costo de reposición.'
+      },
+      {
+        title: 'Bienes Raíces Físicos vs Bursátiles: Retorno Bruto vs Neto y Cash-on-Cash',
+        content: 'Comparativa financiera real: costos de escrituración, predial, vacancia y mantenimiento frente a la liquidez y diversificación de un CBFI.'
+      },
+      {
+        title: 'Construcción de una Escalera de Flujos Mensuales (Monthly Cash Flow Ladder)',
+        content: 'Ingeniería de calendario para sincronizar distribuciones de FIBRAS y emisoras del SIC, asegurando cobros de efectivo cada semana del año.'
+      },
+      {
+        title: 'Régimen Fiscal de Dividendos y FIBRAS: Reembolso de Capital vs Resultado Fiscal',
+        content: 'Distribuciones exentas de impuesto por reembolso de capital (reducción de costo fiscal) vs retención definitiva del 30% en resultado fiscal.'
+      },
+      {
+        title: 'Gestión de Riesgos Inmobiliarios: Apalancamiento (LTV), Vacancia y Tasas',
+        content: 'Límites normativos de Loan-to-Value (50%), vencimiento de contratos de arrendamiento (WALT) y cobertura ante alzas en tasas de interés.'
+      },
+      {
+        title: 'Proyecto de Ingreso Pasivo: Cartera de $100,000 MXN en Flujos Sostenibles',
+        content: 'Construcción práctica de un portafolio generador de rentas pasivas con diversificación sectorial industrial, comercial y habitacional.'
+      },
+      {
+        title: 'Auditoría Financiera de un CBFI y Detección de Trampas de Rendimiento',
+        content: 'Lectura forense de reportes trimestrales a la BMV: comisiones de administración interna vs externa e ingresos no recurrentes.'
+      },
+      {
+        title: 'Coberturas Alternativas: Oro, Petróleo y Criptoactivos Regulados (Cold Wallets y SAT)',
+        content: 'Activos de reserva no correlacionados, petróleo como cobertura inflacionaria, y Bitcoin/Ethereum con protocolos de autocustodia y marco fiscal SAT.'
+      }
+    ]
+  },
+  {
+    id: 'fase-8',
+    phase: 8,
+    title: 'Macroeconomía Aplicada y Mercados Globales',
+    level: 'Experto',
+    duration: '8 Semanas',
+    rating: 5.0,
+    description: 'Domina el tablero macroeconómico global: política monetaria de Banxico y la Fed, dinámica cambiaria USD/MXN, indicadores adelantados (IMEF/PMI), reloj de rotación sectorial, megatendencias (nearshoring e IA) e informe institucional.',
+    icon: 'Globe',
+    color: 'bg-purple-600',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
+    topics: [
+      {
+        title: 'Banxico: Lectura de Minutas de Política Monetaria y Expectativas de Inflación',
+        content: 'Mandato del Art. 28, balance de riesgos, inflación subyacente y cálculo de la postura monetaria restrictiva frente a la tasa neutral.'
+      },
+      {
+        title: 'El Tipo de Cambio USD/MXN y el Efecto de Inflación Importada',
+        content: 'Spread Banxico-Fed, dinámica del carry trade global, flujos de remesas y coeficiente de traspaso cambiario a precios (pass-through).'
+      },
+      {
+        title: 'La Reserva Federal (Fed), Tasas Globales y Rendimientos de los Bonos del Tesoro (Treasuries)',
+        content: 'El bono a 10 años como tasa libre de riesgo mundial, lectura del Dot Plot de la Fed, CME FedWatch y contracción de balance (QT).'
+      },
+      {
+        title: 'Indicadores Adelantados: IMEF Manufacturero, PMI y Curva de Rendimientos Invertida',
+        content: 'Umbral de 50 puntos en encuestas fabriles, spread de la curva 10Y-2Y y cómo anticipar recesiones antes de que aparezcan en el PIB rezagado.'
+      },
+      {
+        title: 'Ciclos de Rotación Sectorial en BMV y Wall Street (Defensivos vs Cíclicos vs Tecnológicos)',
+        content: 'Las cuatro estaciones del reloj económico: asignación óptima en recuperación, expansión, fase tardía con inflación y recesión.'
+      },
+      {
+        title: 'Megatendencias Globales: Relocalización (Nearshoring en México) e Inteligencia Artificial',
+        content: 'Absorción logística fronteriza bajo el T-MEC y las 3 capas de monetización en IA (semiconductores, hiperescaladores y aplicaciones).'
+      },
+      {
+        title: 'Macroeconomía sin Pronósticos: Matriz de 3 Escenarios (Base, Optimista y Recesivo)',
+        content: 'Planificación probabilística institucional y pruebas de estrés para blindar la cartera contra cisnes negros y estanflación.'
+      },
+      {
+        title: 'Anatomía de las Grandes Crisis Históricas: Dot-Com (2000), Subprime (2008), Pandemia (2020) e Inflación (2022)',
+        content: 'Estudio forense de duraciones, drawdowns máximos y el principio universal de que el mercado toca fondo antes que las noticias.'
+      },
+      {
+        title: 'Proyecto Final: Informe Macroeconómico Mensual de Inversión con Rúbrica Institucional',
+        content: 'Redacción del Macro Investment Memorandum con semáforo de indicadores, postura de bancos centrales y asignación táctica descargable.'
+      }
+    ]
   }
 ];
 
@@ -280,6 +440,9 @@ export const getIcon = (name: string, className: string = "w-6 h-6") => {
     case 'CandlestickChart': return <CandlestickChart className={className} />;
     case 'ShieldAlert': return <ShieldAlert className={className} />;
     case 'Bot': return <Bot className={className} />;
+    case 'PieChart': return <PieChart className={className} />;
+    case 'Landmark': return <Landmark className={className} />;
+    case 'Globe': return <Globe className={className} />;
     default: return <TrendingUp className={className} />;
   }
 };
